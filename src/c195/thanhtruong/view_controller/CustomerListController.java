@@ -39,18 +39,34 @@ public class CustomerListController implements Initializable {
     private Button searchButton;
 
     @FXML
-    private Button cancelButton;
+    private Button deleteButton;
 
     @FXML
-    private Button selectButton;
+    private Button modifyButton;
 
     @FXML
-    void handleCancelSelect(ActionEvent event) {
+    private Button addButton;
+
+    @FXML
+    private Button closeButton;
+
+    @FXML
+    void handleAddCust(ActionEvent event) {
 
     }
 
     @FXML
-    void handleSelectCust(ActionEvent event) {
+    void handleClose(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleDeleteCust(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleModifyCust(ActionEvent event) {
 
     }
 

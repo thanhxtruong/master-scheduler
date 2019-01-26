@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 /**
@@ -18,44 +20,44 @@ import javafx.scene.control.TextField;
  *
  * @author thanhtruong
  */
-public class AddCustomerController implements Initializable {
-    
+public class AddAppointmentController implements Initializable {
     @FXML
-    private TextField customerName;
+    private TextField apptTitle;
 
     @FXML
-    private TextField address1;
+    private TextField apptDescription;
 
     @FXML
-    private TextField address2;
+    private TextField location;
 
     @FXML
-    private TextField city;
+    private DatePicker apptDate;
 
     @FXML
-    private TextField postalCode;
+    private ComboBox<?> apptType;
 
     @FXML
-    private TextField country;
+    private ComboBox<?> apptHour;
 
     @FXML
-    private TextField phoneNumber;
+    private ComboBox<?> apptMin;
 
     @FXML
-    private Button addCustomerCancel;
-
-      @FXML
-    private Button addCustomerButton;
+    private Button addApptCancel;
 
     @FXML
-    void handleAddCust(ActionEvent event) {
+    private Button addApptButton;
+
+    @FXML
+    void handleAddAppt(ActionEvent event) {
 
     }
 
     @FXML
-    void handleCancelAddCust(ActionEvent event) {
+    void handleCancelAddAppt(ActionEvent event) {
 
     }
+
 
     /**
      * Initializes the controller class.

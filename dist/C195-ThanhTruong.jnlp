@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="C195-ThanhTruong.jar" size="534968" download="eager" />
+    <jar href="C195-ThanhTruong.jar" size="549140" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="C195-ThanhTruong" >
     <param name="requiredFXVersion" value="8.0+"/>

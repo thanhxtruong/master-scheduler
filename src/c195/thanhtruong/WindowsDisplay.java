@@ -5,7 +5,6 @@
  */
 package c195.thanhtruong;
 
-import c195.thanhtruong.view_controller.UserLoginController;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
@@ -37,6 +36,7 @@ import javafx.stage.Stage;
  */
 public class WindowsDisplay {
     public static void displayScene(ResourceBundle rb,
+                                    String FXMLPath,
                                     Pane rootLayout,
                                     Stage primaryStage,
                                     InputStream stream,
@@ -44,7 +44,7 @@ public class WindowsDisplay {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(rb);
-            loader.setLocation(MainApp.class.getResource("view_controller/UserLogin.fxml"));
+            loader.setLocation(MainApp.class.getResource(FXMLPath));
             rootLayout = (AnchorPane) loader.load();
             
             Scene scene = new Scene(rootLayout);
@@ -65,14 +65,15 @@ public class WindowsDisplay {
         }
     }
     
-    public static void displayScene(Pane rootLayout,
+    public static void displayScene(String FXMLPath,
+                                    Pane rootLayout,
                                     Stage primaryStage,
                                     String title,
                                     InputStream stream,
                                     MainApp mainApp) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view_controller/UserLogin.fxml"));
+            loader.setLocation(MainApp.class.getResource(FXMLPath));
             rootLayout = (AnchorPane) loader.load();
             
             Scene scene = new Scene(rootLayout);

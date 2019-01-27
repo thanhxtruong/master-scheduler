@@ -44,10 +44,11 @@ public class MainApp extends Application {
     }    
     
     public void showLoginScreen(){        
-        WindowsDisplay.displayScene(rb, rootLayout, primaryStage, logoStream, this);
+        WindowsDisplay.displayScene(rb, "view_controller/UserLogin.fxml", rootLayout, primaryStage, logoStream, this);
     }
     
     public void showHome(){
+        WindowsDisplay.displayScene("view_controller/UserLogin.fxml", rootLayout, primaryStage, STYLESHEET_MODENA, logoStream, this);
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(rb);

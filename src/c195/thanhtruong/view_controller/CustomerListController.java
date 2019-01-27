@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.AbstractController;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +22,7 @@ import javafx.scene.control.TextField;
  *
  * @author thanhtruong
  */
-public class CustomerListController implements Initializable {
+public class CustomerListController extends AbstractController implements Initializable {
     
     @FXML
     private TableView<Customer> customerTable;

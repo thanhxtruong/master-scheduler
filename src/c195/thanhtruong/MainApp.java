@@ -48,28 +48,7 @@ public class MainApp extends Application {
     }
     
     public void showHome(){
-        WindowsDisplay.displayScene("view_controller/UserLogin.fxml", rootLayout, primaryStage, STYLESHEET_MODENA, logoStream, this);
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setResources(rb);
-            loader.setLocation(MainApp.class.getResource("view_controller/UserLogin.fxml"));
-            rootLayout = (AnchorPane) loader.load();
-            
-            Scene scene = new Scene(rootLayout);
-            
-            primaryStage.setScene(scene);
-            primaryStage.setTitle(rb.getString("title"));
-            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));            
-            primaryStage.show();
-            
-            // Give controller access to the main app
-            UserLoginController controller = loader.getController();
-            controller.setMainApp(this);
-            controller.setDialogStage(primaryStage);
-            
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        WindowsDisplay.displayScene("view_controller/Home.fxml", rootLayout, primaryStage, "Home", logoStream, this);        
     }
 
     /**

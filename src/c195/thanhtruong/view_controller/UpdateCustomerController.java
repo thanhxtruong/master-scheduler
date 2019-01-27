@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.AbstractController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import javafx.scene.control.Label;
  *
  * @author thanhtruong
  */
-public class UpdateCustomerController implements Initializable {
+public class UpdateCustomerController extends AbstractController implements Initializable {
 
     @FXML
     private Label customerName;

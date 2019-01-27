@@ -65,7 +65,7 @@ public class UserLoginController extends AbstractController implements Initializ
                                         "Username and password do not match!",
                                         "Please, login again!");
             } else {
-                System.out.println("Logging in...");
+                getMainApp().showHome();
             }
             DBConnection.closeConnection();
         } catch (Exception ex) {

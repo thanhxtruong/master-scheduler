@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.AbstractController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,7 +18,7 @@ import javafx.scene.control.Button;
  *
  * @author thanhtruong
  */
-public class HomeController implements Initializable {
+public class HomeController extends AbstractController implements Initializable {
     
     @FXML
     private Button custModule;

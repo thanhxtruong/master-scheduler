@@ -32,6 +32,10 @@ public abstract class AbstractController {
 
     public Stage getDialogStage() {
         return dialogStage;
-    }   
-    
+    }
+
+    public MainApp getMainApp() {
+        return mainApp;
+    }  
+        
 }

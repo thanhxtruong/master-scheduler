@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.AbstractController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import javafx.scene.control.TextField;
  *
  * @author thanhtruong
  */
-public class AddCustomerController implements Initializable {
+public class AddCustomerController extends AbstractController implements Initializable {
     
     @FXML
     private TextField customerName;

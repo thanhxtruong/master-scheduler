@@ -9,13 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="269.0" prefWidth="511.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="c195.thanhtruong.view_controller.UserLoginController">
+<AnchorPane id="AnchorPane" prefHeight="269.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.UserLoginController">
    <children>
-      <Label layoutX="114.0" layoutY="97.0" text="User Name:" />
-      <Label layoutX="125.0" layoutY="140.0" text="Password:" />
-      <TextField fx:id="username" layoutX="217.0" layoutY="92.0" promptText="Enter username" />
-      <Label layoutX="40.0" layoutY="35.0" text="Login">
+      <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="114.0" layoutY="97.0" maxWidth="151.0" prefHeight="21.0" prefWidth="151.0" text="User Name:" textAlignment="RIGHT" wrapText="true" />
+      <Label fx:id="pwLabel" alignment="CENTER_RIGHT" layoutX="125.0" layoutY="140.0" prefHeight="21.0" prefWidth="141.0" text="Password:" textAlignment="RIGHT" wrapText="true" />
+      <TextField fx:id="username" layoutX="281.0" layoutY="91.0" promptText="Enter username" />
+      <Label fx:id="headerLabel" layoutX="40.0" layoutY="35.0" text="Login">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -26,6 +25,6 @@
          </image>
       </ImageView>
       <Button fx:id="loginButton" layoutX="364.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-      <PasswordField fx:id="password" layoutX="217.0" layoutY="135.0" />
+      <PasswordField fx:id="password" layoutX="281.0" layoutY="134.0" />
    </children>
 </AnchorPane>

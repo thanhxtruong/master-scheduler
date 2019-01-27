@@ -5,23 +5,36 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.MainApp;
+import c195.thanhtruong.AbstractController;
+import c195.thanhtruong.DBConnection;
+import c195.thanhtruong.Query;
+import c195.thanhtruong.WarningPopup;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author thanhtruong
  */
-public class UserLoginController implements Initializable {
+public class UserLoginController extends AbstractController implements Initializable {
+    
+    @FXML
+    private Label userNameLabel;
+
+    @FXML
+    private Label pwLabel;
+
+    @FXML
+    private Label headerLabel;
     
     @FXML
     private TextField username;
@@ -32,24 +45,32 @@ public class UserLoginController implements Initializable {
     @FXML
     private PasswordField password;
     
-    private MainApp mainApp;
-    private Stage dialogStage;        
-    
-    public void setMainApp(MainApp mainApp){
-        this.mainApp = mainApp;
-    }
-    
-    /**
-     * Sets the stage of the "alert.initOwner(dialogStage)". Called by MainApp
-     * @param dialogStage 
-     */
-    public void setDialogStage(Stage dialogStage){
-        this.dialogStage = dialogStage;
-    }
+    private ResourceBundle rb;
 
     @FXML
     void handleLogin(ActionEvent event) {
-
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            String sqlStatement = "SELECT userName, password FROM user "
+                                + "WHERE userName = '" + username.getText() + "' "
+                                + "AND password = '" + password.getText() +"'";            
+            Query.makeQuery(sqlStatement);
+            ResultSet result = Query.getResult();            
+            
+            if (!result.isBeforeFirst()) {
+                WarningPopup.showAlert(getDialogStage(),
+                                        "Authentication Failure",
+                                        "Username and password do not match!",
+                                        "Please, login again!");
+            } else {
+                System.out.println("Logging in...");
+            }
+            DBConnection.closeConnection();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }
 
     /**
@@ -58,7 +79,12 @@ public class UserLoginController implements Initializable {
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
+        this.rb = rb;
+        headerLabel.setText(rb.getString("header"));
+        userNameLabel.setText(rb.getString("usernameLabel"));
+        username.setPromptText("prompt");
+        pwLabel.setText(rb.getString("pwLabel"));
+        loginButton.setText(rb.getString("button"));
     }    
     
 }

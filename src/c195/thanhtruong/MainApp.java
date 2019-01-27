@@ -7,12 +7,15 @@ package c195.thanhtruong;
 
 import c195.thanhtruong.view_controller.UserLoginController;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -22,30 +25,40 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     
     private Stage primaryStage;
-    private AnchorPane rootLayout;
-            
+    private Pane rootLayout;
+    private static ResourceBundle rb;
+    InputStream logoStream = getClass().getResourceAsStream("logo.png");
+                
     @Override
     public void start(Stage primaryStage) {
+        
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Master Scheduler - Login");
+        Locale myLocale = Locale.getDefault();
+        // Use for testing language
+//        Locale.setDefault(new Locale("fr", "FR"));
+//        rb = ResourceBundle.getBundle("language_files/rb");
+        rb = ResourceBundle.getBundle("language_files/rb", myLocale);
         
         showLoginScreen();
       
+    }    
+    
+    public void showLoginScreen(){        
+        WindowsDisplay.displayScene(rb, rootLayout, primaryStage, logoStream, this);
     }
     
-    
-    public void showLoginScreen(){
+    public void showHome(){
         try {
             FXMLLoader loader = new FXMLLoader();
+            loader.setResources(rb);
             loader.setLocation(MainApp.class.getResource("view_controller/UserLogin.fxml"));
             rootLayout = (AnchorPane) loader.load();
             
             Scene scene = new Scene(rootLayout);
-            primaryStage.setTitle("Master Scheduler");
-//            Image icon = new Image(UserLoginController.class.getResourceAsStream("authentication icon.png"));
-//            System.out.println(icon);
-            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));
+            
             primaryStage.setScene(scene);
+            primaryStage.setTitle(rb.getString("title"));
+            primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("logo.png")));            
             primaryStage.show();
             
             // Give controller access to the main app

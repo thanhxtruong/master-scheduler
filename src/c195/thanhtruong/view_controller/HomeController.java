@@ -6,6 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.AbstractController;
+import c195.thanhtruong.WindowsDisplay;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -44,14 +45,18 @@ public class HomeController extends AbstractController implements Initializable 
 
     @FXML
     void handleCustModButton(ActionEvent event) {
-
+        WindowsDisplay.displayScene("view_controller/CustomerList.fxml",
+                                    getMainApp().getRootLayout(),
+                                    getDialogStage(),
+                                    "Customer Maintenance",
+                                    getMainApp().getLogoStream(),
+                                    getMainApp());
     }
 
     @FXML
     void handleReportMenu(ActionEvent event) {
 
-    }
-
+    }    
 
     /**
      * Initializes the controller class.

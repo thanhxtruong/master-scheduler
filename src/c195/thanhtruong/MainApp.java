@@ -19,7 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- *
+ * Getters are used to pass Stage and mainApp instances to other controllers for 
+ * loading FXML from controller (indirectly) instead of from mainApp.
  * @author thanhtruong
  */
 public class MainApp extends Application {
@@ -28,7 +29,19 @@ public class MainApp extends Application {
     private Pane rootLayout;
     private static ResourceBundle rb;
     InputStream logoStream = getClass().getResourceAsStream("logo.png");
-                
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public Pane getRootLayout() {
+        return rootLayout;
+    }    
+
+    public InputStream getLogoStream() {
+        return logoStream;
+    }
+                    
     @Override
     public void start(Stage primaryStage) {
         

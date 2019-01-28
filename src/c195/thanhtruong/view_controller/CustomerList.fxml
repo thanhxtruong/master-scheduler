@@ -7,26 +7,30 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CustomerListController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CustomerListController">
    <children>
-      <TableView fx:id="customerTable" layoutX="27.0" layoutY="68.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TableView fx:id="customerTable" layoutY="75.0" prefHeight="200.0" prefWidth="1000.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="75.0">
         <columns>
-          <TableColumn fx:id="custIDTableCol" prefWidth="75.0" text="Customer ID" />
-          <TableColumn fx:id="custNameTableCol" prefWidth="75.0" text="Customer Name" />
+          <TableColumn fx:id="custIDTableCol" prefWidth="102.0" text="Customer ID" />
+          <TableColumn fx:id="custNameTableCol" prefWidth="165.0" text="Customer Name" />
+            <TableColumn fx:id="phoneTableCol" prefWidth="143.0" text="Phone" />
+            <TableColumn fx:id="addressTableCol" prefWidth="256.0" text="Address" />
+            <TableColumn fx:id="cityAndPCTableCol" prefWidth="164.0" text="City, Postal Code" />
+            <TableColumn fx:id="countryTableCol" prefWidth="129.0" text="Country" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="customerSearchText" layoutX="399.0" layoutY="26.0" />
-      <Button fx:id="searchButton" layoutX="311.0" layoutY="27.0" mnemonicParsing="false" text="Search" />
-      <ButtonBar layoutX="283.0" layoutY="295.0" prefHeight="40.0" prefWidth="295.0">
+      <TextField fx:id="customerSearchText" layoutX="399.0" layoutY="26.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0" />
+      <Button fx:id="searchButton" layoutX="311.0" layoutY="27.0" mnemonicParsing="false" text="Search" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="25.0" />
+      <ButtonBar layoutX="672.0" layoutY="292.0" prefHeight="40.0" prefWidth="295.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0">
         <buttons>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteCust" text="Delete" />
             <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#handleModifyCust" text="Modify" />
             <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddCust" text="Add" />
         </buttons>
       </ButtonBar>
-    <Button fx:id="closeButton" layoutX="508.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+    <Button fx:id="closeButton" layoutX="911.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleClose" text="Close" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

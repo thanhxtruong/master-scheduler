@@ -14,6 +14,7 @@
       <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" layoutX="114.0" layoutY="97.0" maxWidth="151.0" prefHeight="21.0" prefWidth="151.0" text="User Name:" textAlignment="RIGHT" wrapText="true" />
       <Label fx:id="pwLabel" alignment="CENTER_RIGHT" layoutX="125.0" layoutY="140.0" prefHeight="21.0" prefWidth="141.0" text="Password:" textAlignment="RIGHT" wrapText="true" />
       <TextField fx:id="username" layoutX="281.0" layoutY="91.0" promptText="Enter username" />
+      <PasswordField fx:id="password" layoutX="281.0" layoutY="134.0" />
       <Label fx:id="headerLabel" layoutX="40.0" layoutY="35.0" text="Login">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -25,6 +26,5 @@
          </image>
       </ImageView>
       <Button fx:id="loginButton" layoutX="364.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
-      <PasswordField fx:id="password" layoutX="281.0" layoutY="134.0" />
    </children>
 </AnchorPane>

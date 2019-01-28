@@ -10,7 +10,13 @@ import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -98,7 +104,50 @@ public class CustomerListController extends AbstractController implements Initia
                                             cellData.getValue().postalCode()));
         countryTableCol.setCellValueFactory(cellData -> cellData.getValue().country());
         customerTable.setItems(custDB.getCustomerList());
+        
+        Predicate p = new Predicate() {
+            @Override
+            public boolean test(Object t) {
+                return true;
+            }
+            
+        };
+        
+        FilteredList<Customer> filteredCustomerByName = new FilteredList<>(custDB.getCustomerList(), p);
+        
+        ChangeListener listener = new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable,
+                    Object oldValue,
+                    Object newValue) {                
+        
+                Predicate<Customer> p2 = new Predicate<Customer>() {
+                    @Override
+                    public boolean test(Customer customer) {
+                        if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
+                        return true;
+                        }
+                        
+                        String lowerCaseFilter = newValue.toString().toLowerCase();
+                        
+                        if(customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                };
+                
+                filteredCustomerByName.setPredicate(p2);
+            }
+        };
+        
+        customerSearchText.textProperty().addListener(listener);
+        
+        SortedList<Customer> sortedData = new SortedList<>(filteredCustomerByName);
+        sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
+        customerTable.setItems(sortedData);
     }
+        
 
     /**
      * Initializes the controller class.

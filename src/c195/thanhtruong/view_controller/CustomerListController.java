@@ -19,6 +19,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -70,10 +71,10 @@ public class CustomerListController extends AbstractController implements Initia
 
     @FXML
     private Button closeButton;
-
+    
     @FXML
     void handleAddCust(ActionEvent event) {
-
+        showAddCustScreen();
     }
 
     @FXML
@@ -91,6 +92,9 @@ public class CustomerListController extends AbstractController implements Initia
 
     }
     
+    private void showAddCustScreen() {
+        WindowsDisplay.displayScene("AddCustomer.fxml", "Add Customer");
+    }
     private void displayCustTable(CustomerDB custDB) {
         custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
         custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());
@@ -146,6 +150,91 @@ public class CustomerListController extends AbstractController implements Initia
         sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
         customerTable.setItems(sortedData);
     }
+    
+//    private boolean isInputValid(){
+//        String errorMessage = "";
+//        
+//        if(partID.getText() == null || partID.getText().length() == 0){
+//            errorMessage += "No valid Part ID!\n";
+//        } else {
+//            try {
+//                Integer.parseInt(partID.getText());
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Part ID (must be an integer)!\n";
+//            }
+//        }
+//        if(partName.getText() == null || partName.getText().length() == 0){
+//            errorMessage += "No valid Part Name!\n";
+//        }
+//        
+//        if(partInvMin.getText() == null || partInvMin.getText().length() == 0){
+//            errorMessage += "No valid Min Part Inventory!\n";
+//        } else {
+//            try {
+//                minInvCheck = Integer.parseInt(partInvMin.getText());
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Min Part Inventory (must be a number)!\n";
+//            }
+//        }
+//        if(partInvMax.getText() == null || partInvMax.getText().length() == 0){
+//            errorMessage += "No valid Max Part Inventory!\n";
+//        } else {
+//            try {
+//                maxInvCheck = Integer.parseInt(partInvMax.getText());
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Max Part Inventory (must be a number)!\n";
+//            }
+//        }
+//        if(partInv.getText() == null || partInv.getText().length() == 0){
+//            errorMessage += "No valid Part Inventory!\n";
+//        } else {
+//            try {
+//                inputInventory = Integer.parseInt(partInv.getText());
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Part Inventory (must be a number)!\n";
+//            } finally {
+//                if(inputInventory < minInvCheck){
+//                    errorMessage += "Inventory is less than minimum requirement! \n";
+//                } else if (inputInventory > maxInvCheck) {
+//                    errorMessage += "Inventory exceeds the maximum allowed! \n";
+//                }
+//            }                
+//        }
+//        if(partCost.getText() == null || partCost.getText().length() == 0){
+//            errorMessage += "No valid Part Price/Cost!\n";
+//        } else {
+//            try {
+//                Double.parseDouble(partCost.getText());
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Part Cost/Price (must be a number)!\n";
+//            }
+//        }
+//        if(nameOrIDText.getText() == null || nameOrIDText.getText().length() == 0){
+//            errorMessage += "No valid Machine ID/Customer Name!\n";
+//        } else {
+//            try {
+//                if(inHouse.isSelected()){
+//                    Integer.parseInt(nameOrIDText.getText());
+//                }                
+//            } catch(NumberFormatException e) {
+//                errorMessage += "No valid Machine ID (must be a number)!\n";
+//            }
+//        }
+//        
+//        if(errorMessage.length() == 0){
+//            return true;
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.initOwner(dialogStage);
+//            alert.setTitle("Invalid Input");
+//            alert.setHeaderText("Please correct invalid input");
+//            alert.setContentText(errorMessage);
+//            
+//            alert.showAndWait();
+//            
+//            return false;
+//        }
+//    }
         
 
     /**

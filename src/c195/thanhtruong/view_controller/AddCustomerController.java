@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -36,7 +37,7 @@ public class AddCustomerController extends AbstractController implements Initial
     private TextField postalCode;
 
     @FXML
-    private TextField country;
+    private ComboBox<String> countrycbo;
 
     @FXML
     private TextField phoneNumber;
@@ -44,11 +45,11 @@ public class AddCustomerController extends AbstractController implements Initial
     @FXML
     private Button addCustomerCancel;
 
-      @FXML
+    @FXML
     private Button addCustomerButton;
 
     @FXML
-    void handleAddCust(ActionEvent event) {
+    void handleSaveAddCust(ActionEvent event) {
 
     }
 
@@ -63,7 +64,7 @@ public class AddCustomerController extends AbstractController implements Initial
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
+        
     }    
     
 }

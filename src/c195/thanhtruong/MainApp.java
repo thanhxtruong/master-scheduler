@@ -6,16 +6,9 @@
 package c195.thanhtruong;
 
 import c195.thanhtruong.view_controller.WindowsDisplay;
-import c195.thanhtruong.view_controller.UserLoginController;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -27,15 +20,10 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     
     static Stage primaryStage;
-    private Pane rootLayout;
     private static ResourceBundle rb;
 
     public static Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public Pane getRootLayout() {
-        return rootLayout;
     }   
                     
     @Override

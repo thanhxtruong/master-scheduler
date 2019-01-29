@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package c195.thanhtruong;
+package c195.thanhtruong.service;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;

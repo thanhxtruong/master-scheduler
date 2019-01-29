@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong;
 
+import c195.thanhtruong.view_controller.WindowsDisplay;
 import c195.thanhtruong.view_controller.UserLoginController;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,22 +26,17 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
     
-    private Stage primaryStage;
+    static Stage primaryStage;
     private Pane rootLayout;
     private static ResourceBundle rb;
-    InputStream logoStream = getClass().getResourceAsStream("logo.png");
 
-    public Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
     public Pane getRootLayout() {
         return rootLayout;
-    }    
-
-    public InputStream getLogoStream() {
-        return logoStream;
-    }
+    }   
                     
     @Override
     public void start(Stage primaryStage) {
@@ -57,12 +53,9 @@ public class MainApp extends Application {
     }    
     
     public void showLoginScreen(){        
-        WindowsDisplay.displayScene(rb, "view_controller/UserLogin.fxml", rootLayout, primaryStage, logoStream, this);
-    }
+        WindowsDisplay.displayScene(rb, "UserLogin.fxml");
+    }    
     
-    public void showHome(){
-        WindowsDisplay.displayScene("view_controller/Home.fxml", rootLayout, primaryStage, "Home", logoStream, this);        
-    }
 
     /**
      * @param args the command line arguments

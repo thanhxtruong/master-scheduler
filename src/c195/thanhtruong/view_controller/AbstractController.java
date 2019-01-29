@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package c195.thanhtruong;
+package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
+import java.io.InputStream;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +23,7 @@ import javafx.stage.Stage;
 public abstract class AbstractController {
     private MainApp mainApp;
     private Stage dialogStage;
+    final InputStream logoStream = getClass().getResourceAsStream("logo.png");
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -37,5 +40,9 @@ public abstract class AbstractController {
     public MainApp getMainApp() {
         return mainApp;
     }  
+
+    public InputStream getLogoStream() {
+        return logoStream;
+    }
         
 }

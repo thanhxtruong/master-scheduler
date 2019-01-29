@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane id="AnchorPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="248.0" prefWidth="523.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="c195.thanhtruong.view_controller.HomeController">
+<AnchorPane id="AnchorPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="248.0" prefWidth="523.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.HomeController">
    <children>
       <HBox layoutX="36.0" layoutY="34.0" prefWidth="460.0" spacing="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <children>
@@ -16,7 +15,7 @@
                <graphic>
                   <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
                      <image>
-                        <Image url="@img/customer.png" />
+                        <Image url="@../../../resources/images/customer.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -25,7 +24,7 @@
                <graphic>
                   <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/canlendar.png" />
+                        <Image url="@../../../resources/images/canlendar.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -34,7 +33,7 @@
                <graphic>
                   <ImageView fitHeight="100.0" fitWidth="99.0" pickOnBounds="true">
                      <image>
-                        <Image url="@img/report.png" />
+                        <Image url="@../../../resources/images/report.png" />
                      </image>
                   </ImageView>
                </graphic>

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package c195.thanhtruong;
+package c195.thanhtruong.service;
 
-import static c195.thanhtruong.DBConnection.conn;
+import static c195.thanhtruong.service.DBConnection.conn;
 import java.sql.ResultSet;
 import java.sql.Statement;
 

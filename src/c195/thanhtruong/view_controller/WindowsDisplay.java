@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package c195.thanhtruong;
+package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -35,30 +37,25 @@ import javafx.stage.Stage;
  * @author thanhtruong
  */
 public class WindowsDisplay {
+        
     public static void displayScene(ResourceBundle rb,
-                                    String FXMLPath,
-                                    Pane rootLayout,
-                                    Stage primaryStage,
-                                    InputStream stream,
-                                    MainApp mainApp) {
+                                    String FXMLPath) {
+        Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setResources(rb);
-            loader.setLocation(MainApp.class.getResource(FXMLPath));
-            rootLayout = (AnchorPane) loader.load();
+            loader.setResources(rb);	    
+            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
+            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
+            root = loader.load();
             
-            Scene scene = new Scene(rootLayout);
+            Scene scene = new Scene(root);
+            Stage stage = MainApp.getPrimaryStage();
             
-            primaryStage.setScene(scene);
+            stage.setScene(scene);
             // Title is the key-value pair defined in ResourceBundle
-            primaryStage.setTitle(rb.getString("title"));
-            primaryStage.getIcons().add(new Image(stream));            
-            primaryStage.show();
-            
-            // Give controller access to the main app            
-            AbstractController controller = loader.getController();
-            controller.setMainApp(mainApp);
-            controller.setDialogStage(primaryStage);
+            stage.setTitle(rb.getString("title"));
+            stage.getIcons().add(new Image(logoStream));            
+            stage.show();
             
         } catch(IOException e) {
             e.printStackTrace();
@@ -66,27 +63,21 @@ public class WindowsDisplay {
     }
     
     public static void displayScene(String FXMLPath,
-                                    Pane rootLayout,
-                                    Stage primaryStage,
-                                    String title,
-                                    InputStream stream,
-                                    MainApp mainApp) {
+                                    String title) {
+        Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource(FXMLPath));
-            rootLayout = (AnchorPane) loader.load();
+            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
+            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
+            root = loader.load();
             
-            Scene scene = new Scene(rootLayout);
+            Scene scene = new Scene(root);
+            Stage stage = MainApp.getPrimaryStage();
             
-            primaryStage.setScene(scene);
-            primaryStage.setTitle(title);
-            primaryStage.getIcons().add(new Image(stream));            
-            primaryStage.show();
-            
-            // Give controller access to the main app            
-            AbstractController controller = loader.getController();
-            controller.setMainApp(mainApp);
-            controller.setDialogStage(primaryStage);
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.getIcons().add(new Image(logoStream));            
+            stage.show();
             
         } catch(IOException e) {
             e.printStackTrace();

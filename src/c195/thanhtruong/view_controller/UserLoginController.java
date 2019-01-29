@@ -5,10 +5,8 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.AbstractController;
-import c195.thanhtruong.DBConnection;
-import c195.thanhtruong.Query;
-import c195.thanhtruong.WarningPopup;
+import c195.thanhtruong.service.DBConnection;
+import c195.thanhtruong.service.Query;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
@@ -46,6 +44,10 @@ public class UserLoginController extends AbstractController implements Initializ
     private PasswordField password;
     
     private ResourceBundle rb;
+    
+    public void showHome(){
+        WindowsDisplay.displayScene("Home.fxml", "Home");        
+    }
 
     @FXML
     void handleLogin(ActionEvent event) {
@@ -65,7 +67,7 @@ public class UserLoginController extends AbstractController implements Initializ
                                         "Username and password do not match!",
                                         "Please, login again!");
             } else {
-                getMainApp().showHome();
+                showHome();
             }
             DBConnection.closeConnection();
         } catch (Exception ex) {

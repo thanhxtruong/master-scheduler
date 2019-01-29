@@ -165,7 +165,7 @@
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@img/left.png" />
+                                    <Image url="@../../../resources/images/left.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -175,7 +175,7 @@
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@img/right.png" />
+                                    <Image url="@../../../resources/images/right.png" />
                                  </image>
                               </ImageView>
                            </graphic>

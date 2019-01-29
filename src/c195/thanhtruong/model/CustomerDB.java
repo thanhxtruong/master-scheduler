@@ -5,9 +5,9 @@
  */
 package c195.thanhtruong.model;
 
-import c195.thanhtruong.DBConnection;
-import c195.thanhtruong.Query;
-import c195.thanhtruong.WarningPopup;
+import c195.thanhtruong.service.DBConnection;
+import c195.thanhtruong.service.Query;
+import c195.thanhtruong.view_controller.WarningPopup;
 import java.sql.ResultSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

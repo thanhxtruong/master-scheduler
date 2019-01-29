@@ -5,7 +5,6 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.AbstractController;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;

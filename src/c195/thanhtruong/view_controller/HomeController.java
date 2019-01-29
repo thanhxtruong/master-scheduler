@@ -5,8 +5,6 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.AbstractController;
-import c195.thanhtruong.WindowsDisplay;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +31,7 @@ public class HomeController extends AbstractController implements Initializable 
 
     @FXML
     private Button closeHome;
-
+    
     @FXML
     void handleCalModButton(ActionEvent event) {
 
@@ -46,12 +44,7 @@ public class HomeController extends AbstractController implements Initializable 
 
     @FXML
     void handleCustModButton(ActionEvent event) {
-        WindowsDisplay.displayScene("view_controller/CustomerList.fxml",
-                                    getMainApp().getRootLayout(),
-                                    getDialogStage(),
-                                    "Customer Maintenance",
-                                    getMainApp().getLogoStream(),
-                                    getMainApp());
+        WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
     }
 
     @FXML

@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.CountryDB;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -64,7 +65,11 @@ public class AddCustomerController extends AbstractController implements Initial
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        
+        CountryDB countryDB = new CountryDB();
+        for (String item:countryDB.getListAsString()) {
+            System.out.println(item);
+        }
+        countrycbo.setItems(countryDB.getListAsString());
     }    
     
 }

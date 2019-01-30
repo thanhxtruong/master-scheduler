@@ -27,20 +27,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Name:" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Address 1:" GridPane.rowIndex="1" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Address 2:" GridPane.rowIndex="2" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="City:" GridPane.rowIndex="3" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Postal Code:" GridPane.rowIndex="4" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Country:" GridPane.rowIndex="5" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Phone:" GridPane.rowIndex="6" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Name:" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Address 1:" GridPane.rowIndex="1" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Address 2:" GridPane.rowIndex="2" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="City:" GridPane.rowIndex="3" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Postal Code:" GridPane.rowIndex="4" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Country:" GridPane.rowIndex="5" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Phone:" GridPane.rowIndex="6" />
             <TextField fx:id="customerName" GridPane.columnIndex="1" />
             <TextField fx:id="address1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="address2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="postalCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="phoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ComboBox prefHeight="31.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="countrycbo" prefHeight="31.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <ButtonBar layoutX="343.0" layoutY="477.0" prefHeight="40.0" prefWidth="200.0">

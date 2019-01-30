@@ -9,12 +9,16 @@ import c195.thanhtruong.MainApp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import static javafx.scene.input.KeyCode.E;
 import javafx.stage.Stage;
 
 /**
@@ -83,5 +87,40 @@ public class WindowsDisplay {
             e.printStackTrace();
         }
     }
+    
+//    public static void filterList(ObservableList unsortedList) {
+//        
+//        Predicate p = new Predicate() {
+//            @Override
+//            public boolean test(Object t) {
+//                return true;
+//            }
+//            
+//        };
+//        
+//        FilteredList filteredList = new FilteredList<>(unsortedList, p);
+//        
+//        ChangeListener listener = new ChangeListener() {
+//            @Override
+//            public void changed(ObservableValue observable,
+//                    Object oldValue,
+//                    Object newValue) {
+//                Predicate p2 = new Predicate() {
+//                    @Override
+//                    public boolean test(Object t) {
+//                        if(newValue.toString().isEmpty() || newValue.toString().equals(null)) {
+//                            return true;
+//                        }
+//                        
+//                        String lowerCaseFilter = newValue.toString().toLowerCase();
+//                        
+//                        
+//                    }
+//                    
+//                }
+//            }
+//            
+//        }
+//    }
   
 }

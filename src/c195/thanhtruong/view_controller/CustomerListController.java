@@ -128,7 +128,7 @@ public class CustomerListController extends AbstractController implements Initia
                     @Override
                     public boolean test(Customer customer) {
                         if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
-                        return true;
+                            return true;
                         }
                         
                         String lowerCaseFilter = newValue.toString().toLowerCase();

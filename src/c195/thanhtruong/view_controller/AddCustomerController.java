@@ -5,15 +5,20 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 
 /**
  * FXML Controller class
@@ -32,13 +37,13 @@ public class AddCustomerController extends AbstractController implements Initial
     private TextField address2;
 
     @FXML
-    private TextField city;
+    private ComboBox<String> cityCbo;
 
     @FXML
     private TextField postalCode;
 
     @FXML
-    private ComboBox<String> countrycbo;
+    private ComboBox<String> countryCbo;
 
     @FXML
     private TextField phoneNumber;
@@ -58,6 +63,13 @@ public class AddCustomerController extends AbstractController implements Initial
     void handleCancelAddCust(ActionEvent event) {
 
     }
+    
+    @FXML
+    void handleCountrySelected() {
+        ObservableList<StringProperty> cityList = FXCollections.observableArrayList();        
+        CityDB cityDB = new CityDB();
+        cityList = cityDB.get("US");
+    }
 
     /**
      * Initializes the controller class.
@@ -69,7 +81,7 @@ public class AddCustomerController extends AbstractController implements Initial
         for (String item:countryDB.getListAsString()) {
             System.out.println(item);
         }
-        countrycbo.setItems(countryDB.getListAsString());
+        countryCbo.setItems(countryDB.getListAsString());
     }    
     
 }

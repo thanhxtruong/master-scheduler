@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.InputMethodEvent;
 
 /**
@@ -64,15 +65,22 @@ public class AddCustomerController extends AbstractController implements Initial
 
     }
     
+    /*
+    Event Handler triggered when user selects a country from the combobox.
+    A new instance of CityDB is instantiated to retrieve the list of city for
+    the selected country and populate the City combobox with this list.
+    */
     @FXML
     void handleCountrySelected() {
-        ObservableList<StringProperty> cityList = FXCollections.observableArrayList();        
-        CityDB cityDB = new CityDB();
-        cityList = cityDB.get("US");
+        CityDB cityDB = new CityDB(countryCbo.getSelectionModel().getSelectedItem());
+        cityCbo.setItems(cityDB.getListAsString());
     }
 
     /**
      * Initializes the controller class.
+     * A new instance of the countryDB is instantiated to retrieve the list of
+     * all countries from the database.
+     * Populate the Country combobox with this list.
      */
     @Override
     public void initialize(URL url,
@@ -82,6 +90,9 @@ public class AddCustomerController extends AbstractController implements Initial
             System.out.println(item);
         }
         countryCbo.setItems(countryDB.getListAsString());
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Select a country first to enable this drop-down!");
+        cityCbo.setTooltip(tooltip);
     }    
     
 }

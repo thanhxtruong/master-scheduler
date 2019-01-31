@@ -5,6 +5,8 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.User;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.net.URL;
@@ -57,9 +59,10 @@ public class UserLoginController extends AbstractController implements Initializ
             
             String sqlStatement = "SELECT userName, password FROM user "
                                 + "WHERE userName = '" + username.getText() + "' "
-                                + "AND password = '" + password.getText() +"'";            
+                                + "AND password = '" + password.getText() +"'";
+            System.out.println(sqlStatement);
             Query.makeQuery(sqlStatement);
-            ResultSet result = Query.getResult();            
+            ResultSet result = Query.getResult();
             
             if (!result.isBeforeFirst()) {
                 WarningPopup.showAlert(getDialogStage(),
@@ -67,6 +70,9 @@ public class UserLoginController extends AbstractController implements Initializ
                                         "Username and password do not match!",
                                         "Please, login again!");
             } else {
+                result.first();
+                MainApp.getCurrentUser().setUserName(result.getString("userName"));
+                MainApp.getCurrentUser().setUserPassword(result.getString("password"));                
                 showHome();
             }
             DBConnection.closeConnection();

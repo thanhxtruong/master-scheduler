@@ -34,7 +34,17 @@ public class Customer {
                     String postalCode,
                     String country,
                     String phone) {
-        this.customerID.set(customerID);
+        this(customerName,address1,address2, city,postalCode,country,phone);
+        this.customerID.set(customerID);          
+    }
+    
+    public Customer(String customerName,
+                    String address1,
+                    String address2,
+                    String city,
+                    String postalCode,
+                    String country,
+                    String phone) {
         this.customerName.set(customerName);
         this.address1.set(address1);
         this.address2.set(address2);
@@ -42,12 +52,11 @@ public class Customer {
         this.postalCode.set(postalCode);
         this.country.set(country);
         this.phone.set(phone);
-    }   
-    
+    }
+
     public int getCustomerID() {
         return customerID.get();
     }
-
     public String getCustomerName() {
         return customerName.get();
     }

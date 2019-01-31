@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong;
 
+import c195.thanhtruong.model.User;
 import c195.thanhtruong.view_controller.WindowsDisplay;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,11 +22,16 @@ public class MainApp extends Application {
     
     static Stage primaryStage;
     private static ResourceBundle rb;
+    private static User currentUser = new User();
 
     public static Stage getPrimaryStage() {
         return primaryStage;
-    }   
-                    
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }  
+                        
     @Override
     public void start(Stage primaryStage) {
         

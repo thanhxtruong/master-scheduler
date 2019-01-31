@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
@@ -22,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -71,7 +73,10 @@ public class CustomerListController extends AbstractController implements Initia
     
     @FXML
     void handleAddCust(ActionEvent event) {
-        showAddCustScreen();        
+        Stage ownerStage = MainApp.getPrimaryStage();
+        WindowsDisplay.displayModalWindow("AddCustomer.fxml",
+                                        "Add Customer",
+                                        ownerStage); 
     }
 
     @FXML
@@ -81,17 +86,15 @@ public class CustomerListController extends AbstractController implements Initia
 
     @FXML
     void handleDeleteCust(ActionEvent event) {
-
+        
     }
 
     @FXML
     void handleModifyCust(ActionEvent event) {
-
+        
+        WindowsDisplay.displayScene("UpdateCustomer.fxml", "Edit Customer");
     }
     
-    private void showAddCustScreen() {
-        WindowsDisplay.displayScene("AddCustomer.fxml", "Add Customer");
-    }
     private void displayCustTable(CustomerDB custDB) {
         custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
         custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());

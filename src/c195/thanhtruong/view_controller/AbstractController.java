@@ -7,6 +7,8 @@ package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
 import java.io.InputStream;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 /**
@@ -43,6 +45,33 @@ public abstract class AbstractController {
 
     public InputStream getLogoStream() {
         return logoStream;
+    }
+    
+    public void setExitConfirmation() {
+        /*
+        Set exit confirmation for the modal Window
+        The setOnCloseRequest() method of the Window class, which take an event
+        as an argument is used.
+        This method is called when there is an external request to close the Window.
+        The installed handler will prevent window closing by consuming the received event,
+        i.e. invoke the exitConfirmation() method.
+        An instance of the EventHandler functional interface is created for the event.
+        */
+        EventHandler event = new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                event.consume();
+                WarningPopup.exitConfirmation(dialogStage);
+            }
+            
+        };        
+        
+        dialogStage.setOnCloseRequest(event);
+//        dialogStage.setOnCloseRequest(evt -> {
+//                evt.consume();
+//                WarningPopup.exitConfirmation(dialogStage);
+//        });
+        
     }
         
 }

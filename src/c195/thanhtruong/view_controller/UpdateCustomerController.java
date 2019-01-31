@@ -11,7 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -21,23 +23,41 @@ import javafx.scene.control.Label;
 public class UpdateCustomerController extends AbstractController implements Initializable {
 
     @FXML
-    private Label customerName;
+    private TextField customerName;
+
     @FXML
-    private Label address1;
+    private TextField address1;
+
     @FXML
-    private Label address2;
+    private TextField address2;
+
     @FXML
-    private Label city;
+    private TextField postalCode;
+
     @FXML
-    private Label postalCode;
+    private TextField phoneNumber;
+
     @FXML
-    private Label country;
+    private ComboBox<String> countryCbo;
+
     @FXML
-    private Label phoneNumber;
+    private ComboBox<String> cityCbo;
+
     @FXML
-    private Button addCustomerCancel;
+    private Button cancelUpdateButton;
+
     @FXML
-    private Button addCustomerSave;
+    private Button saveUpdateButton;
+
+    @FXML
+    void handleCancelUpdate(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleSaveUpdate(ActionEvent event) {
+        
+    }
 
     /**
      * Initializes the controller class.
@@ -45,15 +65,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
-    }    
-
-    @FXML
-    private void handleCancelAddCust(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleSaveAddCust(ActionEvent event) {
+        
     }
     
 }

@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -76,7 +77,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleCancelAddCust(ActionEvent event) {
-
+        WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
     }
     
     /*
@@ -128,10 +129,8 @@ public class AddCustomerController extends AbstractController implements Initial
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
+        
         CountryDB countryDB = new CountryDB();
-        for (String item:countryDB.getListAsString()) {
-            System.out.println(item);
-        }
         countryCbo.setItems(countryDB.getListAsString());
         Tooltip tooltip = new Tooltip();
         tooltip.setText("Select a country first to enable this drop-down!");

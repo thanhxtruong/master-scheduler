@@ -17,8 +17,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import static javafx.scene.input.KeyCode.E;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -30,7 +32,8 @@ import javafx.stage.Stage;
  *      language translator used (currently used for Login FXML only)
  *      2. The method WITHOUT ResourceBundle works the same way, except there is
  *      no ResourceBundle
- * 
+ * The displayModalWindow() static method is used to display a Window on top of
+ * the current active Window.
  * @param rb (optional) ResourceBundle for the language_files
  * @param rootLayout The layout container for the FXML
  * @param primaryStage The active stage in mainApp
@@ -66,8 +69,7 @@ public class WindowsDisplay {
         }
     }
     
-    public static void displayScene(String FXMLPath,
-                                    String title) {
+    public static void displayScene(String FXMLPath, String title) {
         Parent root = null;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -76,11 +78,11 @@ public class WindowsDisplay {
             root = loader.load();
             
             Scene scene = new Scene(root);
-            Stage stage = MainApp.getPrimaryStage();
+            Stage stage = MainApp.getPrimaryStage();            
             
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.getIcons().add(new Image(logoStream));            
+            stage.getIcons().add(new Image(logoStream));
             stage.show();
             
         } catch(IOException e) {
@@ -88,6 +90,37 @@ public class WindowsDisplay {
         }
     }
     
+    public static void displayModalWindow(String FXMLPath, String title, Stage ownerStage) {
+        Parent root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
+            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
+            root = loader.load();
+            
+            // Create a new Stage
+            Stage newStage = new Stage();
+            System.out.println("ownerStage is " + ownerStage);
+            System.out.println("newStage from WindowsDisplay is " + newStage);
+            newStage.setTitle(title);
+            newStage.getIcons().add(new Image(logoStream));
+            newStage.initModality(Modality.WINDOW_MODAL);
+            newStage.initOwner(ownerStage);            
+            
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);                        
+            
+            AbstractController controller = loader.getController();
+            controller.setDialogStage(newStage);
+            controller.setExitConfirmation();
+            
+            newStage.showAndWait();
+            
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+            
 //    public static void filterList(ObservableList unsortedList) {
 //        
 //        Predicate p = new Predicate() {

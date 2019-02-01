@@ -98,6 +98,8 @@ public class CustomerListController extends AbstractController implements Initia
     @FXML
     void handleModifyCust(ActionEvent event) {
         Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
+        Stage currentStage = getDialogStage();
+        
         if (selectedCust != null) {
             Parent root = null;
             try {
@@ -111,7 +113,7 @@ public class CustomerListController extends AbstractController implements Initia
                 newStage.setTitle("Edit Customer");
                 newStage.getIcons().add(new Image(logoStream));
                 newStage.initModality(Modality.WINDOW_MODAL);
-                newStage.initOwner(getDialogStage());            
+                newStage.initOwner(currentStage);            
 
                 Scene scene = new Scene(root);
                 newStage.setScene(scene);                        

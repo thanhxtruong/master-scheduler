@@ -33,17 +33,23 @@ public class CustomerDB {
             // Connect to the DB
             DBConnection.makeConnection();
             
-            String sqlStatement = "SELECT customerId, customerName, address, address2, city, postalCode, country, phone\n" +
-                                "FROM customer, address, city, country WHERE customer.addressId = address.addressId\n" +
-                                "AND address.cityId = city.cityId\n" +
-                                "AND city.countryID = country.countryId " +
-                                "ORDER BY customerId";
+            String sqlStatement = "SELECT customerId, customerName, " +
+                "customer.addressId, address, address2,  postalCode,  " +
+                "phone, address.cityId, city, country\n" +
+                "FROM customer\n" +
+                "INNER JOIN address\n" +
+                "ON customer.addressId = address.addressId\n" +
+                "INNER JOIN city\n" +
+                "ON address.cityId = city.cityId\n" +
+                "INNER JOIN country\n" +
+                "ON city.countryId = country.countryId";
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();            
             
             while (result.next()) {
                 Customer tempCust = new Customer(result.getInt("customerId"),
                                     result.getString("customerName"),
+                                    result.getInt("addressId"),
                                     result.getString("address"),
                                     result.getString("address2"),
                                     result.getString("city"),
@@ -107,6 +113,58 @@ public class CustomerDB {
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }      
+    }
+    
+    public void updateDB(Customer newCust, Customer selectedCust, boolean isAddressChanged, boolean isCustNameChanged) {
+        int cityId, addressId;
+        String sqlStatement;
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            if(isAddressChanged) {
+                // Get the cityId for the new city
+                sqlStatement = "SELECT cityId FROM city WHERE city = '" + 
+                                    newCust.getCity() + "'";
+                System.out.println(sqlStatement);
+                Query.makeQuery(sqlStatement);
+                ResultSet result = Query.getResult();            
+                result.next();
+                cityId = result.getInt("cityId");
+
+                // Get the current addressId for the selected customer
+//                sqlStatement = "SELECT addressId FROM customer WHERE customerId = '" + 
+//                                    newCust.getCustomerID() + "'";
+//                System.out.println(sqlStatement);
+//                Query.makeQuery(sqlStatement);
+//                result = Query.getResult();            
+//                result.next();
+//                addressId = result.getInt("addressId");
+
+                // Update address
+                sqlStatement = "UPDATE address\n" +
+                                "SET address = '" + newCust.getAddress1() + "',\n" +
+                                "address2 = '" + newCust.getAddress2() + "',\n" +
+                                "cityId = " + cityId + ",\n" +
+                                "postalCode = '" + newCust.getPostalCode() + "',\n" +
+                                "phone = '" + newCust.getPhone() + "',\n" +
+                                "lastUpdate = '" + now() + "',\n" +
+                                "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
+                                "WHERE addressId = " + selectedCust.getAddressId();
+                System.out.println(sqlStatement);
+                Query.makeQuery(sqlStatement);
+            }
+            
+            if(isCustNameChanged) {
+                sqlStatement = "UPDATE customer\n" +
+                            "SET customerName = '" + newCust.getCustomerName() + "'\n" +
+                            "WHERE customerId = " + selectedCust.getCustomerID();
+            }
+            
+            DBConnection.closeConnection();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
     }
            
     public boolean addCustomer(Customer customer) {

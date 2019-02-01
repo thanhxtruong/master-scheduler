@@ -8,6 +8,7 @@ package c195.thanhtruong.view_controller;
 import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -59,18 +60,47 @@ public class UpdateCustomerController extends AbstractController implements Init
 
     @FXML
     private Button saveUpdateButton;
+    
+    private Customer tempCust;
+    private Customer newCust;
+    private boolean isAddressChanged = false;
+    private boolean isNameChanged = false;
 
     @FXML
     void handleCancelUpdate(ActionEvent event) {
 
     }
-
+    
     @FXML
     void handleSaveUpdate(ActionEvent event) {
-        
+        if(Customer.isInputValid(customerName.getText(),address1.getText(),
+                    currentCountry.getText(), currentCity.getText(),
+                    postalCode.getText(), phoneNumber.getText())) {
+            newCust = new Customer(customerName.getText(),
+                    address1.getText(),
+                    address2.getText(),
+                    cityCbo.getSelectionModel().getSelectedItem(),
+                    postalCode.getText(),
+                    countryCbo.getSelectionModel().getSelectedItem(),
+                    phoneNumber.getText());
+            
+            CustomerDB custDB = new CustomerDB();
+            custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
+            
+            getDialogStage().close();
+//            WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+        } else {
+            WarningPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    "Missing input",
+                                    "Please, fill in the missing input");
+        }
     }
     
-     @FXML
+    /*
+    Display warning when user clicks on City combobox without a new country selected.
+    */
+    @FXML
     void handleCityClicked(MouseEvent event) {
         if (countryCbo.getSelectionModel().getSelectedIndex() == -1) {
             WarningPopup.showAlert(getDialogStage(), "Attention!",
@@ -80,17 +110,26 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     @FXML
     void handleCitySelected(ActionEvent event) {
+        isAddressChanged = true;
         currentCity.setText(cityCbo.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void handleCountrySelected(ActionEvent event) {
+        isAddressChanged = true;
         currentCountry.setText(countryCbo.getSelectionModel().getSelectedItem());
+        currentCity.clear();
         CityDB cityDB = new CityDB(countryCbo.getSelectionModel().getSelectedItem());
         cityCbo.setItems(cityDB.getListAsString());
     }
     
+    @FXML
+    public void handleNameChange() {
+        isNameChanged = true;
+    }
+    
     public void displayCustData(Customer selectedCust) {
+        tempCust = selectedCust;
         customerName.setText(selectedCust.getCustomerName());
         address1.setText(selectedCust.getAddress1());
         address2.setText(selectedCust.getAddress2());

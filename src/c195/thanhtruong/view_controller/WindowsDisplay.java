@@ -83,6 +83,9 @@ public class WindowsDisplay {
             stage.setScene(scene);
             stage.setTitle(title);
             stage.getIcons().add(new Image(logoStream));
+            
+            AbstractController controller = loader.getController();
+            controller.setDialogStage(stage);
             stage.show();
             
         } catch(IOException e) {

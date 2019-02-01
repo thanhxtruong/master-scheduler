@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.model;
 
+import c195.thanhtruong.view_controller.WarningPopup;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -52,6 +53,31 @@ public class Customer {
         this.postalCode.set(postalCode);
         this.country.set(country);
         this.phone.set(phone);
+    }
+    
+    public static boolean isInputValid(String customerName,
+                                        String address1,
+                                        String country,
+                                        String city,
+                                        String postalCode,
+                                        String phone){
+        String errorMessage = "";
+        
+        if(customerName == null ||customerName.length() == 0 ||
+            address1 == null || address1.length() == 0 ||
+            country == null || country.length() == 0 ||
+            city == null || city.length() == 0 ||    
+            postalCode == null || postalCode.length() == 0 ||
+            phone == null || phone.length() == 0) {
+            
+            errorMessage = "Missing input!";
+        }        
+        
+        if(errorMessage.length() == 0){
+            return true;
+        } else {             
+            return false;
+        }
     }
 
     public int getCustomerID() {

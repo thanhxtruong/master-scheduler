@@ -37,8 +37,7 @@ public class CustomerDB {
                                 "FROM customer, address, city, country WHERE customer.addressId = address.addressId\n" +
                                 "AND address.cityId = city.cityId\n" +
                                 "AND city.countryID = country.countryId " +
-                                "ORDER BY customerId";            
-            System.out.println(sqlStatement);
+                                "ORDER BY customerId";
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();            
             
@@ -69,7 +68,6 @@ public class CustomerDB {
             String sqlStatement = "SELECT cityId FROM country, city WHERE country.country = '" +
                                 country + "' AND city.city = '" +
                                 city + "'";
-            System.out.println(sqlStatement);
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();
             result.next();
@@ -87,7 +85,7 @@ public class CustomerDB {
                         newCust.getPhone() + "', '" + 
                         now() + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
                         now() + "', '" + MainApp.getCurrentUser().getUserName() + "')";
-            System.out.println(sqlStatement);
+            
             Query.makeQuery(sqlStatement);
             
             // Get the addressId (FK) to insert into the customer table
@@ -102,7 +100,7 @@ public class CustomerDB {
                 "VALUES ('" + newCust.getCustomerName() + "', " + ID + ", 1, '" +
                 now() + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
                 now() + "', '" + MainApp.getCurrentUser().getUserName() + "')";
-            System.out.println(sqlStatement);
+            
             Query.makeQuery(sqlStatement);
             
             DBConnection.closeConnection();

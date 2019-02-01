@@ -5,7 +5,6 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
@@ -15,12 +14,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -58,7 +55,10 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(isInputValid()) {
+        if(Customer.isInputValid(customerName.getText(),address1.getText(),
+                    countryCbo.getSelectionModel().getSelectedItem(),
+                    cityCbo.getSelectionModel().getSelectedItem(),
+                    postalCode.getText(), phoneNumber.getText())) {
             Customer newCust = new Customer(customerName.getText(),
                     address1.getText(),
                     address2.getText(),
@@ -72,12 +72,17 @@ public class AddCustomerController extends AbstractController implements Initial
                             cityCbo.getSelectionModel().getSelectedItem(),
                             newCust);
             WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+        } else {
+            WarningPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    "Missing input",
+                                    "Please, fill in the missing input");
         }
     }
 
     @FXML
     void handleCancelAddCust(ActionEvent event) {
-        WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+        WarningPopup.exitConfirmation(getDialogStage());
     }
     
     /*
@@ -86,38 +91,21 @@ public class AddCustomerController extends AbstractController implements Initial
     the selected country and populate the City combobox with this list.
     */
     @FXML
-    void handleCountrySelected() {
+    void handleCountrySelected() {        
         CityDB cityDB = new CityDB(countryCbo.getSelectionModel().getSelectedItem());
         cityCbo.setItems(cityDB.getListAsString());
     }
     
-    private boolean isInputValid(){
-        String errorMessage = "";
-        
-        if(customerName.getText() == null ||
-            customerName.getText().length() == 0 ||
-            address1.getText() == null ||
-            address1.getText().length() == 0 ||
-            countryCbo.getSelectionModel().getSelectedItem() == null ||
-            countryCbo.getSelectionModel().getSelectedItem().length() == 0 ||
-            cityCbo.getSelectionModel().getSelectedItem() == null ||
-            cityCbo.getSelectionModel().getSelectedItem().length() == 0 ||    
-            postalCode.getText() == null ||
-            postalCode.getText().length() == 0 ||
-            phoneNumber.getText() == null ||
-            phoneNumber.getText().length() == 0) {
-            errorMessage = "Missing input!";
+    /*
+    Event handler trigger when user click to select City combobox.
+    The alert is invoked only when user has not selected a country yet.
+    */
+    @FXML
+    void handleCitySelected() {
+        if (countryCbo.getSelectionModel().getSelectedIndex() == -1) {
+            WarningPopup.showAlert(getDialogStage(), "Attention!",
+                                    "Country not selected!", "Please, select a country first!");
         }        
-        
-        if(errorMessage.length() == 0){
-            return true;
-        } else {
-            WarningPopup.showAlert(getDialogStage(),
-                                    "Warning",
-                                    "Missing input",
-                                    "Please, fill in the missing input"); 
-            return false;
-        }
     }
 
     /**

@@ -99,9 +99,7 @@ public class WindowsDisplay {
             root = loader.load();
             
             // Create a new Stage
-            Stage newStage = new Stage();
-            System.out.println("ownerStage is " + ownerStage);
-            System.out.println("newStage from WindowsDisplay is " + newStage);
+            Stage newStage = new Stage();            
             newStage.setTitle(title);
             newStage.getIcons().add(new Image(logoStream));
             newStage.initModality(Modality.WINDOW_MODAL);

@@ -43,8 +43,7 @@ public class WarningPopup {
                                 "Are you sure you want to exit?",
                                 ButtonType.YES, ButtonType.NO);
         exitConfirmation.setHeaderText("Confirm Exit");
-        if(exitConfirmation.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){
-            System.out.println("newStage from exitConfirmation is " + currentStage);
+        if(exitConfirmation.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){            
             currentStage.close();
             return true;
         } else {

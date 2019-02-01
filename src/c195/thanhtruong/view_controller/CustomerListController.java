@@ -8,6 +8,8 @@ package c195.thanhtruong.view_controller;
 import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -18,11 +20,16 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -73,10 +80,9 @@ public class CustomerListController extends AbstractController implements Initia
     
     @FXML
     void handleAddCust(ActionEvent event) {
-        Stage ownerStage = MainApp.getPrimaryStage();
         WindowsDisplay.displayModalWindow("AddCustomer.fxml",
                                         "Add Customer",
-                                        ownerStage); 
+                                        MainApp.getPrimaryStage()); 
     }
 
     @FXML
@@ -91,8 +97,39 @@ public class CustomerListController extends AbstractController implements Initia
 
     @FXML
     void handleModifyCust(ActionEvent event) {
-        
-        WindowsDisplay.displayScene("UpdateCustomer.fxml", "Edit Customer");
+        Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
+        if (selectedCust != null) {
+            Parent root = null;
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(WindowsDisplay.class.getResource("UpdateCustomer.fxml"));
+                InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
+                root = loader.load();
+
+                // Create a new Stage
+                Stage newStage = new Stage();            
+                newStage.setTitle("Edit Customer");
+                newStage.getIcons().add(new Image(logoStream));
+                newStage.initModality(Modality.WINDOW_MODAL);
+                newStage.initOwner(getDialogStage());            
+
+                Scene scene = new Scene(root);
+                newStage.setScene(scene);                        
+
+                UpdateCustomerController controller = loader.getController();
+                controller.setDialogStage(newStage);
+                controller.setExitConfirmation();
+                controller.displayCustData(selectedCust);
+
+                newStage.showAndWait();
+
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            WarningPopup.showAlert(getDialogStage(), "Attention",
+                    "No customer selected!", "Please, select a customer to modify!");
+        }
     }
     
     private void displayCustTable(CustomerDB custDB) {

@@ -39,8 +39,10 @@
             <TextField fx:id="address2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="postalCode" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="phoneNumber" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ComboBox fx:id="countryCbo" prefWidth="220.0" promptText="Select Country" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cityCbo" prefWidth="220.0" promptText="Select City" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="countryCbo" onAction="#handleCountrySelected" prefHeight="31.0" prefWidth="161.0" promptText="Select Country" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cityCbo" onAction="#handleCitySelected" onMouseClicked="#handleCityClicked" prefHeight="31.0" prefWidth="161.0" promptText="Select City" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <TextField fx:id="currentCountry" maxWidth="170.0" prefHeight="33.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="currentCity" maxWidth="170.0" prefHeight="33.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <ButtonBar layoutX="343.0" layoutY="477.0" prefHeight="40.0" prefWidth="200.0">

@@ -6,7 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
-import c195.thanhtruong.model.User;
+import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.net.URL;
@@ -48,7 +48,11 @@ public class UserLoginController extends AbstractController implements Initializ
     private ResourceBundle rb;
     
     public void showHome(){
-        WindowsDisplay.displayScene("Home.fxml", "Home");        
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("Home.fxml")
+                .setTitle("Home")
+                .build();
+        windowDisplay.displayScene();   
     }
 
     @FXML
@@ -72,7 +76,8 @@ public class UserLoginController extends AbstractController implements Initializ
             } else {
                 result.first();
                 MainApp.getCurrentUser().setUserName(result.getString("userName"));
-                MainApp.getCurrentUser().setUserPassword(result.getString("password"));                
+                MainApp.getCurrentUser().setUserPassword(result.getString("password"));
+                getDialogStage().close();
                 showHome();
             }
             DBConnection.closeConnection();
@@ -88,11 +93,17 @@ public class UserLoginController extends AbstractController implements Initializ
     public void initialize(URL url,
             ResourceBundle rb) {
         this.rb = rb;
-        headerLabel.setText(rb.getString("header"));
-        userNameLabel.setText(rb.getString("usernameLabel"));
+        
+        headerLabel.setText(this.rb.getString("header"));
+        userNameLabel.setText(this.rb.getString("usernameLabel"));
         username.setPromptText("prompt");
-        pwLabel.setText(rb.getString("pwLabel"));
-        loginButton.setText(rb.getString("button"));
+        pwLabel.setText(this.rb.getString("pwLabel"));
+        loginButton.setText(this.rb.getString("button"));
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -6,20 +6,14 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Customer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import static javafx.scene.input.KeyCode.E;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -43,79 +37,61 @@ import javafx.stage.Stage;
  * 
  * @author thanhtruong
  */
-public class WindowsDisplay {
+public class WindowsDisplay extends ControllerFactory{
+    ResourceBundle rb;
+    String FXMLPath;
+    String title;
+    Stage ownerStage;
+    Customer customer;
+
+    public WindowsDisplay(ResourceBundle rb, String FXMLPath, String title,
+                        Stage ownerStage, Customer customer) {
+        this.rb = rb;
+        this.FXMLPath = FXMLPath;
+        this.title = title;
+        this.ownerStage = ownerStage;
+        this.customer = customer;
+    }
         
-    public static void displayScene(ResourceBundle rb,
-                                    String FXMLPath) {
+    public void displayScene() {
         Parent root = null;
+        Stage stage;
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setResources(rb);	    
-            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
+            if (rb != null) {                
+                loader.setResources(rb);
+            }	    
+            loader.setLocation(WindowsDisplay.class.getResource(this.FXMLPath));
             InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
             root = loader.load();
             
             Scene scene = new Scene(root);
-            Stage stage = MainApp.getPrimaryStage();
+            if (ownerStage != null) {
+                stage = new Stage();
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(ownerStage);
+            } else {
+                stage = MainApp.getPrimaryStage();
+            }            
             
             stage.setScene(scene);
             // Title is the key-value pair defined in ResourceBundle
-            stage.setTitle(rb.getString("title"));
-            stage.getIcons().add(new Image(logoStream));            
-            stage.show();
+            if (rb != null) {                
+                stage.setTitle(rb.getString("title"));
+            } else {
+                stage.setTitle(this.title);
+            }
             
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void displayScene(String FXMLPath, String title) {
-        Parent root = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
-            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
-            root = loader.load();
-            
-            Scene scene = new Scene(root);
-            Stage stage = MainApp.getPrimaryStage();            
-            
-            stage.setScene(scene);
-            stage.setTitle(title);
             stage.getIcons().add(new Image(logoStream));
             
             AbstractController controller = loader.getController();
             controller.setDialogStage(stage);
-            stage.show();
-            
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void displayModalWindow(String FXMLPath, String title, Stage ownerStage) {
-        Parent root = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(WindowsDisplay.class.getResource(FXMLPath));
-            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
-            root = loader.load();
-            
-            // Create a new Stage
-            Stage newStage = new Stage();            
-            newStage.setTitle(title);
-            newStage.getIcons().add(new Image(logoStream));
-            newStage.initModality(Modality.WINDOW_MODAL);
-            newStage.initOwner(ownerStage);            
-            
-            Scene scene = new Scene(root);
-            newStage.setScene(scene);                        
-            
-            AbstractController controller = loader.getController();
-            controller.setDialogStage(newStage);
             controller.setExitConfirmation();
+            if (customer != null) {
+                controller.displayCustData(customer);
+            }
             
-            newStage.showAndWait();
+            stage.show();
             
         } catch(IOException e) {
             e.printStackTrace();

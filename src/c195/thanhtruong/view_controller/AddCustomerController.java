@@ -71,7 +71,12 @@ public class AddCustomerController extends AbstractController implements Initial
             custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
                             cityCbo.getSelectionModel().getSelectedItem(),
                             newCust);
-            WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+            
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CustomerList.fxml")
+                .setTitle("Customer Maintenance")
+                .build();
+            windowDisplay.displayScene();
         } else {
             WarningPopup.showAlert(getDialogStage(),
                                     "Warning",
@@ -124,5 +129,10 @@ public class AddCustomerController extends AbstractController implements Initial
         tooltip.setText("Select a country first to enable this drop-down!");
         cityCbo.setTooltip(tooltip);
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        
+    }
     
 }

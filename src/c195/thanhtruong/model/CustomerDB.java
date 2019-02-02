@@ -17,7 +17,8 @@ import javafx.collections.ObservableList;
  *
  * @author thanhtruong
  */
-public class CustomerDB {
+public class CustomerDB{
+    
     private static ObservableList<Customer> customerList;
 
     public CustomerDB() {
@@ -27,7 +28,7 @@ public class CustomerDB {
     public ObservableList<Customer> getCustomerList() {
         return customerList;
     }
-        
+            
     public void downloadCustDB() {
         try {
             // Connect to the DB
@@ -79,7 +80,6 @@ public class CustomerDB {
             result.next();
             
             ID = result.getInt("cityId");
-            System.out.println(ID);
             
             // Insert the new customer into the DB
             sqlStatement = "INSERT INTO address " +
@@ -109,6 +109,8 @@ public class CustomerDB {
             
             Query.makeQuery(sqlStatement);
             
+            downloadCustDB();
+            
             DBConnection.closeConnection();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -126,20 +128,10 @@ public class CustomerDB {
                 // Get the cityId for the new city
                 sqlStatement = "SELECT cityId FROM city WHERE city = '" + 
                                     newCust.getCity() + "'";
-                System.out.println(sqlStatement);
                 Query.makeQuery(sqlStatement);
                 ResultSet result = Query.getResult();            
                 result.next();
                 cityId = result.getInt("cityId");
-
-                // Get the current addressId for the selected customer
-//                sqlStatement = "SELECT addressId FROM customer WHERE customerId = '" + 
-//                                    newCust.getCustomerID() + "'";
-//                System.out.println(sqlStatement);
-//                Query.makeQuery(sqlStatement);
-//                result = Query.getResult();            
-//                result.next();
-//                addressId = result.getInt("addressId");
 
                 // Update address
                 sqlStatement = "UPDATE address\n" +
@@ -151,7 +143,6 @@ public class CustomerDB {
                                 "lastUpdate = '" + now() + "',\n" +
                                 "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
                                 "WHERE addressId = " + selectedCust.getAddressId();
-                System.out.println(sqlStatement);
                 Query.makeQuery(sqlStatement);
             }
             
@@ -161,22 +152,38 @@ public class CustomerDB {
                             "WHERE customerId = " + selectedCust.getCustomerID();
             }
             
+            downloadCustDB();
+            
             DBConnection.closeConnection();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
-           
+    
     public boolean addCustomer(Customer customer) {
         customerList.add(customer);
         return true;
     }
     
-    public boolean updateCustomer(Customer customer) {
-        return true;
-    }
-    
     public boolean deleteCustomer(Customer customer) {
+        String sqlStatement;
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            sqlStatement = "DELETE FROM address, customer\n" +
+                            "USING customer\n" +
+                            "INNER JOIN address\n" +
+                            "WHERE customerId = " + customer.getCustomerID() + 
+                            " AND address.addressId = " + customer.getAddressId();
+            Query.makeQuery(sqlStatement);
+            
+            downloadCustDB();
+            
+            DBConnection.closeConnection();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
         return true;
     }
 }

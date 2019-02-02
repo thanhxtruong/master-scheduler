@@ -11,6 +11,7 @@ import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,7 +69,12 @@ public class UpdateCustomerController extends AbstractController implements Init
 
     @FXML
     void handleCancelUpdate(ActionEvent event) {
-
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CustomerList.fxml")
+                .setTitle("Customer Maintenance")
+                .build();
+        windowDisplay.displayScene();
     }
     
     @FXML
@@ -87,8 +93,11 @@ public class UpdateCustomerController extends AbstractController implements Init
             CustomerDB custDB = new CustomerDB();
             custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
             
-            getDialogStage().close();
-//            WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CustomerList.fxml")
+                .setTitle("Customer Maintenance")
+                .build();
+            windowDisplay.displayScene();
         } else {
             WarningPopup.showAlert(getDialogStage(),
                                     "Warning",
@@ -126,10 +135,12 @@ public class UpdateCustomerController extends AbstractController implements Init
     @FXML
     public void handleNameChange() {
         isNameChanged = true;
-    }
+    }    
     
+    @Override
     public void displayCustData(Customer selectedCust) {
         tempCust = selectedCust;
+        customerName.setText("Test");
         customerName.setText(selectedCust.getCustomerName());
         address1.setText(selectedCust.getAddress1());
         address2.setText(selectedCust.getAddress2());
@@ -151,7 +162,6 @@ public class UpdateCustomerController extends AbstractController implements Init
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        
     }
     
 }

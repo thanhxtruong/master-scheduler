@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -78,21 +79,42 @@ public class CustomerListController extends AbstractController implements Initia
     @FXML
     private Button closeButton;
     
+    private CustomerDB custDB;
+    
     @FXML
     void handleAddCust(ActionEvent event) {
-        WindowsDisplay.displayModalWindow("AddCustomer.fxml",
-                                        "Add Customer",
-                                        MainApp.getPrimaryStage()); 
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("AddCustomer.fxml")
+                .setTitle("Add Customer")
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML
     void handleClose(ActionEvent event) {
-
+        WarningPopup.exitConfirmation(getDialogStage());
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("Home.fxml")
+                .setTitle("Home")
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML
     void handleDeleteCust(ActionEvent event) {
+        Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
+        Stage currentStage = getDialogStage();
         
+        if (selectedCust != null) {
+            custDB.deleteCustomer(selectedCust);
+            custDB.downloadCustDB();
+        } else {
+            WarningPopup.showAlert(getDialogStage(), "Attention",
+                    "No customer selected!", "Please, select a customer to modify!");
+        }
+        displayCustTable(custDB);
     }
 
     @FXML
@@ -101,39 +123,17 @@ public class CustomerListController extends AbstractController implements Initia
         Stage currentStage = getDialogStage();
         
         if (selectedCust != null) {
-            Parent root = null;
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(WindowsDisplay.class.getResource("UpdateCustomer.fxml"));
-                InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
-                root = loader.load();
-
-                // Create a new Stage
-                Stage newStage = new Stage();            
-                newStage.setTitle("Edit Customer");
-                newStage.getIcons().add(new Image(logoStream));
-                newStage.initModality(Modality.WINDOW_MODAL);
-                newStage.initOwner(currentStage);            
-
-                Scene scene = new Scene(root);
-                newStage.setScene(scene);                        
-
-                UpdateCustomerController controller = loader.getController();
-                controller.setDialogStage(newStage);
-                controller.setExitConfirmation();
-                controller.displayCustData(selectedCust);
-
-                newStage.showAndWait();
-
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("UpdateCustomer.fxml")
+                .setTitle("Update Customer Information")
+                .setCustomer(selectedCust)
+                .build();
+            windowDisplay.displayScene();
         } else {
             WarningPopup.showAlert(getDialogStage(), "Attention",
                     "No customer selected!", "Please, select a customer to modify!");
         }
     }
-    
     private void displayCustTable(CustomerDB custDB) {
         custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
         custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());
@@ -198,10 +198,15 @@ public class CustomerListController extends AbstractController implements Initia
     public void initialize(URL url,
             ResourceBundle rb) {
         
-        CustomerDB custDB = new CustomerDB();
+        custDB = new CustomerDB();
         custDB.downloadCustDB();
         displayCustTable(custDB);
         
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

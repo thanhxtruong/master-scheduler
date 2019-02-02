@@ -5,7 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.model.CustomerDB;
+import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,17 +34,27 @@ public class HomeController extends AbstractController implements Initializable 
     
     @FXML
     void handleCalModButton(ActionEvent event) {
-
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CalendarByCust.fxml")
+                .setTitle("Appointments")
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML
     void handleCloseHome(ActionEvent event) {
-
+        WarningPopup.exitConfirmation(getDialogStage());
+        getDialogStage().close();
     }
 
     @FXML
     void handleCustModButton(ActionEvent event) {
-        WindowsDisplay.displayScene("CustomerList.fxml", "Customer Maintenance");
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CustomerList.fxml")
+                .setTitle("Customer Maintenance")
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML
@@ -60,5 +70,10 @@ public class HomeController extends AbstractController implements Initializable 
             ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/WindowsDisplay.java</file>
-            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/HomeController.java</file>
+            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/DisplayTableView.java</file>
+            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/WindowsDisplay.java</file>
             <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/CustomerListController.java</file>
+            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/UpdateCustomerController.java</file>
+            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/WindowBuilder.java</file>
             <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/MainApp.java</file>
-            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/model/Customer.java</file>
+            <file>file:/C:/Users/thanhtruong/Documents/NetBeansProjects/C195-ThanhTruong/src/c195/thanhtruong/view_controller/AddCustomerController.java</file>
         </group>
     </open-files>
 </project-private>

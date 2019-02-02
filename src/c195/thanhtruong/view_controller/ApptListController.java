@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -67,6 +68,11 @@ public class ApptListController extends AbstractController implements Initializa
             ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
     

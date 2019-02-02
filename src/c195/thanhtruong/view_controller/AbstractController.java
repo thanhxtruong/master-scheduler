@@ -6,7 +6,10 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.CustomerDB;
 import java.io.InputStream;
+import java.util.function.Function;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -22,10 +25,13 @@ import javafx.stage.Stage;
  * 
  * @author thanhtruong
  */
-public abstract class AbstractController {
+public abstract class AbstractController extends ControllerFactory {
     private MainApp mainApp;
     private Stage dialogStage;
+    private Customer selectedCust;
     final InputStream logoStream = getClass().getResourceAsStream("logo.png");
+    
+    public abstract void displayCustData(Customer selectedCust);
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

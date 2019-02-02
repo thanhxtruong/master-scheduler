@@ -6,6 +6,7 @@
 package c195.thanhtruong;
 
 import c195.thanhtruong.model.User;
+import c195.thanhtruong.view_controller.WindowsBuilder;
 import c195.thanhtruong.view_controller.WindowsDisplay;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -41,13 +42,18 @@ public class MainApp extends Application {
 //        Locale.setDefault(new Locale("fr", "FR"));
 //        rb = ResourceBundle.getBundle("language_files/rb");
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
-        
+                
         showLoginScreen();
       
     }    
     
-    public void showLoginScreen(){        
-        WindowsDisplay.displayScene(rb, "UserLogin.fxml");
+    public void showLoginScreen(){
+        // Use of Builder Pattern
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setRb(rb)
+                .setFXMLPath("UserLogin.fxml")
+                .build();
+        windowDisplay.displayScene();
     }    
     
 

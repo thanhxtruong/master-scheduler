@@ -10,9 +10,7 @@ package c195.thanhtruong.model;
  * @author thanhtruong
  */
 public class DataInput {
-    public static boolean isInputValid(String ...s) {
-        String errorMessage = "";
-        
+    public static boolean isMissingInput(String ...s) {
         for (String i:s) {
             if (i == null || i.length() == 0) {
                 return false;

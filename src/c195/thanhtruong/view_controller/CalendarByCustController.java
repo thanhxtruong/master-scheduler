@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,8 +28,11 @@ public class CalendarByCustController extends AbstractController implements Init
     
     @FXML
     private AnchorPane calByWeek;
+    
     @FXML
     private CalendarByWeekController calByWeekCOntroller;
+    
+    private Customer selectedCust;
     
     
     /**
@@ -42,7 +46,12 @@ public class CalendarByCustController extends AbstractController implements Init
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        
+        // Set the selectedCust
+        this.selectedCust = selectedCust;
+        System.err.println("selectedCustomer from CalendarBuCustController: " + this.selectedCust.getCustomerName());
+        calByMonthController.displayCustData(selectedCust);
+        AppointmentDB apptDB = new AppointmentDB();
+        apptDB.downloadAppt(selectedCust);
     }
     
 }

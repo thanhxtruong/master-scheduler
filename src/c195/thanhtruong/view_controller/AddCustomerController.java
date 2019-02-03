@@ -56,7 +56,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(DataInput.isInputValid(customerName.getText(),address1.getText(),
+        if(DataInput.isMissingInput(customerName.getText(),address1.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     cityCbo.getSelectionModel().getSelectedItem(),
                     postalCode.getText(), phoneNumber.getText())) {
@@ -72,7 +72,7 @@ public class AddCustomerController extends AbstractController implements Initial
             custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
                             cityCbo.getSelectionModel().getSelectedItem(),
                             newCust);
-            
+            getDialogStage().close();
             WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("CustomerList.fxml")
                 .setTitle("Customer Maintenance")

@@ -41,6 +41,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @FXML
     private Button closeCalBut;
+    
+    private Customer selectedCust;
 
     @FXML
     void handleCloseCal(ActionEvent event) {
@@ -67,6 +69,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
         WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("AddAppointment.fxml")
                 .setTitle("Add Appointment")
+                .setCustomer(selectedCust)
                 .build();
         windowDisplay.displayScene();
     }
@@ -92,7 +95,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.selectedCust = selectedCust;
+        System.err.println("selectedCustomer from CalendarByMonthController: " + this.selectedCust.getCustomerName());
     }
     
 }

@@ -5,8 +5,17 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.DataInput;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,10 +49,16 @@ public class AddAppointmentController extends AbstractController implements Init
     private ComboBox<String> apptType;
 
     @FXML
-    private ComboBox<String> apptHour;
+    private ComboBox<String> apptStartHr;
 
     @FXML
-    private ComboBox<String> apptMin;
+    private ComboBox<String> apptStartMin;
+
+    @FXML
+    private ComboBox<String> apptEndHr;
+
+    @FXML
+    private ComboBox<String> apptEndMin;
 
     @FXML
     private Button addApptCancel;
@@ -51,17 +66,85 @@ public class AddAppointmentController extends AbstractController implements Init
     @FXML
     private Button addApptButton;
     
+    private Customer selectedCust;
+    
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
 
     @FXML
     void handleAddAppt(ActionEvent event) {
+        String title = apptTitle.getText();
+        String description = apptDescription.getText();
+        String loc = location.getText();
+        String type = apptType.getSelectionModel().getSelectedItem();
+        String date = apptDate.getValue().toString();
+        String startHr = apptStartHr.getSelectionModel().getSelectedItem();
+        String startMin = apptStartMin.getSelectionModel().getSelectedItem();
+        String endHr = apptEndHr.getSelectionModel().getSelectedItem();
+        String endMin = apptEndMin.getSelectionModel().getSelectedItem();
         
+        boolean missingInput = DataInput.isMissingInput(title, description, loc, type, date,
+                                    startHr, startMin, endHr, endMin);
+        boolean invalidInput = isInputValid(Integer.parseInt(startHr), Integer.parseInt(endHr),
+                        Integer.parseInt(startMin), Integer.parseInt(endMin));
+        if (missingInput && invalidInput) {
+            // Concatanate the String Start DateTime
+            String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
+            String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
+            System.err.println(startdtConcat);
+            
+            // Parse String to LocalDateTime in order to covert to timezone in local DB
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
+            LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
+            LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
+            System.err.println(ldtStart);
+            
+            // Convert to DB timezone
+            ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
+            ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
+            System.err.println(dbzdtStart);
+            
+            // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
+            LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
+            LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
+            Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
+            Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
+            
+            // Now, we're ready to create the new appointment to add to the DB
+            Appointment newAppt = new Appointment(title, description, loc, type,
+                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName());
+            
+            AppointmentDB apptDB = new AppointmentDB();
+            apptDB.insertAppt(newAppt, selectedCust);
+            
+            getDialogStage().close();
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CalendarByCust.fxml")
+                .setTitle("Appointments")
+                .setCustomer(selectedCust)
+                .build();
+            windowDisplay.displayScene();
+        } else {            
+            String errorMessage = !invalidInput ? "Invalid Appointment Time!" : "Missing input!";
+            DialogPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    errorMessage,
+                                    "Please, fill in the missing input");
+        }    
     }
 
     @FXML
     void handleCancelAddAppt(ActionEvent event) {
         
+    }
+    
+    public boolean isInputValid(int startHr, int endHr, int startMin, int endMin) {
+        if (endHr > startHr)
+            return true;
+        else if (endHr == startHr && endMin > startMin)
+            return true;
+        else
+            return false;
     }
 
 
@@ -70,16 +153,22 @@ public class AddAppointmentController extends AbstractController implements Init
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ObservableList<String> typeList = FXCollections.observableArrayList();
+        typeList.addAll("Consultance", "Product Launch");
         hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
                 "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
         minutes.addAll("00", "15", "30", "45");
-        apptHour.setItems(hours);
-        apptMin.setItems(minutes);
+        apptStartHr.setItems(hours);
+        apptStartMin.setItems(minutes);
+        apptEndHr.setItems(hours);
+        apptEndMin.setItems(minutes);
+        apptType.setItems(typeList);
     }    
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.selectedCust = selectedCust;
+        System.err.println("selectedCustomer from AddAppointmentController: " + this.selectedCust.getCustomerName());
     }
     
 }

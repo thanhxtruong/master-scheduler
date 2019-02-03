@@ -9,6 +9,7 @@ import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
+import c195.thanhtruong.model.DataInput;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -79,7 +80,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     @FXML
     void handleSaveUpdate(ActionEvent event) {
-        if(Customer.isInputValid(customerName.getText(),address1.getText(),
+        if(DataInput.isMissingInput(customerName.getText(),address1.getText(),
                     currentCountry.getText(), currentCity.getText(),
                     postalCode.getText(), phoneNumber.getText())) {
             newCust = new Customer(customerName.getText(),

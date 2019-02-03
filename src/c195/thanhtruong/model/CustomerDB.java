@@ -9,7 +9,8 @@ import c195.thanhtruong.MainApp;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
-import static java.time.LocalDateTime.now;
+import java.time.ZoneId;
+import static java.time.ZonedDateTime.now;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -108,8 +109,8 @@ public class CustomerDB{
                         ID + ", '" +
                         newCust.getPostalCode() + "', '" +
                         newCust.getPhone() + "', '" + 
-                        now() + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
-                        now() + "', '" + MainApp.getCurrentUser().getUserName() + "')";
+                        now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
+                        now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "')";
             
             Query.makeQuery(sqlStatement);
             
@@ -123,8 +124,8 @@ public class CustomerDB{
             sqlStatement = "INSERT INTO customer " +
                 "(customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)\n" +
                 "VALUES ('" + newCust.getCustomerName() + "', " + ID + ", 1, '" +
-                now() + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
-                now() + "', '" + MainApp.getCurrentUser().getUserName() + "')";
+                now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
+                now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "')";
             
             Query.makeQuery(sqlStatement);
             
@@ -160,7 +161,7 @@ public class CustomerDB{
                                 "cityId = " + cityId + ",\n" +
                                 "postalCode = '" + newCust.getPostalCode() + "',\n" +
                                 "phone = '" + newCust.getPhone() + "',\n" +
-                                "lastUpdate = '" + now() + "',\n" +
+                                "lastUpdate = '" + now(ZoneId.of("UTC")) + "',\n" +
                                 "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
                                 "WHERE addressId = " + selectedCust.getAddressId();
                 Query.makeQuery(sqlStatement);

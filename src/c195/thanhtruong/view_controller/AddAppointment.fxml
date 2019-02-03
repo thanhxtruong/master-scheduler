@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="553.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.AddAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.AddAppointmentController">
    <children>
       <GridPane layoutX="64.0" layoutY="52.0" prefHeight="280.0" prefWidth="457.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -25,6 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Title:" />
@@ -32,18 +33,22 @@
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Location:" GridPane.rowIndex="2" />
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Type:" GridPane.rowIndex="3" />
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Date:" GridPane.rowIndex="4" />
-            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Time:" GridPane.rowIndex="5" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Start Time:" GridPane.rowIndex="5" />
             <TextField fx:id="apptTitle" GridPane.columnIndex="1" />
             <TextField fx:id="apptDescription" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="location" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <DatePicker fx:id="apptDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="apptType" prefHeight="31.0" prefWidth="211.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="apptHour" prefHeight="31.0" prefWidth="87.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="apptStartHr" prefHeight="31.0" prefWidth="87.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text=":" translateX="110.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="apptMin" prefHeight="31.0" prefWidth="87.0" translateX="140.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="apptStartMin" prefHeight="31.0" prefWidth="87.0" translateX="140.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="End Time:" GridPane.rowIndex="6" />
+            <ComboBox fx:id="apptEndHr" prefHeight="31.0" prefWidth="87.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text=":" translateX="110.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="apptEndMin" prefHeight="31.0" prefWidth="87.0" translateX="140.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="343.0" layoutY="477.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="343.0" layoutY="477.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0">
         <buttons>
           <Button fx:id="addApptCancel" mnemonicParsing="false" onAction="#handleCancelAddAppt" text="Cancel" />
             <Button fx:id="addApptButton" mnemonicParsing="false" onAction="#handleAddAppt" text="Add" />

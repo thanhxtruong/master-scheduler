@@ -61,10 +61,9 @@ public class UserLoginController extends AbstractController implements Initializ
             // Connect to the DB
             DBConnection.makeConnection();
             
-            String sqlStatement = "SELECT userName, password FROM user "
+            String sqlStatement = "SELECT userId, userName, password FROM user "
                                 + "WHERE userName = '" + username.getText() + "' "
                                 + "AND password = '" + password.getText() +"'";
-            System.out.println(sqlStatement);
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();
             
@@ -75,6 +74,7 @@ public class UserLoginController extends AbstractController implements Initializ
                                         "Please, login again!");
             } else {
                 result.first();
+                MainApp.getCurrentUser().setUserId(result.getInt("userId"));
                 MainApp.getCurrentUser().setUserName(result.getString("userName"));
                 MainApp.getCurrentUser().setUserPassword(result.getString("password"));
                 getDialogStage().close();

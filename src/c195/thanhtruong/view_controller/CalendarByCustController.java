@@ -8,7 +8,10 @@ package c195.thanhtruong.view_controller;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -17,6 +20,17 @@ import javafx.fxml.Initializable;
  */
 public class CalendarByCustController extends AbstractController implements Initializable {
 
+    @FXML
+    private AnchorPane calByMonth;
+    @FXML
+    private CalendarByMonthController calByMonthController;
+    
+    @FXML
+    private AnchorPane calByWeek;
+    @FXML
+    private CalendarByWeekController calByWeekCOntroller;
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -28,7 +42,7 @@ public class CalendarByCustController extends AbstractController implements Init
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

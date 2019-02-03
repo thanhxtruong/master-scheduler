@@ -93,7 +93,7 @@ public class CustomerListController extends AbstractController implements Initia
 
     @FXML
     void handleClose(ActionEvent event) {
-        WarningPopup.exitConfirmation(getDialogStage());
+        DialogPopup.exitConfirmation(getDialogStage());
         getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("Home.fxml")
@@ -111,7 +111,7 @@ public class CustomerListController extends AbstractController implements Initia
             custDB.deleteCustomer(selectedCust);
             custDB.downloadCustDB();
         } else {
-            WarningPopup.showAlert(getDialogStage(), "Attention",
+            DialogPopup.showAlert(getDialogStage(), "Attention",
                     "No customer selected!", "Please, select a customer to modify!");
         }
         displayCustTable(custDB);
@@ -130,7 +130,7 @@ public class CustomerListController extends AbstractController implements Initia
                 .build();
             windowDisplay.displayScene();
         } else {
-            WarningPopup.showAlert(getDialogStage(), "Attention",
+            DialogPopup.showAlert(getDialogStage(), "Attention",
                     "No customer selected!", "Please, select a customer to modify!");
         }
     }

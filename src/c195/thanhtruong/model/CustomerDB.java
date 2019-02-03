@@ -10,6 +10,8 @@ import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
 import static java.time.LocalDateTime.now;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,8 +27,25 @@ public class CustomerDB{
         this.customerList = FXCollections.observableArrayList();
     }
 
-    public ObservableList<Customer> getCustomerList() {
+    public static ObservableList<Customer> getCustomerList() {
         return customerList;
+    }
+    
+    public Customer getCustByName(String name) {
+        for (Customer customer:customerList) {
+            if (customer.getCustomerName().contains(name)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+    
+    public List<String> getCustListAsString() {
+        List<String> custNameList = new ArrayList<>();
+        for(Customer customer:customerList) {
+            custNameList.add(customer.getCustomerName());
+        }
+        return custNameList;
     }
             
     public void downloadCustDB() {
@@ -109,6 +128,7 @@ public class CustomerDB{
             
             Query.makeQuery(sqlStatement);
             
+            // Update customerList
             downloadCustDB();
             
             DBConnection.closeConnection();

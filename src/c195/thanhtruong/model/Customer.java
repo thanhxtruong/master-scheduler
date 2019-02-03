@@ -5,7 +5,7 @@
  */
 package c195.thanhtruong.model;
 
-import c195.thanhtruong.view_controller.WarningPopup;
+import c195.thanhtruong.view_controller.DialogPopup;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

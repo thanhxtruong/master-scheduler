@@ -27,12 +27,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Title:" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Description:" GridPane.rowIndex="1" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Location:" GridPane.rowIndex="2" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Type:" GridPane.rowIndex="3" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Date:" GridPane.rowIndex="4" />
-            <Label styleClass="custom-label" stylesheets="@customLabel.css" text="Time:" GridPane.rowIndex="5" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Title:" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Description:" GridPane.rowIndex="1" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Location:" GridPane.rowIndex="2" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Type:" GridPane.rowIndex="3" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Date:" GridPane.rowIndex="4" />
+            <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Time:" GridPane.rowIndex="5" />
             <TextField fx:id="apptTitle" GridPane.columnIndex="1" />
             <TextField fx:id="apptDescription" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="location" GridPane.columnIndex="1" GridPane.rowIndex="2" />

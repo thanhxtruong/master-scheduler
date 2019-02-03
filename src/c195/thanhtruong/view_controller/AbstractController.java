@@ -67,7 +67,7 @@ public abstract class AbstractController extends ControllerFactory {
             @Override
             public void handle(Event event) {
                 event.consume();
-                WarningPopup.exitConfirmation(dialogStage);
+                DialogPopup.exitConfirmation(dialogStage);
             }
             
         };        
@@ -75,7 +75,7 @@ public abstract class AbstractController extends ControllerFactory {
         dialogStage.setOnCloseRequest(event);
 //        dialogStage.setOnCloseRequest(evt -> {
 //                evt.consume();
-//                WarningPopup.exitConfirmation(dialogStage);
+//                DialogPopup.exitConfirmation(dialogStage);
 //        });
         
     }

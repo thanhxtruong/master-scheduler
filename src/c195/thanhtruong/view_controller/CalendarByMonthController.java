@@ -12,60 +12,74 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
  *
  * @author thanhtruong
  */
-public class HomeController extends AbstractController implements Initializable {
+public class CalendarByMonthController extends AbstractController implements Initializable {
     
     @FXML
-    private Button custModule;
+    private Button previousMonthBut;
 
     @FXML
-    private Button calendarModule;
+    private Label currentMonthLabel;
 
     @FXML
-    private Button reportMenu;
+    private Button nextMonthBut;
 
     @FXML
-    private Button closeHome;
-    
-    @FXML
-    void handleCalModButton(ActionEvent event) {
-        Customer selectedCust = DialogPopup.selectCustomer();
-        if (selectedCust != null) {
-            WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CalendarByCust.fxml")
-                .setTitle("Appointments")
-                .setCustomer(selectedCust)
-                .build();
-            windowDisplay.displayScene();
-        }
-        
-    }
+    private Button newApptBut;
 
     @FXML
-    void handleCloseHome(ActionEvent event) {
-        DialogPopup.exitConfirmation(getDialogStage());
-        getDialogStage().close();
-    }
+    private Button editApptBut;
 
     @FXML
-    void handleCustModButton(ActionEvent event) {
+    private Button deleteApptBut;
+
+    @FXML
+    private Button closeCalBut;
+
+    @FXML
+    void handleCloseCal(ActionEvent event) {
         getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CustomerList.fxml")
-                .setTitle("Customer Maintenance")
+                .setFXMLPath("Home.fxml")
+                .setTitle("Home")
                 .build();
         windowDisplay.displayScene();
     }
 
     @FXML
-    void handleReportMenu(ActionEvent event) {
+    void handleDeleteAppt(ActionEvent event) {
+        
+    }
 
-    }    
+    @FXML
+    void handleEditAppt(ActionEvent event) {
+        
+    }
+
+    @FXML
+    void handleNewAppt(ActionEvent event) {
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("AddAppointment.fxml")
+                .setTitle("Add Appointment")
+                .build();
+        windowDisplay.displayScene();
+    }
+
+    @FXML
+    void handleNextMonth(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handlePreviousMonth(ActionEvent event) {
+
+    }
 
     /**
      * Initializes the controller class.

@@ -9,6 +9,7 @@ import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
+import c195.thanhtruong.model.DataInput;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -55,7 +56,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(Customer.isInputValid(customerName.getText(),address1.getText(),
+        if(DataInput.isInputValid(customerName.getText(),address1.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     cityCbo.getSelectionModel().getSelectedItem(),
                     postalCode.getText(), phoneNumber.getText())) {
@@ -78,7 +79,7 @@ public class AddCustomerController extends AbstractController implements Initial
                 .build();
             windowDisplay.displayScene();
         } else {
-            WarningPopup.showAlert(getDialogStage(),
+            DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
                                     "Missing input",
                                     "Please, fill in the missing input");
@@ -87,7 +88,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleCancelAddCust(ActionEvent event) {
-        WarningPopup.exitConfirmation(getDialogStage());
+        DialogPopup.exitConfirmation(getDialogStage());
     }
     
     /*
@@ -108,7 +109,7 @@ public class AddCustomerController extends AbstractController implements Initial
     @FXML
     void handleCitySelected() {
         if (countryCbo.getSelectionModel().getSelectedIndex() == -1) {
-            WarningPopup.showAlert(getDialogStage(), "Attention!",
+            DialogPopup.showAlert(getDialogStage(), "Attention!",
                                     "Country not selected!", "Please, select a country first!");
         }        
     }

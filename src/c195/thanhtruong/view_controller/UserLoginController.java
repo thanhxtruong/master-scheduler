@@ -69,7 +69,7 @@ public class UserLoginController extends AbstractController implements Initializ
             ResultSet result = Query.getResult();
             
             if (!result.isBeforeFirst()) {
-                WarningPopup.showAlert(getDialogStage(),
+                DialogPopup.showAlert(getDialogStage(),
                                         "Authentication Failure",
                                         "Username and password do not match!",
                                         "Please, login again!");

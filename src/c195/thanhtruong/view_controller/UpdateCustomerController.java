@@ -99,7 +99,7 @@ public class UpdateCustomerController extends AbstractController implements Init
                 .build();
             windowDisplay.displayScene();
         } else {
-            WarningPopup.showAlert(getDialogStage(),
+            DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
                                     "Missing input",
                                     "Please, fill in the missing input");
@@ -112,7 +112,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     @FXML
     void handleCityClicked(MouseEvent event) {
         if (countryCbo.getSelectionModel().getSelectedIndex() == -1) {
-            WarningPopup.showAlert(getDialogStage(), "Attention!",
+            DialogPopup.showAlert(getDialogStage(), "Attention!",
                                     "Country not selected!", "Please, select a country first!");
         } 
     }

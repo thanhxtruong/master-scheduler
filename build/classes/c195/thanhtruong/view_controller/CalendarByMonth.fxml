@@ -2,9 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByMonthController">
    <children>
       <GridPane hgap="5.0" layoutX="0.5" layoutY="0.5" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" translateY="85.0" vgap="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
          <columnConstraints>
@@ -75,85 +76,17 @@
             </Pane>
             <VBox prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.rowIndex="1">
                <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="110.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="210.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="310.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="4" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="410.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="5" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="510.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="6" GridPane.rowIndex="1">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="610.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="10.0" layoutY="170.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="110.0" layoutY="170.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="210.0" layoutY="170.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="310.0" layoutY="170.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-            <VBox layoutX="410.0" layoutY="170.0" prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.columnIndex="5" GridPane.rowIndex="2">
-               <children>
-                  <TextField maxWidth="1.7976931348623157E308" style="-fx-background-color: default;" />
+                  <Label prefHeight="27.0" prefWidth="43.0" text="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                   <ComboBox maxWidth="1.7976931348623157E308" />
                </children>
             </VBox>
          </children>
       </GridPane>
-      <Button layoutX="21.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+      <Button fx:id="previousMonthBut" layoutX="21.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handlePreviousMonth" prefHeight="25.0" prefWidth="25.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -162,8 +95,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="64.0" layoutY="28.0" text="December 2018" />
-      <Button layoutX="185.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
+      <Label fx:id="currentMonthLabel" layoutX="64.0" layoutY="28.0" text="December 2018" />
+      <Button fx:id="nextMonthBut" layoutX="185.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleNextMonth" prefHeight="25.0" prefWidth="25.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -172,5 +105,13 @@
             </ImageView>
          </graphic>
       </Button>
+      <ButtonBar layoutX="465.0" layoutY="19.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0">
+        <buttons>
+          <Button fx:id="newApptBut" mnemonicParsing="false" onAction="#handleNewAppt" text="New" />
+            <Button fx:id="editApptBut" mnemonicParsing="false" onAction="#handleEditAppt" text="Edit" />
+            <Button fx:id="deleteApptBut" mnemonicParsing="false" onAction="#handleDeleteAppt" text="Delete" />
+        </buttons>
+      </ButtonBar>
+      <Button fx:id="closeCalBut" layoutX="628.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleCloseCal" text="Close" />
    </children>
 </AnchorPane>

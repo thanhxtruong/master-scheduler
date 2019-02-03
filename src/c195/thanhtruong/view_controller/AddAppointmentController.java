@@ -8,6 +8,8 @@ package c195.thanhtruong.view_controller;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,28 +37,31 @@ public class AddAppointmentController extends AbstractController implements Init
     private DatePicker apptDate;
 
     @FXML
-    private ComboBox<?> apptType;
+    private ComboBox<String> apptType;
 
     @FXML
-    private ComboBox<?> apptHour;
+    private ComboBox<String> apptHour;
 
     @FXML
-    private ComboBox<?> apptMin;
+    private ComboBox<String> apptMin;
 
     @FXML
     private Button addApptCancel;
 
     @FXML
     private Button addApptButton;
+    
+    ObservableList<String> hours = FXCollections.observableArrayList();
+    ObservableList<String> minutes = FXCollections.observableArrayList();
 
     @FXML
     void handleAddAppt(ActionEvent event) {
-
+        
     }
 
     @FXML
     void handleCancelAddAppt(ActionEvent event) {
-
+        
     }
 
 
@@ -64,9 +69,12 @@ public class AddAppointmentController extends AbstractController implements Init
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url,
-            ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) {
+        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+        minutes.addAll("00", "15", "30", "45");
+        apptHour.setItems(hours);
+        apptMin.setItems(minutes);
     }    
 
     @Override

@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import java.net.URL;
@@ -196,7 +197,7 @@ public class CustomerListController extends AbstractController implements Initia
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

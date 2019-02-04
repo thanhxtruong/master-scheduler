@@ -15,9 +15,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
- *
+ * The typeList, hours, and minutes ObservableList are static final with
+ * static getters, which are used to populate comboboxes in FXML
  * @author thanhtruong
  */
 public class Appointment {
@@ -32,7 +35,7 @@ public class Appointment {
     
     ObjectProperty<LocalDate> date = new SimpleObjectProperty();
     ObjectProperty<LocalTime> startTime = new SimpleObjectProperty();
-    ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();
+    ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();    
 
     public Appointment(String title, String description, String location,
             String type, Timestamp startDateTime, Timestamp endDateTime, String userName) {
@@ -42,8 +45,7 @@ public class Appointment {
         this.type.set(type);
         this.startDateTime.set(startDateTime);
         this.endDateTime.set(endDateTime);
-        this.userName.set(userName);
-        
+        this.userName.set(userName);        
     }
     
     public Appointment(int appointmentId, String title, String description, String location,
@@ -63,11 +65,6 @@ public class Appointment {
         
     }
     
-    public void isInputValid(String title, String apptType, String description,
-                String location, String appDate, String apptHour, String apptMin) {
-        
-    }
-
     public int getAppointmentId() {
         return appointmentId.get();
     }

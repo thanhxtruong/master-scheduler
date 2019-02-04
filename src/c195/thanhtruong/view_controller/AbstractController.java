@@ -6,6 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import java.io.InputStream;
 import javafx.event.Event;
@@ -29,7 +30,7 @@ public abstract class AbstractController extends ControllerFactory {
     private Customer selectedCust;
     final InputStream logoStream = getClass().getResourceAsStream("logo.png");
     
-    public abstract void displayCustData(Customer selectedCust);
+    public abstract void displayCustData(Customer selectedCust, Appointment appointment);
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

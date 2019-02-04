@@ -8,6 +8,7 @@ package c195.thanhtruong.view_controller;
 import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
+import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.DataInput;
 import java.net.URL;
@@ -66,11 +67,8 @@ public class AddAppointmentController extends AbstractController implements Init
     @FXML
     private Button addApptButton;
     
-    private Customer selectedCust;
+    private Customer selectedCust;    
     
-    ObservableList<String> hours = FXCollections.observableArrayList();
-    ObservableList<String> minutes = FXCollections.observableArrayList();
-
     @FXML
     void handleAddAppt(ActionEvent event) {
         String title = apptTitle.getText();
@@ -159,22 +157,16 @@ public class AddAppointmentController extends AbstractController implements Init
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<String> typeList = FXCollections.observableArrayList();
-        typeList.addAll("Consultance", "Product Launch");
-        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutes.addAll("00", "15", "30", "45");
-        apptStartHr.setItems(hours);
-        apptStartMin.setItems(minutes);
-        apptEndHr.setItems(hours);
-        apptEndMin.setItems(minutes);
-        apptType.setItems(typeList);
+        apptStartHr.setItems(ApptCboOptions.getInstance().getHours());
+        apptStartMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        apptEndHr.setItems(ApptCboOptions.getInstance().getHours());
+        apptEndMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        apptType.setItems(ApptCboOptions.getInstance().getTypeList());
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
-        System.err.println("selectedCustomer from AddAppointmentController: " + this.selectedCust.getCustomerName());
     }
     
 }

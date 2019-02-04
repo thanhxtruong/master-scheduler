@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -22,6 +23,7 @@ public class WindowsBuilder {
     String title;
     Stage ownerStage;
     Customer customer;
+    Appointment appointment;
     
     public WindowsBuilder setRb(ResourceBundle rb) {
         this.rb = rb;
@@ -47,8 +49,13 @@ public class WindowsBuilder {
         this.customer = customer;
         return this;
     }
+
+    public WindowsBuilder setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+        return this;
+    }
     
     public WindowsDisplay build() {
-        return new WindowsDisplay(rb, FXMLPath, title, ownerStage, customer);
+        return new WindowsDisplay(rb, FXMLPath, title, ownerStage, customer, appointment);
     }
 }

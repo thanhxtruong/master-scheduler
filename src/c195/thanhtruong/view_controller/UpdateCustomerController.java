@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
@@ -137,7 +138,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     }    
     
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appoinment) {
         tempCust = selectedCust;
         customerName.setText(selectedCust.getCustomerName());
         address1.setText(selectedCust.getAddress1());

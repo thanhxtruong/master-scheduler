@@ -5,6 +5,8 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,8 +79,28 @@ public class EditAppointmentController extends AbstractController implements Ini
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appointment) {
+        Appointment tempAppt = appointment;
+        apptTitle.setText(tempAppt.getTitle());
+        apptDescription.setText(tempAppt.getDescription());
+        location.setText(tempAppt.getTitle());
         
+        apptType.setItems(ApptCboOptions.getInstance().getTypeList());
+        // Display the current selected type
+        apptType.getSelectionModel().select(tempAppt.getType());
+        
+        // Display the current selected date        
+        apptDate.setValue(tempAppt.Date().get());
+        
+        apptStartHr.setItems(ApptCboOptions.getInstance().getHours());
+        apptStartMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        apptEndHr.setItems(ApptCboOptions.getInstance().getHours());
+        apptEndMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        // Display the current selected time
+        apptStartHr.setValue(Integer.toString(tempAppt.getStartDateTime().toLocalDateTime().getHour()));
+        apptEndHr.setValue(Integer.toString(tempAppt.getEndDateTime().toLocalDateTime().getHour()));
+        apptStartMin.setValue(Integer.toString(tempAppt.getStartDateTime().toLocalDateTime().getMinute()));
+        apptEndMin.setValue(Integer.toString(tempAppt.getEndDateTime().toLocalDateTime().getMinute()));
     }
 
     

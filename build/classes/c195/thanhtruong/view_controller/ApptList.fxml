@@ -22,7 +22,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ButtonBar layoutX="550.0" layoutY="290.0" prefHeight="40.0" prefWidth="295.0">
+      <ButtonBar layoutX="550.0" layoutY="290.0" prefHeight="40.0" prefWidth="295.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0">
         <buttons>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteCust" text="Delete" />
             <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#handleModifyCust" text="Modify" />

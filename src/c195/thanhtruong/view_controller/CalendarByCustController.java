@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
@@ -41,16 +42,13 @@ public class CalendarByCustController extends AbstractController implements Init
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        calByMonthController.setDialogStage(getDialogStage());
-        calByWeekController.setDialogStage(getDialogStage());
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appoinment) {
         // Set the selectedCust
         this.selectedCust = selectedCust;
-        System.err.println("selectedCustomer from CalendarBuCustController: " + this.selectedCust.getCustomerName());
-        calByMonthController.displayCustData(selectedCust);
+        calByMonthController.displayCustData(selectedCust, null);
         AppointmentDB apptDB = new AppointmentDB();
         apptDB.downloadAppt(selectedCust);
     }

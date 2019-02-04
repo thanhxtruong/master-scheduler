@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -101,9 +102,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appoinment) {
         this.selectedCust = selectedCust;
-        System.err.println("selectedCustomer from CalendarByMonthController: " + this.selectedCust.getCustomerName());
     }
     
 }

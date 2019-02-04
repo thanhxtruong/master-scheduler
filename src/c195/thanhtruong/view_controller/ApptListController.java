@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -63,6 +64,22 @@ public class ApptListController extends AbstractController implements Initializa
 
     @FXML
     private void handleModifyCust(ActionEvent event) {
+        Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
+        Stage currentStage = getDialogStage();
+        
+        if (selectedAppt != null) {
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("EditAppointment.fxml")
+                .setTitle("Update Appointment")
+                .setOwnerStage(currentStage)
+                .setCustomer(selectedCust)
+                .setAppointment(selectedAppt)
+                .build();
+            windowDisplay.displayScene();
+        } else {
+            DialogPopup.showAlert(getDialogStage(), "Attention",
+                    "No appointment selected!", "Please, select an appointment to modify!");
+        }
     }
 
     @FXML
@@ -79,7 +96,7 @@ public class ApptListController extends AbstractController implements Initializa
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
+    public void displayCustData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
         
         AppointmentDB apptDB = new AppointmentDB();

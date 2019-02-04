@@ -6,6 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,14 +44,16 @@ public class WindowsDisplay extends ControllerFactory{
     String title;
     Stage ownerStage;
     Customer customer;
+    Appointment appointment;
 
     public WindowsDisplay(ResourceBundle rb, String FXMLPath, String title,
-                        Stage ownerStage, Customer customer) {
+                        Stage ownerStage, Customer customer, Appointment appointment) {
         this.rb = rb;
         this.FXMLPath = FXMLPath;
         this.title = title;
         this.ownerStage = ownerStage;
         this.customer = customer;
+        this.appointment = appointment;
     }
         
     public void displayScene() {
@@ -58,9 +61,8 @@ public class WindowsDisplay extends ControllerFactory{
         Stage stage;
         try {
             FXMLLoader loader = new FXMLLoader();
-            if (rb != null) {                
+            if (rb != null)
                 loader.setResources(rb);
-            }	    
             loader.setLocation(WindowsDisplay.class.getResource(this.FXMLPath));
             InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
             root = loader.load();
@@ -87,9 +89,13 @@ public class WindowsDisplay extends ControllerFactory{
             AbstractController controller = loader.getController();
             controller.setDialogStage(stage);
             controller.setExitConfirmation();
-            if (customer != null) {
-                controller.displayCustData(customer);
-            }
+            if (customer != null)
+                if (appointment != null)
+                    controller.displayCustData(customer, appointment);
+                else
+                    controller.displayCustData(customer, null);
+            else
+                controller.displayCustData(null, null);
             
             stage.show();
             

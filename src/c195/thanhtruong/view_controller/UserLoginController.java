@@ -6,6 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
@@ -102,8 +103,8 @@ public class UserLoginController extends AbstractController implements Initializ
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+        
     }
     
 }

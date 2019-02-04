@@ -135,7 +135,13 @@ public class AddAppointmentController extends AbstractController implements Init
 
     @FXML
     void handleCancelAddAppt(ActionEvent event) {
-        
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CalendarByCust.fxml")
+                .setTitle("Appointments")
+                .setCustomer(selectedCust)
+                .build();
+        windowDisplay.displayScene();
     }
     
     public boolean isInputValid(int startHr, int endHr, int startMin, int endMin) {

@@ -23,32 +23,49 @@ import javafx.scene.control.TextField;
  */
 public class EditAppointmentController extends AbstractController implements Initializable {
 
-    @FXML
+     @FXML
     private TextField apptTitle;
+
     @FXML
     private TextField apptDescription;
+
     @FXML
     private TextField location;
+
     @FXML
     private DatePicker apptDate;
+
     @FXML
-    private ComboBox<?> apptType;
+    private ComboBox<String> apptType;
+
     @FXML
-    private ComboBox<?> apptHour;
+    private ComboBox<String> apptStartHr;
+
     @FXML
-    private ComboBox<?> apptMin;
+    private ComboBox<String> apptStartMin;
+
     @FXML
-    private Button editApptCancel;
+    private ComboBox<String> apptEndHr;
+
     @FXML
-    private Button saveApptButton;
-    
+    private ComboBox<String> apptEndMin;
+
     @FXML
-    private void handleCancelEditAppt(ActionEvent event) {
+    private Button updateApptCancel;
+
+    @FXML
+    private Button saveUpdateButton;
+
+    @FXML
+    void handleCancelUpdateAppt(ActionEvent event) {
+
     }
 
     @FXML
-    private void handleEditAppt(ActionEvent event) {
+    void handleSaveUpdate(ActionEvent event) {
+
     }
+
 
     /**
      * Initializes the controller class.
@@ -61,7 +78,7 @@ public class EditAppointmentController extends AbstractController implements Ini
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     

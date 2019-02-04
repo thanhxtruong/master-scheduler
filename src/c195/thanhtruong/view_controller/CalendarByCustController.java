@@ -30,7 +30,7 @@ public class CalendarByCustController extends AbstractController implements Init
     private AnchorPane calByWeek;
     
     @FXML
-    private CalendarByWeekController calByWeekCOntroller;
+    private CalendarByWeekController calByWeekController;
     
     private Customer selectedCust;
     
@@ -41,7 +41,8 @@ public class CalendarByCustController extends AbstractController implements Init
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
+        calByMonthController.setDialogStage(getDialogStage());
+        calByWeekController.setDialogStage(getDialogStage());
     }    
 
     @Override

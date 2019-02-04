@@ -5,16 +5,20 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author thanhtruong
  */
-public class CalendarByWeekController implements Initializable {
+public class CalendarByWeekController extends AbstractController implements Initializable {
+    
+    
 
     /**
      * Initializes the controller class.
@@ -24,5 +28,10 @@ public class CalendarByWeekController implements Initializable {
             ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+    public void displayCustData(Customer selectedCust) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

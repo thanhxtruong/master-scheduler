@@ -29,7 +29,11 @@ public class AppointmentDB {
 
     public AppointmentDB() {
         this.apptListByCust = FXCollections.observableArrayList();
-    }   
+    }
+    
+    public ObservableList<Appointment> getApptListByCust() {
+        return apptListByCust;
+    }
         
     public void downloadAppt(Customer selectedCust) {
         try {
@@ -83,8 +87,6 @@ public class AppointmentDB {
         }            
     }
     
-    
-    
     public void insertAppt(Appointment newAppt, Customer selectedCust) {
         try {
             System.err.println("selectedCustomer from AppointmentDB: " + selectedCust.getCustomerName());
@@ -96,15 +98,13 @@ public class AppointmentDB {
                 + "createDate, createdBy, lastUpdate, lastUpdateBy, type, userId)\n" +
                 "VALUES (" + selectedCust.getCustomerID() + ", '" + newAppt.getTitle() +
                 "', '" + newAppt.getDescription() + "', '" + newAppt.getLocation() +
-                "', 'not used', 'not used', '" + newAppt.getStartTime() + "', '" + newAppt.getEndTime() +
+                "', 'not used', 'not used', '" + newAppt.getStartDateTime() + "', '" + newAppt.getEndDateTime() +
                 "', '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "', '" + 
                 MainApp.getCurrentUser().getUserName() +
                 "', '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "', '" + 
                 MainApp.getCurrentUser().getUserName() +
                 "', '" + newAppt.getType() + "', " + MainApp.getCurrentUser().getUserId() +")";
-            
-            System.err.println(sqlStatement);
-            
+                        
             Query.makeQuery(sqlStatement);
             
             //Update apptListByCust;
@@ -116,16 +116,15 @@ public class AppointmentDB {
         }
     }
     
+    
+    
 //    public static void main(String[] args) {
-//        ObservableList<Appointment> apptListByCust = FXCollections.observableArrayList();
-//        Map<Customer, ObservableList<Appointment>> apptMapByCust = new TreeMap<>();
-//        
-//        System.err.println(now(ZoneId.of("UTC")));
+//        ObservableList<Appointment> apptList= FXCollections.observableArrayList();
 //        
 //        try {
 //            // Connect to the DB
 //            DBConnection.makeConnection();
-//
+//            
 //            String sqlStatement = "SELECT customerName, appointmentId, "
 //                + "appointment.customerId, title, description, location, contact, "
 //                + "start, end, type, appointment.userId, userName\n"
@@ -135,10 +134,10 @@ public class AppointmentDB {
 //                + "INNER JOIN user\n"
 //                + "ON appointment.userId = user.userId\n"
 //                + "WHERE customer.customerId = 3";
-//
+//            
 //            Query.makeQuery(sqlStatement);
 //            ResultSet result = Query.getResult();            
-//
+//            
 //            Timestamp tempStartTS;
 //            Timestamp tempEndTS;
 //            while (result.next()) {
@@ -164,18 +163,17 @@ public class AppointmentDB {
 //                    result.getString("location"), result.getString("type"),
 //                    localStartTS, localEndTS,
 //                    result.getString("userName"));
-//                apptListByCust.add(tempAppt);
+//                apptList.add(tempAppt);
 //            }
 //            DBConnection.closeConnection();
+//            
+//            for (Appointment a:apptList) {
+//                System.err.println(a.StartTime().get() + ", " + a.EndTime().get());
+//            }
 //        } catch (Exception ex) {
 //            System.out.println("Error: " + ex.getMessage());
 //        }
-//        
-//        for (Appointment appt:apptListByCust) {
-//            System.out.println(appt.getStartTime());
-//        }        
-//          
 //    }
-    
+      
     
 }

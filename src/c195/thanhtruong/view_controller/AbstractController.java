@@ -7,9 +7,7 @@ package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Customer;
-import c195.thanhtruong.model.CustomerDB;
 import java.io.InputStream;
-import java.util.function.Function;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;

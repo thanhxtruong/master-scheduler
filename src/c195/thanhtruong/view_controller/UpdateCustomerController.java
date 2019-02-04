@@ -12,13 +12,11 @@ import c195.thanhtruong.model.CustomerDB;
 import c195.thanhtruong.model.DataInput;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
@@ -141,7 +139,6 @@ public class UpdateCustomerController extends AbstractController implements Init
     @Override
     public void displayCustData(Customer selectedCust) {
         tempCust = selectedCust;
-        customerName.setText("Test");
         customerName.setText(selectedCust.getCustomerName());
         address1.setText(selectedCust.getAddress1());
         address2.setText(selectedCust.getAddress2());

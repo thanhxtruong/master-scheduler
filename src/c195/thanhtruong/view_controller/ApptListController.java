@@ -5,9 +5,14 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,19 +29,21 @@ import javafx.scene.control.TextField;
 public class ApptListController extends AbstractController implements Initializable {
 
     @FXML
-    private TableView<?> ApptTable;
+    private TableView<Appointment> apptTable;
     @FXML
-    private TableColumn<?, ?> apptTitleCol;
+    private TableColumn<Appointment, String> apptTitleCol;
     @FXML
-    private TableColumn<?, ?> apptDescCol;
+    private TableColumn<Appointment, String> apptDescCol;
     @FXML
-    private TableColumn<?, ?> apptLocationCol;
+    private TableColumn<Appointment, String> apptLocationCol;
     @FXML
-    private TableColumn<?, ?> apptTypeCol;
+    private TableColumn<Appointment, String> apptTypeCol;
     @FXML
-    private TableColumn<?, ?> apptDateCol;
+    private TableColumn<Appointment, LocalDate> apptDateCol;
     @FXML
-    private TableColumn<?, ?> apptTimeCol;
+    private TableColumn<Appointment, LocalTime> apptStartTimeCol;
+    @FXML
+    private TableColumn<Appointment, LocalTime> apptEndTimeCol;
     @FXML
     private TextField apptSearchText;
     @FXML
@@ -47,6 +54,8 @@ public class ApptListController extends AbstractController implements Initializa
     private Button modifyButton;
     @FXML
     private Button closeButton;
+    
+    private Customer selectedCust;
     
     @FXML
     private void handleDeleteCust(ActionEvent event) {
@@ -66,12 +75,24 @@ public class ApptListController extends AbstractController implements Initializa
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @Override
     public void displayCustData(Customer selectedCust) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.selectedCust = selectedCust;
+        
+        AppointmentDB apptDB = new AppointmentDB();
+        apptDB.downloadAppt(this.selectedCust);
+        
+        apptTitleCol.setCellValueFactory(cellData -> cellData.getValue().Title());
+        apptDescCol.setCellValueFactory(cellData -> cellData.getValue().Description());
+        apptLocationCol.setCellValueFactory(cellData -> cellData.getValue().Location());
+        apptTypeCol.setCellValueFactory(cellData -> cellData.getValue().Type());
+        apptDateCol.setCellValueFactory(cellData -> cellData.getValue().Date());
+        apptStartTimeCol.setCellValueFactory(cellData -> cellData.getValue().StartTime());
+        apptEndTimeCol.setCellValueFactory(cellData -> cellData.getValue().EndTime());
+        apptTable.setItems(apptDB.getApptListByCust());
     }
 
     

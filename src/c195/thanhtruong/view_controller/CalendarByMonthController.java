@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -42,8 +43,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
     @FXML
     private Button closeCalBut;
     
-    private Customer selectedCust;
-
+    private Customer selectedCust;   
+        
     @FXML
     void handleCloseCal(ActionEvent event) {
         getDialogStage().close();
@@ -61,11 +62,17 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @FXML
     void handleEditAppt(ActionEvent event) {
-        
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("ApptList.fxml")
+                .setTitle("Appointment List")
+                .setCustomer(selectedCust)
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML
     void handleNewAppt(ActionEvent event) {
+        getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("AddAppointment.fxml")
                 .setTitle("Add Appointment")

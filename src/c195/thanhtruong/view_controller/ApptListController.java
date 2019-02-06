@@ -64,7 +64,9 @@ public class ApptListController extends AbstractController implements Initializa
 
     @FXML
     private void handleModifyCust(ActionEvent event) {
+        System.err.println("Selected from table: " + apptTable.getSelectionModel().getSelectedItem().getStartDateTime());
         Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
+        System.err.println("Set selected appointment: " + selectedAppt.getStartDateTime());
         Stage currentStage = getDialogStage();
         
         if (selectedAppt != null) {
@@ -102,13 +104,13 @@ public class ApptListController extends AbstractController implements Initializa
         AppointmentDB apptDB = new AppointmentDB();
         apptDB.downloadAppt(this.selectedCust);
         
-        apptTitleCol.setCellValueFactory(cellData -> cellData.getValue().Title());
-        apptDescCol.setCellValueFactory(cellData -> cellData.getValue().Description());
-        apptLocationCol.setCellValueFactory(cellData -> cellData.getValue().Location());
-        apptTypeCol.setCellValueFactory(cellData -> cellData.getValue().Type());
-        apptDateCol.setCellValueFactory(cellData -> cellData.getValue().Date());
-        apptStartTimeCol.setCellValueFactory(cellData -> cellData.getValue().StartTime());
-        apptEndTimeCol.setCellValueFactory(cellData -> cellData.getValue().EndTime());
+        apptTitleCol.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        apptDescCol.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
+        apptLocationCol.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
+        apptTypeCol.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        apptDateCol.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        apptStartTimeCol.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
+        apptEndTimeCol.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
         apptTable.setItems(apptDB.getApptListByCust());
     }
 

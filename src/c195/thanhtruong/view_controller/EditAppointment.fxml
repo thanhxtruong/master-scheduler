@@ -51,7 +51,7 @@
       <ButtonBar layoutX="343.0" layoutY="477.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0">
         <buttons>
           <Button fx:id="updateApptCancel" mnemonicParsing="false" onAction="#handleCancelUpdateAppt" text="Cancel" />
-            <Button fx:id="saveUpdateButton" mnemonicParsing="false" onAction="#handleSaveUpdate" text="Add" />
+            <Button fx:id="saveUpdateButton" mnemonicParsing="false" onAction="#handleSaveUpdate" text="Save" />
         </buttons>
       </ButtonBar>
    </children>

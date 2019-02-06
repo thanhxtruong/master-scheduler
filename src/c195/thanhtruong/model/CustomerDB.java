@@ -171,8 +171,9 @@ public class CustomerDB{
                 sqlStatement = "UPDATE customer\n" +
                             "SET customerName = '" + newCust.getCustomerName() + "'\n" +
                             "WHERE customerId = " + selectedCust.getCustomerID();
+                
+                Query.makeQuery(sqlStatement);
             }
-            
             downloadCustDB();
             
             DBConnection.closeConnection();

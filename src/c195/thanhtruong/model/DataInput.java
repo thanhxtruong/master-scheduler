@@ -10,12 +10,12 @@ package c195.thanhtruong.model;
  * @author thanhtruong
  */
 public class DataInput {
-    public static boolean isMissingInput(String ...s) {
+    public static boolean isInputMissing(String ...s) {
         for (String i:s) {
             if (i == null || i.length() == 0) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

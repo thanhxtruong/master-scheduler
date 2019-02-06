@@ -14,10 +14,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import static java.time.ZonedDateTime.now;
-import java.util.Map;
-import java.util.TreeMap;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
+
 
 /**
  *
@@ -25,10 +29,43 @@ import javafx.collections.ObservableList;
  */
 public class AppointmentDB {
     
-    private static ObservableList<Appointment> apptListByCust;
+    final ObservableList<Appointment> apptListByCust;
 
     public AppointmentDB() {
-        this.apptListByCust = FXCollections.observableArrayList();
+        Callback<Appointment, Observable[]> extractor = new Callback<Appointment, Observable[]>(){
+            @Override
+            public Observable[] call(Appointment a) {
+                return new Observable[] {
+                    a.appointmentIdProperty(),
+                    a.titleProperty(),
+                    a.descriptionProperty(),
+                    a.locationProperty(),
+                    a.dateProperty(),
+                    a.startTimeProperty(),
+                    a.endTimeProperty(),
+                    a.startDateTimeProperty(),
+                    a.endDateTimeProperty(),
+                    a.typeProperty(),
+                    a.userNameProperty()
+                };
+            }
+            
+        };
+        this.apptListByCust = FXCollections.observableArrayList(extractor);
+        ListChangeListener listener = new ListChangeListener() {
+            @Override
+            public void onChanged(Change c) {
+                while (c.next()) {
+                    if (c.wasUpdated()) {
+                        int start = c.getFrom();
+                        int end = c.getTo();
+                        System.out.println("start: " + start + ",end: " + end);
+                    }
+                }
+            }
+            
+        };
+        apptListByCust.addListener(listener);        
     }
     
     public ObservableList<Appointment> getApptListByCust() {
@@ -49,7 +86,6 @@ public class AppointmentDB {
                 + "INNER JOIN user\n"
                 + "ON appointment.userId = user.userId\n"
                 + "WHERE customer.customerId = " + selectedCust.getCustomerID();
-            System.err.println(sqlStatement);
             
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();            
@@ -89,16 +125,16 @@ public class AppointmentDB {
     
     public void insertAppt(Appointment newAppt, Customer selectedCust) {
         try {
-            System.err.println("selectedCustomer from AppointmentDB: " + selectedCust.getCustomerName());
             // Connect to the DB
             DBConnection.makeConnection();
             
+            // Start and End Time have been converted to DB TimeZone in AddAppointmentController
             String sqlStatement = "INSERT INTO appointment\n" +
                 "(customerId, title, description, location, contact, url, start, end, "
                 + "createDate, createdBy, lastUpdate, lastUpdateBy, type, userId)\n" +
                 "VALUES (" + selectedCust.getCustomerID() + ", '" + newAppt.getTitle() +
                 "', '" + newAppt.getDescription() + "', '" + newAppt.getLocation() +
-                "', 'not used', 'not used', '" + newAppt.getStartDateTime() + "', '" + newAppt.getEndDateTime() +
+                    "', 'not used', 'not used', '" + newAppt.getStartDateTime() + "', '" + newAppt.getEndDateTime() +
                 "', '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "', '" + 
                 MainApp.getCurrentUser().getUserName() +
                 "', '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "', '" + 
@@ -111,6 +147,34 @@ public class AppointmentDB {
             downloadAppt(selectedCust);
             
             DBConnection.closeConnection();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    public void updateAppt(Appointment newAppt, Appointment selectedAppt, Customer selectedCust) {
+        String sqlStatement;
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            //Start and End Time have been converted to DB TimeZone in EditAppointmentController
+            sqlStatement = "UPDATE appointment\n" +
+                            "SET title = '" + newAppt.getTitle() + "',\n" +
+                            "description = '" + newAppt.getDescription() + "',\n" +
+                            "location = '" + newAppt.getLocation() + "',\n" +
+                            "type = '" + newAppt.getType() + "',\n" +
+                            "start = '" + newAppt.getStartDateTime() + "',\n" +
+                            "end = '" + newAppt.getEndDateTime() + "',\n" +
+                            "lastUpdate = '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "',\n" +
+                            "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
+                            "WHERE appointmentId = " + selectedAppt.getAppointmentId();
+            System.err.println(sqlStatement);
+            Query.makeQuery(sqlStatement);
+            
+            DBConnection.closeConnection();
+            
+            downloadAppt(selectedCust);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
@@ -168,7 +232,7 @@ public class AppointmentDB {
 //            DBConnection.closeConnection();
 //            
 //            for (Appointment a:apptList) {
-//                System.err.println(a.StartTime().get() + ", " + a.EndTime().get());
+//                System.err.println(a.startTimeProperty().get() + ", " + a.endTimeProperty().get());
 //            }
 //        } catch (Exception ex) {
 //            System.out.println("Error: " + ex.getMessage());

@@ -15,8 +15,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * The typeList, hours, and minutes ObservableList are static final with
@@ -24,18 +22,18 @@ import javafx.collections.ObservableList;
  * @author thanhtruong
  */
 public class Appointment {
-    IntegerProperty appointmentId = new SimpleIntegerProperty();
-    StringProperty title = new SimpleStringProperty();
-    StringProperty description = new SimpleStringProperty();
-    StringProperty location = new SimpleStringProperty();
-    ObjectProperty<Timestamp> startDateTime = new SimpleObjectProperty();
-    ObjectProperty<Timestamp> endDateTime = new SimpleObjectProperty();
-    StringProperty type = new SimpleStringProperty();
-    StringProperty userName = new SimpleStringProperty();
+    private IntegerProperty appointmentId = new SimpleIntegerProperty();
+    private StringProperty title = new SimpleStringProperty();
+    private StringProperty description = new SimpleStringProperty();
+    private StringProperty location = new SimpleStringProperty();
+    private ObjectProperty<Timestamp> startDateTime = new SimpleObjectProperty();
+    private ObjectProperty<Timestamp> endDateTime = new SimpleObjectProperty();
+    private StringProperty type = new SimpleStringProperty();
+    private StringProperty userName = new SimpleStringProperty();
     
-    ObjectProperty<LocalDate> date = new SimpleObjectProperty();
-    ObjectProperty<LocalTime> startTime = new SimpleObjectProperty();
-    ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();    
+    private ObjectProperty<LocalDate> date = new SimpleObjectProperty();
+    private ObjectProperty<LocalTime> startTime = new SimpleObjectProperty();
+    private ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();    
 
     public Appointment(String title, String description, String location,
             String type, Timestamp startDateTime, Timestamp endDateTime, String userName) {
@@ -63,6 +61,15 @@ public class Appointment {
         this.startTime.setValue(LocalTime.parse(txtStartDT.substring(11), tFormatter));
         this.endTime.setValue(LocalTime.parse(txtEndDT.substring(11), tFormatter));
         
+    }   
+        
+    public static boolean isInputValid(int startHr, int endHr, int startMin, int endMin) {
+        if (endHr > startHr)
+            return true;
+        else if (endHr == startHr && endMin > startMin)
+            return true;
+        else
+            return false;
     }
     
     public int getAppointmentId() {
@@ -97,47 +104,47 @@ public class Appointment {
         return userName.get();
     }
 
-    public IntegerProperty AppointmentId() {
+    public IntegerProperty appointmentIdProperty() {
         return appointmentId;
     }
 
-    public StringProperty Title() {
+    public StringProperty titleProperty() {
         return title;
     }
 
-    public StringProperty Description() {
+    public StringProperty descriptionProperty() {
         return description;
     }
 
-    public StringProperty Location() {
+    public StringProperty locationProperty() {
         return location;
     }
 
-    public ObjectProperty<Timestamp> StartDateTime() {
+    public ObjectProperty<Timestamp> startDateTimeProperty() {
         return startDateTime;
     }
 
-    public ObjectProperty<Timestamp> EndDateTime() {
+    public ObjectProperty<Timestamp> endDateTimeProperty() {
         return endDateTime;
     }
 
-    public StringProperty Type() {
+    public StringProperty typeProperty() {
         return type;
     }
 
-    public StringProperty UserName() {
+    public StringProperty userNameProperty() {
         return userName;
     }
 
-    public ObjectProperty<LocalDate> Date() {
+    public ObjectProperty<LocalDate> dateProperty() {
         return date;
     }
 
-    public ObjectProperty<LocalTime> StartTime() {
+    public ObjectProperty<LocalTime> startTimeProperty() {
         return startTime;
     }
 
-    public ObjectProperty<LocalTime> EndTime() {
+    public ObjectProperty<LocalTime> endTimeProperty() {
         return endTime;
     }       
         

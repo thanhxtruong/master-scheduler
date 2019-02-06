@@ -57,7 +57,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(DataInput.isMissingInput(customerName.getText(),address1.getText(),
+        if(DataInput.isInputMissing(customerName.getText(),address1.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     cityCbo.getSelectionModel().getSelectedItem(),
                     postalCode.getText(), phoneNumber.getText())) {

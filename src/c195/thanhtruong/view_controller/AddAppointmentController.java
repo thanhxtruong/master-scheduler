@@ -81,26 +81,23 @@ public class AddAppointmentController extends AbstractController implements Init
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();
         String endMin = apptEndMin.getSelectionModel().getSelectedItem();
         
-        boolean missingInput = DataInput.isMissingInput(title, description, loc, type, date,
+        boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
-        boolean invalidInput = isInputValid(Integer.parseInt(startHr), Integer.parseInt(endHr),
+        boolean invalidInput = Appointment.isInputValid(Integer.parseInt(startHr), Integer.parseInt(endHr),
                         Integer.parseInt(startMin), Integer.parseInt(endMin));
         if (missingInput && invalidInput) {
-            // Concatanate the String Start DateTime
+            // Concatanate the String Start DateTime3
             String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
             String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
-            System.err.println(startdtConcat);
             
             // Parse String to LocalDateTime in order to covert to timezone in local DB
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
             LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
             LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
-            System.err.println(ldtStart);
             
             // Convert to DB timezone
             ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
             ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
-            System.err.println(dbzdtStart);
             
             // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
             LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
@@ -141,26 +138,16 @@ public class AddAppointmentController extends AbstractController implements Init
                 .build();
         windowDisplay.displayScene();
     }
-    
-    public boolean isInputValid(int startHr, int endHr, int startMin, int endMin) {
-        if (endHr > startHr)
-            return true;
-        else if (endHr == startHr && endMin > startMin)
-            return true;
-        else
-            return false;
-    }
-
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        apptStartHr.setItems(ApptCboOptions.getInstance().getHours());
-        apptStartMin.setItems(ApptCboOptions.getInstance().getMinutes());
-        apptEndHr.setItems(ApptCboOptions.getInstance().getHours());
-        apptEndMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        apptStartHr.setItems(ApptCboOptions.getInstance().getHourList());
+        apptStartMin.setItems(ApptCboOptions.getInstance().getMinuteList());
+        apptEndHr.setItems(ApptCboOptions.getInstance().getHourList());
+        apptEndMin.setItems(ApptCboOptions.getInstance().getMinuteList());
         apptType.setItems(ApptCboOptions.getInstance().getTypeList());
     }    
 

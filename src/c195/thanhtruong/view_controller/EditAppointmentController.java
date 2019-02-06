@@ -5,10 +5,18 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.DataInput;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +65,9 @@ public class EditAppointmentController extends AbstractController implements Ini
 
     @FXML
     private Button saveUpdateButton;
+    
+    private Customer selectedCust;
+    private Appointment tempAppt;
 
     @FXML
     void handleCancelUpdateAppt(ActionEvent event) {
@@ -65,9 +76,60 @@ public class EditAppointmentController extends AbstractController implements Ini
 
     @FXML
     void handleSaveUpdate(ActionEvent event) {
-
+        String title = apptTitle.getText();
+        String description = apptDescription.getText();
+        String loc = location.getText();
+        String type = apptType.getSelectionModel().getSelectedItem();
+        String date = apptDate.getValue().toString();
+        String startHr = apptStartHr.getSelectionModel().getSelectedItem();
+        String startMin = apptStartMin.getSelectionModel().getSelectedItem();
+        String endHr = apptEndHr.getSelectionModel().getSelectedItem();
+        String endMin = apptEndMin.getSelectionModel().getSelectedItem();
+        
+        boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
+                                    startHr, startMin, endHr, endMin);
+        boolean validInput = Appointment.isInputValid(Integer.parseInt(startHr), Integer.parseInt(endHr),
+                        Integer.parseInt(startMin), Integer.parseInt(endMin));
+        if (!missingInput && validInput) {
+            // Concatanate the String Start DateTime
+            String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
+            String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
+            System.err.println(startdtConcat);
+            
+            // Parse String to LocalDateTime in order to covert to timezone in local DB
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
+            LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
+            LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
+            System.err.println(ldtStart);
+            
+            // Convert to DB timezone
+            ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
+            ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
+            System.err.println(dbzdtStart);
+            
+            // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
+            LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
+            LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
+            Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
+            Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
+            
+            // Now, we're ready to create the new appointment to add to the DB
+            Appointment newAppt = new Appointment(title, description, loc, type,
+                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName());
+            
+            AppointmentDB apptDB = new AppointmentDB();
+            apptDB.updateAppt(newAppt, tempAppt, selectedCust);
+            
+            getDialogStage().close();
+            
+        } else {            
+            String errorMessage = !validInput ? "Invalid Appointment Time!" : "Missing input!";
+            DialogPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    errorMessage,
+                                    "Please, fill in the missing input");
+        }
     }
-
 
     /**
      * Initializes the controller class.
@@ -80,27 +142,34 @@ public class EditAppointmentController extends AbstractController implements Ini
 
     @Override
     public void displayCustData(Customer selectedCust, Appointment appointment) {
-        Appointment tempAppt = appointment;
+        this.selectedCust = selectedCust;
+        this.tempAppt = appointment;
         apptTitle.setText(tempAppt.getTitle());
         apptDescription.setText(tempAppt.getDescription());
-        location.setText(tempAppt.getTitle());
+        location.setText(tempAppt.getLocation());
         
         apptType.setItems(ApptCboOptions.getInstance().getTypeList());
         // Display the current selected type
         apptType.getSelectionModel().select(tempAppt.getType());
         
         // Display the current selected date        
-        apptDate.setValue(tempAppt.Date().get());
+        apptDate.setValue(tempAppt.dateProperty().get());
         
-        apptStartHr.setItems(ApptCboOptions.getInstance().getHours());
-        apptStartMin.setItems(ApptCboOptions.getInstance().getMinutes());
-        apptEndHr.setItems(ApptCboOptions.getInstance().getHours());
-        apptEndMin.setItems(ApptCboOptions.getInstance().getMinutes());
+        apptStartHr.setItems(ApptCboOptions.getInstance().getHourList());
+        apptStartMin.setItems(ApptCboOptions.getInstance().getMinuteList());
+        apptEndHr.setItems(ApptCboOptions.getInstance().getHourList());
+        apptEndMin.setItems(ApptCboOptions.getInstance().getMinuteList());
         // Display the current selected time
-        apptStartHr.setValue(Integer.toString(tempAppt.getStartDateTime().toLocalDateTime().getHour()));
-        apptEndHr.setValue(Integer.toString(tempAppt.getEndDateTime().toLocalDateTime().getHour()));
-        apptStartMin.setValue(Integer.toString(tempAppt.getStartDateTime().toLocalDateTime().getMinute()));
-        apptEndMin.setValue(Integer.toString(tempAppt.getEndDateTime().toLocalDateTime().getMinute()));
+        int startHr = tempAppt.getStartDateTime().toLocalDateTime().getHour();
+        int endHr = tempAppt.getEndDateTime().toLocalDateTime().getHour();
+        int startMin = tempAppt.getStartDateTime().toLocalDateTime().getMinute();
+        int endMin = tempAppt.getEndDateTime().toLocalDateTime().getMinute();
+        
+        apptStartHr.setValue(ApptCboOptions.getInstance().getValueByKey(startHr));
+        apptEndHr.setValue(ApptCboOptions.getInstance().getValueByKey(endHr));
+        apptStartMin.setValue(ApptCboOptions.getInstance().getValueByKey(startMin));
+        apptEndMin.setValue(ApptCboOptions.getInstance().getValueByKey(endMin));
+        
     }
 
     

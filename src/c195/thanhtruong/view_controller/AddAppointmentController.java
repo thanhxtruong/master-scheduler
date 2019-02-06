@@ -75,7 +75,14 @@ public class AddAppointmentController extends AbstractController implements Init
         String description = apptDescription.getText();
         String loc = location.getText();
         String type = apptType.getSelectionModel().getSelectedItem();
-        String date = apptDate.getValue().toString();
+        
+        String date;
+        if (apptDate.getValue() != null) {
+            date = apptDate.getValue().toString();
+        } else {
+            date = null;
+        }
+        
         String startHr = apptStartHr.getSelectionModel().getSelectedItem();
         String startMin = apptStartMin.getSelectionModel().getSelectedItem();
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();
@@ -110,18 +117,19 @@ public class AddAppointmentController extends AbstractController implements Init
             AppointmentDB.getInstance().insertAppt(newAppt, selectedCust);
             
             getDialogStage().close();
-            WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CalendarByCust.fxml")
-                .setTitle("Appointments")
-                .setCustomer(selectedCust)
-                .build();
-            windowDisplay.displayScene();
         } else {
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
                                     "Missing input!",
                                     "Please, fill in the missing input");
-        }    
+        }
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CalendarByCust.fxml")
+                .setTitle("Appointments")
+                .setCustomer(selectedCust)
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML

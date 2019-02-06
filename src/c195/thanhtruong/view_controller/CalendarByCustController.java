@@ -50,6 +50,7 @@ public class CalendarByCustController extends AbstractController implements Init
         // Set the selectedCust
         this.selectedCust = selectedCust;
         calByMonthController.displayCustData(selectedCust, null);
+        calByMonthController.setDialogStage(getDialogStage());
         AppointmentDB.getInstance().downloadAppt(selectedCust);
     }
     

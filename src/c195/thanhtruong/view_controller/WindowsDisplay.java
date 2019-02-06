@@ -45,6 +45,7 @@ public class WindowsDisplay extends ControllerFactory{
     Stage ownerStage;
     Customer customer;
     Appointment appointment;
+    private static final InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
 
     public WindowsDisplay(ResourceBundle rb, String FXMLPath, String title,
                         Stage ownerStage, Customer customer, Appointment appointment) {
@@ -64,7 +65,7 @@ public class WindowsDisplay extends ControllerFactory{
             if (rb != null)
                 loader.setResources(rb);
             loader.setLocation(WindowsDisplay.class.getResource(this.FXMLPath));
-            InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
+            
             root = loader.load();
             
             Scene scene = new Scene(root);

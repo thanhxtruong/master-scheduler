@@ -151,10 +151,10 @@ public class AppointmentDB {
                         
             Query.makeQuery(sqlStatement);
             
+            DBConnection.closeConnection();
+            
             //Update apptListByCust;
             downloadAppt(selectedCust);
-            
-            DBConnection.closeConnection();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }

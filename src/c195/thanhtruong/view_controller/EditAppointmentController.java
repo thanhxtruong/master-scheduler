@@ -80,7 +80,13 @@ public class EditAppointmentController extends AbstractController implements Ini
         String description = apptDescription.getText();
         String loc = location.getText();
         String type = apptType.getSelectionModel().getSelectedItem();
-        String date = apptDate.getValue().toString();
+        
+        String date;
+        if (apptDate.getValue() != null) {
+            date = apptDate.getValue().toString();
+        } else {
+            date = null;
+        }
         String startHr = apptStartHr.getSelectionModel().getSelectedItem();
         String startMin = apptStartMin.getSelectionModel().getSelectedItem();
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();

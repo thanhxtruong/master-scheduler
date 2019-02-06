@@ -63,6 +63,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @FXML
     void handleEditAppt(ActionEvent event) {
+        getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("ApptList.fxml")
                 .setTitle("Appointment List")

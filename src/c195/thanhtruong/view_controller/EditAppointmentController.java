@@ -71,7 +71,7 @@ public class EditAppointmentController extends AbstractController implements Ini
 
     @FXML
     void handleCancelUpdateAppt(ActionEvent event) {
-
+        DialogPopup.exitConfirmation(getDialogStage());
     }
 
     @FXML

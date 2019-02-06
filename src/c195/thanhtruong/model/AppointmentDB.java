@@ -20,6 +20,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
+import static java.time.ZonedDateTime.now;
 
 
 /**
@@ -185,6 +186,25 @@ public class AppointmentDB {
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
+    }
+    
+    public void deleteAppt(Appointment selectedAppt, Customer selectedCust ) {
+        String sqlStatement;
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            sqlStatement = "DELETE FROM appointment\n" +
+                            "WHERE appointmentId = " + selectedAppt.getAppointmentId();
+            Query.makeQuery(sqlStatement);          
+                        
+            DBConnection.closeConnection();
+            
+            downloadAppt(selectedCust);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        
     }
     
     

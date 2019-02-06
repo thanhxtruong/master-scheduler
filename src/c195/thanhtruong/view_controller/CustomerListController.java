@@ -97,14 +97,13 @@ public class CustomerListController extends AbstractController implements Initia
     @FXML
     void handleDeleteCust(ActionEvent event) {
         Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
-        Stage currentStage = getDialogStage();
         
         if (selectedCust != null) {
             custDB.deleteCustomer(selectedCust);
             custDB.downloadCustDB();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
-                    "No customer selected!", "Please, select a customer to modify!");
+                    "No customer selected!", "Please, select a customer to delete!");
         }
         displayCustTable(custDB);
     }
@@ -198,7 +197,7 @@ public class CustomerListController extends AbstractController implements Initia
 
     @Override
     public void displayCustData(Customer selectedCust, Appointment appoinment) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

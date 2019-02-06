@@ -129,10 +129,10 @@ public class CustomerDB{
             
             Query.makeQuery(sqlStatement);
             
+            DBConnection.closeConnection();
+            
             // Update customerList
             downloadCustDB();
-            
-            DBConnection.closeConnection();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }      
@@ -174,9 +174,9 @@ public class CustomerDB{
                 
                 Query.makeQuery(sqlStatement);
             }
-            downloadCustDB();
             
             DBConnection.closeConnection();
+            downloadCustDB();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
@@ -200,9 +200,9 @@ public class CustomerDB{
                             " AND address.addressId = " + customer.getAddressId();
             Query.makeQuery(sqlStatement);
             
-            downloadCustDB();
-            
             DBConnection.closeConnection();
+            
+            downloadCustDB();
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }

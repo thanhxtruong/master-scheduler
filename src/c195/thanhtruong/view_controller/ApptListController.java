@@ -61,6 +61,13 @@ public class ApptListController extends AbstractController implements Initializa
     
     @FXML
     private void handleDeleteCust(ActionEvent event) {
+        Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
+        if (selectedAppt != null) {
+            AppointmentDB.getInstance().deleteAppt(selectedAppt, selectedCust);
+        } else {
+            DialogPopup.showAlert(getDialogStage(), "Attention",
+                    "No appointment selected!", "Please, select an appointment to delete!");
+        }
     }
 
     @FXML
@@ -85,6 +92,14 @@ public class ApptListController extends AbstractController implements Initializa
 
     @FXML
     private void handleClose(ActionEvent event) {
+        if (DialogPopup.exitConfirmation(getDialogStage())) {
+            WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("CalendarByCust.fxml")
+                .setTitle("Appointments")
+                .setCustomer(selectedCust)
+                .build();
+            windowDisplay.displayScene();
+        }
     }
 
     /**

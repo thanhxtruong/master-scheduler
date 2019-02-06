@@ -58,7 +58,13 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @FXML
     void handleDeleteAppt(ActionEvent event) {
-        
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("ApptList.fxml")
+                .setTitle("Appointment List")
+                .setCustomer(selectedCust)
+                .build();
+        windowDisplay.displayScene();
     }
 
     @FXML

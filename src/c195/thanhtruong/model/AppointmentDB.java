@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import static java.time.ZonedDateTime.now;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -29,9 +28,11 @@ import javafx.util.Callback;
  */
 public class AppointmentDB {
     
-    final ObservableList<Appointment> apptListByCust;
-
-    public AppointmentDB() {
+    private static ObservableList<Appointment> apptListByCust;
+    private static final AppointmentDB instance;
+    
+    static {
+        instance = new AppointmentDB();
         Callback<Appointment, Observable[]> extractor = new Callback<Appointment, Observable[]>(){
             @Override
             public Observable[] call(Appointment a) {
@@ -51,7 +52,6 @@ public class AppointmentDB {
             }
             
         };
-        this.apptListByCust = FXCollections.observableArrayList(extractor);
         ListChangeListener listener = new ListChangeListener() {
             @Override
             public void onChanged(Change c) {
@@ -65,7 +65,14 @@ public class AppointmentDB {
             }
             
         };
-        apptListByCust.addListener(listener);        
+        apptListByCust = FXCollections.observableArrayList(extractor);
+        
+        apptListByCust.addListener(listener);
+    }
+    private AppointmentDB() {}
+    
+    public static AppointmentDB getInstance() {
+        return instance;
     }
     
     public ObservableList<Appointment> getApptListByCust() {
@@ -74,6 +81,7 @@ public class AppointmentDB {
         
     public void downloadAppt(Customer selectedCust) {
         try {
+            apptListByCust.clear();
             // Connect to the DB
             DBConnection.makeConnection();
             
@@ -169,7 +177,6 @@ public class AppointmentDB {
                             "lastUpdate = '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "',\n" +
                             "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
                             "WHERE appointmentId = " + selectedAppt.getAppointmentId();
-            System.err.println(sqlStatement);
             Query.makeQuery(sqlStatement);
             
             DBConnection.closeConnection();
@@ -182,62 +189,8 @@ public class AppointmentDB {
     
     
     
-//    public static void main(String[] args) {
-//        ObservableList<Appointment> apptList= FXCollections.observableArrayList();
-//        
-//        try {
-//            // Connect to the DB
-//            DBConnection.makeConnection();
-//            
-//            String sqlStatement = "SELECT customerName, appointmentId, "
-//                + "appointment.customerId, title, description, location, contact, "
-//                + "start, end, type, appointment.userId, userName\n"
-//                + "FROM appointment\n"
-//                + "INNER JOIN customer\n"
-//                + "ON appointment.customerId = customer.customerId\n"
-//                + "INNER JOIN user\n"
-//                + "ON appointment.userId = user.userId\n"
-//                + "WHERE customer.customerId = 3";
-//            
-//            Query.makeQuery(sqlStatement);
-//            ResultSet result = Query.getResult();            
-//            
-//            Timestamp tempStartTS;
-//            Timestamp tempEndTS;
-//            while (result.next()) {
-//                //Start and End time from DB
-//                tempStartTS = result.getTimestamp("start");
-//                tempEndTS = result.getTimestamp("end");
-//                
-//                ZoneId newzid = ZoneId.systemDefault();
-//                
-//                // Covert Start and End time to local date and time
-//                ZonedDateTime newzdtStart = tempStartTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
-//                ZonedDateTime newLocalStart = newzdtStart.withZoneSameInstant(newzid);
-//                LocalDateTime localStart = newLocalStart.toLocalDateTime();
-//                Timestamp localStartTS = Timestamp.valueOf(localStart);
-//                
-//                ZonedDateTime newzdtEnd = tempEndTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
-//                ZonedDateTime newLocalEnd = newzdtEnd.withZoneSameInstant(newzid);
-//                LocalDateTime localEnd = newLocalEnd.toLocalDateTime();
-//                Timestamp localEndTS = Timestamp.valueOf(localEnd);
-//                
-//                Appointment tempAppt = new Appointment(result.getInt("appointmentId"),
-//                    result.getString("title"), result.getString("description"),
-//                    result.getString("location"), result.getString("type"),
-//                    localStartTS, localEndTS,
-//                    result.getString("userName"));
-//                apptList.add(tempAppt);
-//            }
-//            DBConnection.closeConnection();
-//            
-//            for (Appointment a:apptList) {
-//                System.err.println(a.startTimeProperty().get() + ", " + a.endTimeProperty().get());
-//            }
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex.getMessage());
-//        }
-//    }
-      
+    public static void main(String[] args) {
+        final AppointmentDB apptDB = AppointmentDB.getInstance();
+    }  
     
 }

@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
@@ -49,8 +50,7 @@ public class CalendarByCustController extends AbstractController implements Init
         // Set the selectedCust
         this.selectedCust = selectedCust;
         calByMonthController.displayCustData(selectedCust, null);
-        AppointmentDB apptDB = new AppointmentDB();
-        apptDB.downloadAppt(selectedCust);
+        AppointmentDB.getInstance().downloadAppt(selectedCust);
     }
     
 }

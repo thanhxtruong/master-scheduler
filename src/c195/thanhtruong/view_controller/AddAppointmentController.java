@@ -83,9 +83,7 @@ public class AddAppointmentController extends AbstractController implements Init
         
         boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
-        boolean invalidInput = Appointment.isInputValid(Integer.parseInt(startHr), Integer.parseInt(endHr),
-                        Integer.parseInt(startMin), Integer.parseInt(endMin));
-        if (missingInput && invalidInput) {
+        if (!missingInput) {
             // Concatanate the String Start DateTime3
             String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
             String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
@@ -109,8 +107,7 @@ public class AddAppointmentController extends AbstractController implements Init
             Appointment newAppt = new Appointment(title, description, loc, type,
                     lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName());
             
-            AppointmentDB apptDB = new AppointmentDB();
-            apptDB.insertAppt(newAppt, selectedCust);
+            AppointmentDB.getInstance().insertAppt(newAppt, selectedCust);
             
             getDialogStage().close();
             WindowsDisplay windowDisplay = new WindowsBuilder()
@@ -119,11 +116,10 @@ public class AddAppointmentController extends AbstractController implements Init
                 .setCustomer(selectedCust)
                 .build();
             windowDisplay.displayScene();
-        } else {            
-            String errorMessage = !invalidInput ? "Invalid Appointment Time!" : "Missing input!";
+        } else {
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
-                                    errorMessage,
+                                    "Missing input!",
                                     "Please, fill in the missing input");
         }    
     }

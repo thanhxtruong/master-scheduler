@@ -61,16 +61,7 @@ public class Appointment {
         this.startTime.setValue(LocalTime.parse(txtStartDT.substring(11), tFormatter));
         this.endTime.setValue(LocalTime.parse(txtEndDT.substring(11), tFormatter));
         
-    }   
-        
-    public static boolean isInputValid(int startHr, int endHr, int startMin, int endMin) {
-        if (endHr > startHr)
-            return true;
-        else if (endHr == startHr && endMin > startMin)
-            return true;
-        else
-            return false;
-    }
+    }  
     
     public int getAppointmentId() {
         return appointmentId.get();

@@ -25,6 +25,7 @@ public class ApptCboOptions {
     private static Map<Integer, String> hourMap = new TreeMap<>();
     private static ObservableList<String> minuteList = FXCollections.observableArrayList();
     private static Map<Integer, String> minuteMap = new TreeMap<>();
+    private static List<Integer> minuteKey = new ArrayList<>();
 
     private static final ApptCboOptions instance;
     
@@ -34,12 +35,16 @@ public class ApptCboOptions {
         hourList.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
                 "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
         minuteList.addAll("00", "15", "30", "45");
-        int i, j;
-        for (i=0, j=0; i<24; i++, j++) {
-            hourMap.put(i, hourList.get(j));
+        int i;
+        int keyArray[] = {0, 15, 30, 45};
+        for (i=0; i < keyArray.length; i++) {
+            minuteKey.add(i, new Integer(keyArray[i]));
         }
-        for (i=0, j=0; i<4; i++, j++) {
-            minuteMap.put(i, minuteList.get(j));
+        for (i=0; i<hourList.size(); i++) {
+            hourMap.put(new Integer(i), hourList.get(i));
+        }
+        for (i=0; i<minuteKey.size(); i++) {
+            minuteMap.put(minuteKey.get(i), minuteList.get(i));
         }
     }
     
@@ -69,10 +74,22 @@ public class ApptCboOptions {
         return minuteList;
     }
     
-    public String getValueByKey(Integer k) {
+    public String getHrByKey(Integer k) {
         for (Integer key:hourMap.keySet()) {
-            if (key.equals(k))
+            if (key.equals(k)) {
                 return hourMap.get(key);
+            }
+                
+        }
+        return null;
+    }
+    
+    public String getMinByKey(Integer k) {
+        for (Integer key:minuteMap.keySet()) {
+            if (key.equals(k)) {
+                return minuteMap.get(key);
+            }
+                
         }
         return null;
     }

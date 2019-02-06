@@ -5,6 +5,7 @@
  */
 package c195.thanhtruong;
 
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.User;
 import c195.thanhtruong.view_controller.WindowsBuilder;
 import c195.thanhtruong.view_controller.WindowsDisplay;
@@ -23,7 +24,8 @@ public class MainApp extends Application {
     
     static Stage primaryStage;
     private static ResourceBundle rb;
-    private static User currentUser = new User();
+    private static final User currentUser = new User();
+    private final AppointmentDB apptDB = AppointmentDB.getInstance();
 
     public static Stage getPrimaryStage() {
         return primaryStage;
@@ -31,7 +33,7 @@ public class MainApp extends Application {
 
     public static User getCurrentUser() {
         return currentUser;
-    }  
+    }
                         
     @Override
     public void start(Stage primaryStage) {

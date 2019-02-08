@@ -145,7 +145,7 @@ public class EditAppointmentController extends AbstractController implements Ini
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appointment) {
+    public void displayData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
         this.tempAppt = appointment;
         apptTitle.setText(tempAppt.getTitle());

@@ -156,7 +156,7 @@ public class AddAppointmentController extends AbstractController implements Init
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appointment) {
+    public void displayData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
     }
     

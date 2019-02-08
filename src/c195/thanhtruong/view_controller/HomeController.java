@@ -78,7 +78,7 @@ public class HomeController extends AbstractController implements Initializable 
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+    public void displayData(Customer selectedCust, Appointment appoinment) {
         
     }
     

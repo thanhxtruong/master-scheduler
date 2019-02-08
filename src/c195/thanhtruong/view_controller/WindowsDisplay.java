@@ -92,11 +92,11 @@ public class WindowsDisplay extends ControllerFactory{
             controller.setExitConfirmation();
             if (customer != null)
                 if (appointment != null)
-                    controller.displayCustData(customer, appointment);
+                    controller.displayData(customer, appointment);
                 else
-                    controller.displayCustData(customer, null);
+                    controller.displayData(customer, null);
             else
-                controller.displayCustData(null, null);
+                controller.displayData(null, null);
             
             stage.show();
             

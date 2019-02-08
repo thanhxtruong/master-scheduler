@@ -103,7 +103,7 @@ public class UserLoginController extends AbstractController implements Initializ
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+    public void displayData(Customer selectedCust, Appointment appoinment) {
         
     }
     

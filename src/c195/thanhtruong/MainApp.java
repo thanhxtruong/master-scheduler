@@ -45,7 +45,8 @@ public class MainApp extends Application {
 //        rb = ResourceBundle.getBundle("language_files/rb");
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
                 
-        showLoginScreen();
+//        showLoginScreen();
+        showScreen();
       
     }    
     
@@ -56,7 +57,16 @@ public class MainApp extends Application {
                 .setFXMLPath("UserLogin.fxml")
                 .build();
         windowDisplay.displayScene();
-    }    
+    }
+
+    public void showScreen(){
+        // Use of Builder Pattern
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setRb(rb)
+                .setFXMLPath("CalendarByCust.fxml")
+                .build();
+        windowDisplay.displayScene();
+    }
     
 
     /**

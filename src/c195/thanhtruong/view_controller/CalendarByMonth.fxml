@@ -3,21 +3,70 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByMonthController">
+<AnchorPane fx:id="CalByMonth" prefHeight="950.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByMonthController">
    <children>
-      <GridPane hgap="5.0" layoutX="0.5" layoutY="0.5" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" translateY="85.0" vgap="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
+      <GridPane hgap="5.0" layoutX="6.0" layoutY="693.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="736.0" vgap="5.0" AnchorPane.bottomAnchor="780.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="70.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;">
+               <children>
+                  <Label layoutY="15.0" text="SUNDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="1">
+               <children>
+                  <Label layoutY="15.0" text="MONDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="2">
+               <children>
+                  <Label layoutY="15.0" text="TUESDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="3">
+               <children>
+                  <Label layoutY="15.0" text="WEDNESDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="4">
+               <children>
+                  <Label layoutY="15.0" text="THURSDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="5">
+               <children>
+                  <Label layoutY="15.0" text="FRIDAY" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="6">
+               <children>
+                  <Label layoutY="15.0" text="SATURDAY" />
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+      <GridPane fx:id="container" hgap="5.0" layoutX="0.5" layoutY="0.5" maxWidth="-Infinity" prefHeight="716.0" prefWidth="736.0" translateY="85.0" vgap="5.0" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,7 +77,8 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
@@ -38,73 +88,34 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-         <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;">
-               <children>
-                  <Label layoutY="15.0" text="SUNDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="1">
-               <children>
-                  <Label layoutY="15.0" text="MONDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="2">
-               <children>
-                  <Label layoutY="15.0" text="TUESDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="210.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="3">
-               <children>
-                  <Label layoutY="15.0" text="WEDNESDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="310.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="4">
-               <children>
-                  <Label layoutY="15.0" text="THURSDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="410.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="5">
-               <children>
-                  <Label layoutY="15.0" text="FRIDAY" />
-               </children>
-            </Pane>
-            <Pane layoutX="510.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="6">
-               <children>
-                  <Label layoutY="15.0" text="SATURDAY" />
-               </children>
-            </Pane>
-            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.rowIndex="1">
-               <children>
-                  <Label prefHeight="27.0" prefWidth="43.0" text="1">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
-         </children>
       </GridPane>
-      <Button fx:id="previousMonthBut" layoutX="21.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handlePreviousMonth" prefHeight="25.0" prefWidth="25.0">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../resources/images/left.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label fx:id="currentMonthLabel" layoutX="64.0" layoutY="28.0" text="December 2018" />
-      <Button fx:id="nextMonthBut" layoutX="185.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleNextMonth" prefHeight="25.0" prefWidth="25.0">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../resources/images/right.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+      <HBox layoutX="21.0" layoutY="26.0">
+         <children>
+            <Button fx:id="previousMonthBut" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handlePreviousMonth" prefHeight="25.0" prefWidth="25.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../resources/images/left.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="currentMonthLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="110.0" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" top="2.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="nextMonthBut" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleNextMonth" prefHeight="25.0" prefWidth="25.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../resources/images/right.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
       <ButtonBar layoutX="465.0" layoutY="19.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0">
         <buttons>
           <Button fx:id="newApptBut" mnemonicParsing="false" onAction="#handleNewAppt" text="New" />
@@ -112,6 +123,6 @@
             <Button fx:id="deleteApptBut" mnemonicParsing="false" onAction="#handleDeleteAppt" text="Delete" />
         </buttons>
       </ButtonBar>
-      <Button fx:id="closeCalBut" layoutX="628.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleCloseCal" text="Close" />
+      <Button fx:id="closeCalBut" layoutX="628.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleCloseCal" text="Close" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

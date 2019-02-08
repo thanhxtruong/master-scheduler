@@ -46,10 +46,10 @@ public class CalendarByCustController extends AbstractController implements Init
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+    public void displayData(Customer selectedCust, Appointment appoinment) {
         // Set the selectedCust
         this.selectedCust = selectedCust;
-        calByMonthController.displayCustData(selectedCust, null);
+        calByMonthController.displayData(selectedCust, null);
         calByMonthController.setDialogStage(getDialogStage());
         AppointmentDB.getInstance().downloadAppt(selectedCust);
     }

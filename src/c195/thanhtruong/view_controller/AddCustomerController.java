@@ -133,7 +133,7 @@ public class AddCustomerController extends AbstractController implements Initial
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appointment) {
+    public void displayData(Customer selectedCust, Appointment appointment) {
         
     }
     

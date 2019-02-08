@@ -138,7 +138,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     }    
     
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+    public void displayData(Customer selectedCust, Appointment appoinment) {
         tempCust = selectedCust;
         customerName.setText(selectedCust.getCustomerName());
         address1.setText(selectedCust.getAddress1());

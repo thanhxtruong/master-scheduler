@@ -112,7 +112,7 @@ public class ApptListController extends AbstractController implements Initializa
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appointment) {
+    public void displayData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
         
         AppointmentDB.getInstance().downloadAppt(this.selectedCust);

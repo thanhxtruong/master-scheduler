@@ -30,7 +30,7 @@ public abstract class AbstractController extends ControllerFactory {
     private Customer selectedCust;
     final InputStream logoStream = getClass().getResourceAsStream("logo.png");
     
-    public abstract void displayCustData(Customer selectedCust, Appointment appointment);
+    public abstract void displayData(Customer selectedCust, Appointment appointment);
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;

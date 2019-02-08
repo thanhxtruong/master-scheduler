@@ -196,7 +196,7 @@ public class CustomerListController extends AbstractController implements Initia
     }    
 
     @Override
-    public void displayCustData(Customer selectedCust, Appointment appoinment) {
+    public void displayData(Customer selectedCust, Appointment appoinment) {
         
     }
     

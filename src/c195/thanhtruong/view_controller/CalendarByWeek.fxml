@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,12 +10,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CalByWeek" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByWeekController">
+<AnchorPane fx:id="CalByWeek" prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByWeekController">
    <children>
-      <GridPane hgap="5.0" layoutX="0.5" layoutY="0.5" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" translateY="85.0" vgap="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
+      <GridPane fx:id="container" hgap="5.0" layoutX="0.5" layoutY="0.5" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" translateY="85.0" vgap="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -73,16 +70,6 @@
                   <Label layoutY="15.0" text="SATURDAY" />
                </children>
             </Pane>
-            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="grid-style" stylesheets="@customStyle.css" GridPane.rowIndex="1">
-               <children>
-                  <Label prefHeight="27.0" prefWidth="43.0" text="1">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ComboBox maxWidth="1.7976931348623157E308" />
-               </children>
-            </VBox>
          </children>
       </GridPane>
       <Button layoutX="21.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
@@ -94,7 +81,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label layoutX="64.0" layoutY="28.0" text="December 2018" />
+      <Label layoutX="64.0" layoutY="28.0" />
       <Button layoutX="185.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

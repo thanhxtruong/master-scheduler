@@ -11,15 +11,9 @@ import c195.thanhtruong.model.CalendarByMonth;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import static java.util.Calendar.DAY_OF_WEEK;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -27,8 +21,6 @@ import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -39,7 +31,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -73,6 +64,9 @@ public class CalendarByMonthController extends AbstractController implements Ini
 
     @FXML
     private Button deleteApptBut;
+    
+     @FXML
+    private Button apptDetailBut;
 
     @FXML
     private Button closeCalBut;
@@ -81,9 +75,9 @@ public class CalendarByMonthController extends AbstractController implements Ini
     private CalendarByMonth calByMonth;
     private List<LocalDate> allDatesInMonth = new ArrayList<>();
     private ObservableList<Appointment> sortedApptList;
-    private Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByMonth;
-    private Map<Integer, ObservableList<Appointment>> apptInMonth = new TreeMap<>();
-    private ObservableList<Appointment> apptByDate = FXCollections.observableArrayList();
+    private Map<Integer, Map<Integer, ObservableList<String>>> apptMapByMonth;
+    private Map<Integer, ObservableList<String>> apptInMonth = new TreeMap<>();
+    private ObservableList<String> apptByDate = FXCollections.observableArrayList();
     private AppointmentDB apptDB;
         
     @FXML
@@ -149,6 +143,17 @@ public class CalendarByMonthController extends AbstractController implements Ini
         printAllDays(newYear, newMonth);        
     }
     
+    @FXML
+    void handleSeeDetails(ActionEvent event) {
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("ApptList.fxml")
+                .setTitle("Appointment List")
+                .setCustomer(selectedCust)
+                .build();
+        windowDisplay.displayScene();
+    }
+    
     public void clearAllDays() {
         for (int i=0; i < 35; i++) {
             if (container.getChildren() != null) {
@@ -158,7 +163,6 @@ public class CalendarByMonthController extends AbstractController implements Ini
     }
     
     public void printAllDays(int year, int month) {
-        ObservableList<String> apptTitle = FXCollections.observableArrayList();
         allDatesInMonth = calByMonth.getAllDatesInMonth(year, month);
         // Get day for first date of month
         Calendar firstDateOfMonth = Calendar.getInstance();
@@ -192,12 +196,9 @@ public class CalendarByMonthController extends AbstractController implements Ini
             if (apptInMonth != null) {
                 apptByDate = apptDB.matchApptDatesInMonth(apptInMonth, allDates[i]);
                 if (apptByDate != null) {
-                    for (Appointment appt:apptByDate) {
-                        apptTitle.add(appt.getTitle());
-                    }
                     ComboBox cboBox = new ComboBox();
-                    cboBox.promptTextProperty().set("Select appointment");
-                    cboBox.setItems(apptTitle);
+                    cboBox.promptTextProperty().set("Appointments");
+                    cboBox.setItems(apptByDate);
                     vBox.getChildren().add(cboBox);            
                     cboBox.setMaxWidth(Double.MAX_VALUE);
                 }
@@ -206,7 +207,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
         }
     }
     
-    public Map<Integer, ObservableList<Appointment>> printAllAppt(int month) {
+    public Map<Integer, ObservableList<String>> printAllAppt(int month) {
         for (Integer key:apptMapByMonth.keySet()) {
             if (key.intValue() == month) {
                 return apptMapByMonth.get(key);                

@@ -45,8 +45,8 @@ public class MainApp extends Application {
 //        rb = ResourceBundle.getBundle("language_files/rb");
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
                 
-        showLoginScreen();
-//        showScreen();
+//        showLoginScreen();
+        showScreen();
       
     }    
     

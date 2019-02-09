@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="CalByMonth" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByMonthController">
    <children>
@@ -29,41 +29,68 @@
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;">
                <children>
-                  <Label layoutY="15.0" text="SUNDAY" />
+                  <Label prefHeight="50.0" prefWidth="209.0" text="SUNDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="1">
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="1">
                <children>
-                  <Label layoutY="15.0" text="MONDAY" />
+                  <Label layoutX="20.0" layoutY="-4.0" prefHeight="50.0" prefWidth="209.0" text="MONDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="2">
+            </AnchorPane>
+            <AnchorPane layoutX="224.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="2">
                <children>
-                  <Label layoutY="15.0" text="TUESDAY" />
+                  <Label layoutX="21.0" layoutY="13.0" prefHeight="50.0" prefWidth="209.0" text="TUESDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="3">
+            </AnchorPane>
+            <AnchorPane layoutX="438.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="3">
                <children>
-                  <Label layoutY="15.0" text="WEDNESDAY" />
+                  <Label layoutX="8.0" layoutY="9.0" prefHeight="50.0" prefWidth="209.0" text="WEDNESDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="4">
+            </AnchorPane>
+            <AnchorPane layoutX="652.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="4">
                <children>
-                  <Label layoutY="15.0" text="THURSDAY" />
+                  <Label layoutX="40.0" layoutY="24.0" prefHeight="50.0" prefWidth="208.0" text="THURSDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="5">
+            </AnchorPane>
+            <AnchorPane layoutX="866.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="5">
                <children>
-                  <Label layoutY="15.0" text="FRIDAY" />
+                  <Label layoutX="43.0" layoutY="17.0" prefHeight="50.0" prefWidth="208.0" text="FRIDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="6">
+            </AnchorPane>
+            <AnchorPane layoutX="1079.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #cce6ff;" GridPane.columnIndex="6">
                <children>
-                  <Label layoutY="15.0" text="SATURDAY" />
+                  <Label layoutX="9.0" layoutY="13.0" prefHeight="50.0" prefWidth="208.0" text="SATURDAY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
-            </Pane>
+            </AnchorPane>
          </children>
       </GridPane>
       <GridPane fx:id="container" hgap="5.0" layoutX="0.5" layoutY="0.5" maxWidth="-Infinity" prefWidth="1490.0" translateY="85.0" vgap="5.0" AnchorPane.bottomAnchor="173.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="40.0">
@@ -100,10 +127,13 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="currentMonthLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="110.0" textAlignment="CENTER">
+            <Label fx:id="currentMonthLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="138.0" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" top="2.0" />
                </HBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
             <Button fx:id="nextMonthBut" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleNextMonth" prefHeight="25.0" prefWidth="25.0">
                <graphic>
@@ -121,6 +151,7 @@
           <Button fx:id="newApptBut" mnemonicParsing="false" onAction="#handleNewAppt" text="New" />
             <Button fx:id="editApptBut" mnemonicParsing="false" onAction="#handleEditAppt" text="Edit" />
             <Button fx:id="deleteApptBut" mnemonicParsing="false" onAction="#handleDeleteAppt" text="Delete" />
+            <Button fx:id="apptDetailBut" mnemonicParsing="false" onAction="#handleSeeDetails" text="Details" />
         </buttons>
       </ButtonBar>
       <Button fx:id="closeCalBut" layoutX="628.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleCloseCal" text="Close" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />

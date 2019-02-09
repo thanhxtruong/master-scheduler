@@ -6,9 +6,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByCustController">
    <children>
-      <TabPane layoutX="-5.0" layoutY="-1.0" prefHeight="850.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TabPane layoutX="-5.0" layoutY="-1.0" prefHeight="1000.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <tabs>
-          <Tab text="Month">
+          <Tab closable="false" text="Month">
               <content>
                     <fx:include fx:id="calByMonth" source="CalendarByMonth.fxml" />
                 </content>

@@ -21,6 +21,13 @@ import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
 import static java.time.ZonedDateTime.now;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import java.util.TreeMap;
 
 
 /**
@@ -30,6 +37,8 @@ import static java.time.ZonedDateTime.now;
 public class AppointmentDB {
     
     private static ObservableList<Appointment> apptListByCust;
+    private static ObservableList<Appointment> sortedList = FXCollections.observableArrayList();
+    private static Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByMonth;
     private static final AppointmentDB instance;
     
     static {
@@ -207,7 +216,64 @@ public class AppointmentDB {
         
     }
     
+    public ObservableList<Appointment> sortAppt() {
+        sortedList.addAll(apptListByCust);
+        Collections.sort(sortedList, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                int month1 = ((Appointment) o1).dateProperty().get().getMonthValue();
+                int month2 = ((Appointment) o2).dateProperty().get().getMonthValue();
+                
+                int mComp = month1 - month2;
+                if (mComp != 0) {
+                    return mComp;
+                } else {
+                    int date1 = ((Appointment) o1).dateProperty().get().getDayOfMonth();
+                    int date2 = ((Appointment) o2).dateProperty().get().getDayOfMonth();
+                    
+                    return date1 - date2;
+                }
+            }            
+        });        
+        return sortedList;
+    }
     
+    public Map<Integer, Map<Integer, ObservableList<Appointment>>> getApptMap(ObservableList<Appointment> sortedList) {
+        apptMapByMonth = new TreeMap<>();
+        Integer mKey;
+        Integer dKey;
+        for (Appointment appt:sortedList) {
+            mKey = appt.dateProperty().get().getMonthValue();
+            dKey = appt.dateProperty().get().getDayOfMonth();
+            if (!apptMapByMonth.containsKey(mKey)) {
+                apptMapByMonth.put(mKey, new TreeMap<>());
+            }
+            if (!apptMapByMonth.get(mKey).containsKey(dKey)) {
+                apptMapByMonth.get(mKey).put(dKey, FXCollections.observableArrayList());
+            }
+            apptMapByMonth.get(mKey).get(dKey).add(appt);
+        }
+        return apptMapByMonth;
+    }
+    
+    /*
+    month is from 1 - 12
+    */
+    public Map<Integer, ObservableList<Appointment>> checkApptByMonth(int month, Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMap) {
+        for (Integer key:apptMap.keySet()) {
+            if (key.intValue() == month) {
+                return apptMap.get(key);
+            }                
+        }
+        return null;
+    }
+    
+    public ObservableList<Appointment> matchApptDatesInMonth(Map<Integer, ObservableList<Appointment>> apptInMonth, int dateToMatch) {
+        if (apptInMonth.containsKey(Integer.valueOf(dateToMatch))) {
+            return apptInMonth.get(Integer.valueOf(dateToMatch));
+        }
+        return null;
+    }
     
     public static void main(String[] args) {
         final AppointmentDB apptDB = AppointmentDB.getInstance();

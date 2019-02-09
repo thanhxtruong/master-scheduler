@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="CalByWeek" prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByWeekController">
+<AnchorPane fx:id="CalByWeek" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="c195.thanhtruong.view_controller.CalendarByWeekController">
    <children>
       <GridPane fx:id="container" hgap="5.0" layoutX="0.5" layoutY="0.5" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" translateY="85.0" vgap="5.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
          <columnConstraints>

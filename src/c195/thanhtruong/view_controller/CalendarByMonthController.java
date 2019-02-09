@@ -6,6 +6,7 @@
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.CalendarByMonth;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
@@ -16,10 +17,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import static java.util.Calendar.DAY_OF_WEEK;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -71,6 +80,11 @@ public class CalendarByMonthController extends AbstractController implements Ini
     private Customer selectedCust;
     private CalendarByMonth calByMonth;
     private List<LocalDate> allDatesInMonth = new ArrayList<>();
+    private ObservableList<Appointment> sortedApptList;
+    private Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByMonth;
+    private Map<Integer, ObservableList<Appointment>> apptInMonth = new TreeMap<>();
+    private ObservableList<Appointment> apptByDate = FXCollections.observableArrayList();
+    private AppointmentDB apptDB;
         
     @FXML
     void handleCloseCal(ActionEvent event) {
@@ -143,7 +157,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
         }
     }
     
-    public void printAllDays(int year, int month) {        
+    public void printAllDays(int year, int month) {
+        ObservableList<String> apptTitle = FXCollections.observableArrayList();
         allDatesInMonth = calByMonth.getAllDatesInMonth(year, month);
         // Get day for first date of month
         Calendar firstDateOfMonth = Calendar.getInstance();
@@ -156,8 +171,12 @@ public class CalendarByMonthController extends AbstractController implements Ini
         int[] allDates;
         CalendarByMonth calByMonth = new CalendarByMonth();
         allDates = calByMonth.getDatesOnly(year, month);
+        
+        apptInMonth = apptDB.checkApptByMonth(month, apptMapByMonth);
+        
         labels = new ArrayList<>();
         container.setAlignment(Pos.TOP_LEFT);
+        
         for (int i=0; i < allDates.length; i++) {
             if (colNo > 6) {
                 colNo = 0;
@@ -169,12 +188,31 @@ public class CalendarByMonthController extends AbstractController implements Ini
             Label label = new Label(Integer.toString(allDates[i]));
             label.setFont(new Font(18));
             labels.add(label);            
-            vBox.getChildren().add(label);                       
-            ComboBox cboBox = new ComboBox();            
-            vBox.getChildren().add(cboBox);            
-            cboBox.setMaxWidth(Double.MAX_VALUE);
+            vBox.getChildren().add(label);
+            if (apptInMonth != null) {
+                apptByDate = apptDB.matchApptDatesInMonth(apptInMonth, allDates[i]);
+                if (apptByDate != null) {
+                    for (Appointment appt:apptByDate) {
+                        apptTitle.add(appt.getTitle());
+                    }
+                    ComboBox cboBox = new ComboBox();
+                    cboBox.promptTextProperty().set("Select appointment");
+                    cboBox.setItems(apptTitle);
+                    vBox.getChildren().add(cboBox);            
+                    cboBox.setMaxWidth(Double.MAX_VALUE);
+                }
+            }            
             colNo++;
         }
+    }
+    
+    public Map<Integer, ObservableList<Appointment>> printAllAppt(int month) {
+        for (Integer key:apptMapByMonth.keySet()) {
+            if (key.intValue() == month) {
+                return apptMapByMonth.get(key);                
+            }
+        }
+        return null;
     }
 
     /**
@@ -183,20 +221,28 @@ public class CalendarByMonthController extends AbstractController implements Ini
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        calByMonth = new CalendarByMonth();
-        currentMonthLabel.setText(calByMonth.getMonthYearAsString(calByMonth.getCurrentDate()));
         
-        LocalDate currentDate = calByMonth.getLcDate();
-        int currentMonth = currentDate.getMonthValue();
-        int currentYear = currentDate.getYear();
-        
-        printAllDays(currentYear, currentMonth);
     }    
 
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
         this.selectedCust = selectedCust;
+        apptDB = AppointmentDB.getInstance();
+        apptDB.downloadAppt(selectedCust);
         
+        sortedApptList = apptDB.sortAppt();
+        for (Appointment appt:sortedApptList) {
+            System.out.println(appt.dateProperty().get());
+        }
+        apptMapByMonth = apptDB.getApptMap(sortedApptList);
+        
+        calByMonth = new CalendarByMonth();
+        currentMonthLabel.setText(calByMonth.getMonthYearAsString(calByMonth.getCurrentDate()));
+        
+        LocalDate currentDate = calByMonth.getLcDate();
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();        
+        printAllDays(currentYear, currentMonth);
     }
     
 }

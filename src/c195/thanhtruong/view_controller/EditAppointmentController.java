@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -128,10 +129,8 @@ public class EditAppointmentController extends AbstractController implements Ini
             getDialogStage().close();
             
         } else {
-            DialogPopup.showAlert(getDialogStage(),
-                                    "Warning",
-                                    "Missing input!",
-                                    "Please, fill in the missing input");
+            DialogPopup.showAlert(getDialogStage(), "Warning", "Missing input!",
+                "Please, fill in the missing input", AlertType.ERROR);
         }
     }
 
@@ -164,10 +163,10 @@ public class EditAppointmentController extends AbstractController implements Ini
         apptEndHr.setItems(ApptCboOptions.getInstance().getHourList());
         apptEndMin.setItems(ApptCboOptions.getInstance().getMinuteList());
         // Display the current selected time
-        Integer startHr = new Integer(tempAppt.getStartDateTime().toLocalDateTime().getHour());
-        Integer endHr = new Integer(tempAppt.getEndDateTime().toLocalDateTime().getHour());
-        Integer startMin = new Integer(tempAppt.getStartDateTime().toLocalDateTime().getMinute());
-        Integer endMin = new Integer(tempAppt.getEndDateTime().toLocalDateTime().getMinute());
+        Integer startHr = tempAppt.getStartDateTime().toLocalDateTime().getHour();
+        Integer endHr = tempAppt.getEndDateTime().toLocalDateTime().getHour();
+        Integer startMin = tempAppt.getStartDateTime().toLocalDateTime().getMinute();
+        Integer endMin = tempAppt.getEndDateTime().toLocalDateTime().getMinute();
         
         apptStartHr.setValue(ApptCboOptions.getInstance().getHrByKey(startHr));
         apptEndHr.setValue(ApptCboOptions.getInstance().getHrByKey(endHr));
@@ -175,7 +174,4 @@ public class EditAppointmentController extends AbstractController implements Ini
         apptEndMin.setValue(ApptCboOptions.getInstance().getHrByKey(endMin));
         
     }
-
-    
-    
 }

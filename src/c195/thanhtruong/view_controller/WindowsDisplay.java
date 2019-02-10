@@ -11,12 +11,14 @@ import c195.thanhtruong.model.Customer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * The WindowsDisplay class is used to load FXML, set BundleResource (as needed),

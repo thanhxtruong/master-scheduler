@@ -27,6 +27,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -79,7 +80,12 @@ public class CalendarByMonthController extends AbstractController implements Ini
     private Map<Integer, ObservableList<String>> apptInMonth = new TreeMap<>();
     private ObservableList<String> apptByDate = FXCollections.observableArrayList();
     private AppointmentDB apptDB;
-        
+    
+    @FXML
+    void labelClick(MouseEvent event) {
+        System.out.println("clicked");
+    }
+    
     @FXML
     void handleCloseCal(ActionEvent event) {
         getDialogStage().close();
@@ -155,11 +161,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
     }
     
     public void clearAllDays() {
-        for (int i=0; i < 35; i++) {
-            if (container.getChildren() != null) {
-                container.getChildren().clear();
-            }
-        }
+        container.getChildren().clear();
     }
     
     public void printAllDays(int year, int month) {
@@ -231,11 +233,8 @@ public class CalendarByMonthController extends AbstractController implements Ini
         apptDB = AppointmentDB.getInstance();
         apptDB.downloadAppt(selectedCust);
         
-        sortedApptList = apptDB.sortAppt();
-        for (Appointment appt:sortedApptList) {
-            System.out.println(appt.dateProperty().get());
-        }
-        apptMapByMonth = apptDB.getApptMap(sortedApptList);
+        sortedApptList = apptDB.sortApptByMonth();
+        apptMapByMonth = apptDB.getApptMapByMonth(sortedApptList);
         
         calByMonth = new CalendarByMonth();
         currentMonthLabel.setText(calByMonth.getMonthYearAsString(calByMonth.getCurrentDate()));

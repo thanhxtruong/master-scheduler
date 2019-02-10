@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -83,7 +85,8 @@ public class AddCustomerController extends AbstractController implements Initial
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
                                     "Missing input",
-                                    "Please, fill in the missing input");
+                                    "Please, fill in the missing input",
+                                    AlertType.ERROR);
         }
     }
 
@@ -111,7 +114,8 @@ public class AddCustomerController extends AbstractController implements Initial
     void handleCitySelected() {
         if (countryCbo.getSelectionModel().getSelectedIndex() == -1) {
             DialogPopup.showAlert(getDialogStage(), "Attention!",
-                                    "Country not selected!", "Please, select a country first!");
+                "Country not selected!", "Please, select a country first!",
+                AlertType.ERROR);
         }        
     }
 

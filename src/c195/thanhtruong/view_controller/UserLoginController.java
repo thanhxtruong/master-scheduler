@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -69,10 +70,9 @@ public class UserLoginController extends AbstractController implements Initializ
             ResultSet result = Query.getResult();
             
             if (!result.isBeforeFirst()) {
-                DialogPopup.showAlert(getDialogStage(),
-                                        "Authentication Failure",
-                                        "Username and password do not match!",
-                                        "Please, login again!");
+                DialogPopup.showAlert(getDialogStage(), "Authentication Failure",
+                    "Username and password do not match!", "Please, login again!",
+                    AlertType.ERROR);
             } else {
                 result.first();
                 MainApp.getCurrentUser().setUserId(result.getInt("userId"));

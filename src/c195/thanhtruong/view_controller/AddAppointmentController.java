@@ -18,11 +18,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -121,7 +121,8 @@ public class AddAppointmentController extends AbstractController implements Init
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
                                     "Missing input!",
-                                    "Please, fill in the missing input");
+                                    "Please, fill in the missing input",
+                                    AlertType.ERROR);
         }
         getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()

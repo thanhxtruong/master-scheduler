@@ -10,11 +10,11 @@ import c195.thanhtruong.model.CustomerDB;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
+import static javafx.scene.input.KeyCode.T;
 import javafx.stage.Stage;
 
 /**
@@ -30,8 +30,15 @@ public class DialogPopup {
     public static void showAlert(Stage dialogStage,
                                 String title,
                                 String headerText,
-                                String errorMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+                                String errorMessage,
+                                AlertType alertType) {
+        Alert alert = null;
+        switch (alertType) {
+            case ERROR:
+                alert = new Alert(Alert.AlertType.ERROR);
+            case INFORMATION:
+                alert = new Alert(Alert.AlertType.INFORMATION);
+        }
         alert.initOwner(dialogStage);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

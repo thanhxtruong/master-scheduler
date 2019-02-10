@@ -12,7 +12,6 @@ import c195.thanhtruong.view_controller.WindowsDisplay;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -45,8 +44,8 @@ public class MainApp extends Application {
 //        rb = ResourceBundle.getBundle("language_files/rb");
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
                 
-//        showLoginScreen();
-        showScreen();
+        showLoginScreen();
+//        showScreen();
       
     }    
     
@@ -59,14 +58,14 @@ public class MainApp extends Application {
         windowDisplay.displayScene();
     }
 
-    public void showScreen(){
-        // Use of Builder Pattern
-        WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setRb(rb)
-                .setFXMLPath("CalendarByCust.fxml")
-                .build();
-        windowDisplay.displayScene();
-    }
+//    public void showScreen(){
+//        // Use of Builder Pattern
+//        WindowsDisplay windowDisplay = new WindowsBuilder()
+//                .setRb(rb)
+//                .setFXMLPath("CalendarByCust.fxml")
+//                .build();
+//        windowDisplay.displayScene();
+//    }
     
 
     /**

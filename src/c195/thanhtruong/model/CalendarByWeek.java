@@ -38,21 +38,4 @@ public class CalendarByWeek {
         currentFirst.add(DAY_OF_MONTH, 7);
         return currentFirst;
     }
-    
-    public List<LocalDate> getAllDatesInMonth(int year, int month) {        
-        allDatesList.clear();
-        Calendar firstDate = Calendar.getInstance();
-        firstDate.set(year, month-1, 1);
-        LocalDate lcDate;
-        lcDate = LocalDateTime.ofInstant(firstDate.toInstant(), firstDate.getTimeZone().toZoneId()).toLocalDate();
-        // Add the first date to the list before incrementing in loop
-        allDatesList.add(lcDate);
-        int daysInMonth = firstDate.getActualMaximum(Calendar.DAY_OF_MONTH);
-        for (int i=0; i<daysInMonth-1; i++) {            
-            firstDate.add(Calendar.DAY_OF_MONTH, 1);
-            lcDate = LocalDateTime.ofInstant(firstDate.toInstant(), firstDate.getTimeZone().toZoneId()).toLocalDate();
-            allDatesList.add(lcDate);
-        }
-        return allDatesList;
-    }
 }

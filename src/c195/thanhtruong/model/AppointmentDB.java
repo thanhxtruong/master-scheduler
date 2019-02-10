@@ -10,27 +10,43 @@ import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import static java.time.ZonedDateTime.now;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
-import static java.time.ZonedDateTime.now;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
-import static java.time.ZonedDateTime.now;
 import static java.time.ZonedDateTime.now;
 import java.time.format.DateTimeFormatter;
 import java.util.TreeMap;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.WEEK_OF_YEAR;
+import java.util.Locale;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
+import static java.time.ZonedDateTime.now;
 
 
 /**
@@ -42,6 +58,7 @@ public class AppointmentDB {
     private static ObservableList<Appointment> apptListByCust;
     private static ObservableList<Appointment> sortedList = FXCollections.observableArrayList();
     private static Map<Integer, Map<Integer, ObservableList<String>>> apptMapByMonth;
+    private static Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByWeek;
     private static final AppointmentDB instance;
     
     static {
@@ -72,7 +89,6 @@ public class AppointmentDB {
                     if (c.wasUpdated()) {
                         int start = c.getFrom();
                         int end = c.getTo();
-                        System.out.println("start: " + start + ",end: " + end);
                     }
                 }
             }
@@ -219,21 +235,22 @@ public class AppointmentDB {
         
     }
     
-    public ObservableList<Appointment> sortAppt() {
+    public ObservableList<Appointment> sortApptByMonth() {
+        sortedList.clear();
         sortedList.addAll(apptListByCust);
         Collections.sort(sortedList, new Comparator() {
             @Override
             public int compare(Object o1, Object o2) {
                 int month1 = ((Appointment) o1).dateProperty().get().getMonthValue();
                 int month2 = ((Appointment) o2).dateProperty().get().getMonthValue();
-                
+
                 int mComp = month1 - month2;
                 if (mComp != 0) {
                     return mComp;
                 } else {
                     int date1 = ((Appointment) o1).dateProperty().get().getDayOfMonth();
                     int date2 = ((Appointment) o2).dateProperty().get().getDayOfMonth();
-                    
+
                     return date1 - date2;
                 }
             }            
@@ -241,7 +258,35 @@ public class AppointmentDB {
         return sortedList;
     }
     
-    public Map<Integer, Map<Integer, ObservableList<String>>> getApptMap(ObservableList<Appointment> sortedList) {        
+    public ObservableList<Appointment> sortApptByWeek() {
+        sortedList.clear();
+        sortedList.addAll(apptListByCust);
+        Collections.sort(sortedList, new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                int week1 = getWeekOfYear(((Appointment) o1).dateProperty().get());
+                int week2 = getWeekOfYear(((Appointment) o2).dateProperty().get());
+
+                int wComp = week1 - week2;
+                if (wComp != 0) {
+                    return wComp;
+                } else {
+                    int date1 = ((Appointment) o1).dateProperty().get().getDayOfMonth();
+                    int date2 = ((Appointment) o2).dateProperty().get().getDayOfMonth();
+                    return date1 - date2;
+                }
+            }            
+        });        
+        return sortedList;
+    }
+    
+    public int getWeekOfYear(LocalDate lcDate) {
+        Calendar calDate = Calendar.getInstance();
+        calDate.set(lcDate.getYear(), lcDate.getMonthValue()-1, lcDate.getDayOfMonth());
+        return calDate.get(WEEK_OF_YEAR);
+    }
+    
+    public Map<Integer, Map<Integer, ObservableList<String>>> getApptMapByMonth(ObservableList<Appointment> sortedList) {        
         DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm");
         
         apptMapByMonth = new TreeMap<>();
@@ -261,6 +306,25 @@ public class AppointmentDB {
         return apptMapByMonth;
     }
     
+    public Map<Integer, Map<Integer, ObservableList<Appointment>>> getApptMapByWeek(ObservableList<Appointment> sortedList) {
+        
+        apptMapByWeek = new TreeMap<>();
+        Integer wKey;
+        Integer dKey;
+        for (Appointment appt:sortedList) {
+            wKey = getWeekOfYear(appt.dateProperty().get());
+            dKey = appt.dateProperty().get().getDayOfMonth();
+            if (!apptMapByWeek.containsKey(wKey)) {
+                apptMapByWeek.put(wKey, new TreeMap<>());
+            }
+            if (!apptMapByWeek.get(wKey).containsKey(dKey)) {
+                apptMapByWeek.get(wKey).put(dKey, FXCollections.observableArrayList());
+            }
+            apptMapByWeek.get(wKey).get(dKey).add(appt);
+        }
+        return apptMapByWeek;
+    }
+    
     /*
     month is from 1 - 12
     */
@@ -273,9 +337,25 @@ public class AppointmentDB {
         return null;
     }
     
+    public Map<Integer, ObservableList<Appointment>> checkApptByWeek(int weekOfYear, Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMap) {
+        for (Integer key:apptMap.keySet()) {
+            if (key.intValue() == weekOfYear) {
+                return apptMap.get(key);
+            }                
+        }
+        return null;
+    }
+    
     public ObservableList<String> matchApptDatesInMonth(Map<Integer, ObservableList<String>> apptInMonth, int dateToMatch) {
         if (apptInMonth.containsKey(Integer.valueOf(dateToMatch))) {
             return apptInMonth.get(Integer.valueOf(dateToMatch));
+        }
+        return null;
+    }
+    
+    public ObservableList<Appointment> matchApptDatesInWeek(Map<Integer, ObservableList<Appointment>> apptInWeek, int dateToMatch) {
+        if (apptInWeek.containsKey(Integer.valueOf(dateToMatch))) {
+            return apptInWeek.get(Integer.valueOf(dateToMatch));
         }
         return null;
     }

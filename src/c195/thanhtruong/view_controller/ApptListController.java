@@ -5,7 +5,6 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
@@ -13,10 +12,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -66,7 +65,8 @@ public class ApptListController extends AbstractController implements Initializa
             AppointmentDB.getInstance().deleteAppt(selectedAppt, selectedCust);
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
-                    "No appointment selected!", "Please, select an appointment to delete!");
+                "No appointment selected!", "Please, select an appointment to delete!",
+                AlertType.ERROR);
         }
     }
 
@@ -86,7 +86,8 @@ public class ApptListController extends AbstractController implements Initializa
             windowDisplay.displayScene();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
-                    "No appointment selected!", "Please, select an appointment to modify!");
+                "No appointment selected!", "Please, select an appointment to modify!",
+                AlertType.ERROR);
         }
     }
 

@@ -19,6 +19,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -103,7 +104,8 @@ public class CustomerListController extends AbstractController implements Initia
             custDB.downloadCustDB();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
-                    "No customer selected!", "Please, select a customer to delete!");
+                "No customer selected!", "Please, select a customer to delete!",
+                AlertType.ERROR);
         }
         displayCustTable(custDB);
     }
@@ -122,7 +124,8 @@ public class CustomerListController extends AbstractController implements Initia
             windowDisplay.displayScene();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
-                    "No customer selected!", "Please, select a customer to modify!");
+                "No customer selected!", "Please, select a customer to modify!",
+                AlertType.ERROR);
         }
     }
     private void displayCustTable(CustomerDB custDB) {

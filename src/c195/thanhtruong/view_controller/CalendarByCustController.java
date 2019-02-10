@@ -10,11 +10,15 @@ import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -34,9 +38,16 @@ public class CalendarByCustController extends AbstractController implements Init
     @FXML
     private CalendarByWeekController calByWeekController;
     
+    @FXML
+    private Tab weekTab;
+    
     private Customer selectedCust;
+    private Calendar currentCalDate;
     
-    
+    @FXML
+    void displayApptByWeek() {
+        calByWeekController.displayAllAppt(currentCalDate);
+    }
     /**
      * Initializes the controller class.
      */
@@ -49,6 +60,7 @@ public class CalendarByCustController extends AbstractController implements Init
     public void displayData(Customer selectedCust, Appointment appoinment) {
         // Set the selectedCust
         this.selectedCust = selectedCust;
+        currentCalDate = Calendar.getInstance();
         calByMonthController.displayData(selectedCust, null);
         calByMonthController.setDialogStage(getDialogStage());
         calByWeekController.displayData(selectedCust, null);

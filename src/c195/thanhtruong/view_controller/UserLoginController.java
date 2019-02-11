@@ -7,6 +7,7 @@ package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
@@ -78,6 +79,11 @@ public class UserLoginController extends AbstractController implements Initializ
                 MainApp.getCurrentUser().setUserId(result.getInt("userId"));
                 MainApp.getCurrentUser().setUserName(result.getString("userName"));
                 MainApp.getCurrentUser().setUserPassword(result.getString("password"));
+                
+                // Download and store all appointments by User in apptListByUser in AppointmentDB
+                AppointmentDB apptDB = AppointmentDB.getInstance();
+                apptDB.downloadAppt(MainApp.getCurrentUser());
+                
                 getDialogStage().close();
                 showHome();
             }

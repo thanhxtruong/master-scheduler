@@ -7,11 +7,14 @@ package c195.thanhtruong;
 
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.User;
+import c195.thanhtruong.service.ApptAlertService;
 import c195.thanhtruong.view_controller.WindowsBuilder;
 import c195.thanhtruong.view_controller.WindowsDisplay;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 /**
@@ -45,8 +48,7 @@ public class MainApp extends Application {
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
                 
         showLoginScreen();
-//        showScreen();
-      
+//        showScreen(); 
     }    
     
     public void showLoginScreen(){

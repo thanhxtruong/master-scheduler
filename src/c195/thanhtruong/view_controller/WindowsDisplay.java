@@ -7,9 +7,13 @@ package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
+import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.User;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -40,22 +44,25 @@ import javafx.stage.WindowEvent;
  * 
  * @author thanhtruong
  */
-public class WindowsDisplay extends ControllerFactory{
+public class WindowsDisplay extends ControllerFactory {
     ResourceBundle rb;
     String FXMLPath;
     String title;
     Stage ownerStage;
     Customer customer;
+    User user;
     Appointment appointment;
     private static final InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
 
     public WindowsDisplay(ResourceBundle rb, String FXMLPath, String title,
-                        Stage ownerStage, Customer customer, Appointment appointment) {
+        Stage ownerStage, Customer customer, User user, Appointment appointment) {
+        
         this.rb = rb;
         this.FXMLPath = FXMLPath;
         this.title = title;
         this.ownerStage = ownerStage;
         this.customer = customer;
+        this.user = user;
         this.appointment = appointment;
     }
         
@@ -78,7 +85,7 @@ public class WindowsDisplay extends ControllerFactory{
             } else {
                 stage = MainApp.getPrimaryStage();
             }            
-            
+            stage.centerOnScreen();
             stage.setScene(scene);
             // Title is the key-value pair defined in ResourceBundle
             if (rb != null) {                
@@ -99,6 +106,9 @@ public class WindowsDisplay extends ControllerFactory{
                     controller.displayData(customer, null);
             else
                 controller.displayData(null, null);
+            if (user != null) {
+                controller.displayData(null, null);
+            }
             
             stage.show();
             
@@ -106,40 +116,5 @@ public class WindowsDisplay extends ControllerFactory{
             e.printStackTrace();
         }
     }
-            
-//    public static void filterList(ObservableList unsortedList) {
-//        
-//        Predicate p = new Predicate() {
-//            @Override
-//            public boolean test(Object t) {
-//                return true;
-//            }
-//            
-//        };
-//        
-//        FilteredList filteredList = new FilteredList<>(unsortedList, p);
-//        
-//        ChangeListener listener = new ChangeListener() {
-//            @Override
-//            public void changed(ObservableValue observable,
-//                    Object oldValue,
-//                    Object newValue) {
-//                Predicate p2 = new Predicate() {
-//                    @Override
-//                    public boolean test(Object t) {
-//                        if(newValue.toString().isEmpty() || newValue.toString().equals(null)) {
-//                            return true;
-//                        }
-//                        
-//                        String lowerCaseFilter = newValue.toString().toLowerCase();
-//                        
-//                        
-//                    }
-//                    
-//                }
-//            }
-//            
-//        }
-//    }
   
 }

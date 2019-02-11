@@ -30,25 +30,27 @@ public class Appointment {
     private ObjectProperty<Timestamp> endDateTime = new SimpleObjectProperty();
     private StringProperty type = new SimpleStringProperty();
     private StringProperty userName = new SimpleStringProperty();
+    private StringProperty custName = new SimpleStringProperty();
     
     private ObjectProperty<LocalDate> date = new SimpleObjectProperty();
     private ObjectProperty<LocalTime> startTime = new SimpleObjectProperty();
     private ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();    
 
     public Appointment(String title, String description, String location,
-            String type, Timestamp startDateTime, Timestamp endDateTime, String userName) {
+            String type, Timestamp startDateTime, Timestamp endDateTime, String userName, String custName) {
         this.title.set(title);
         this.description.set(description);
         this.location.set(location);
         this.type.set(type);
         this.startDateTime.set(startDateTime);
         this.endDateTime.set(endDateTime);
-        this.userName.set(userName);        
+        this.userName.set(userName);
+        this.custName.set(custName);
     }
     
     public Appointment(int appointmentId, String title, String description, String location,
-            String type, Timestamp startDateTime, Timestamp endDateTime, String userName) {
-        this(title, description, location, type, startDateTime, endDateTime, userName);
+            String type, Timestamp startDateTime, Timestamp endDateTime, String userName, String custName) {
+        this(title, description, location, type, startDateTime, endDateTime, userName, custName);
         this.appointmentId.set(appointmentId);
 
         // Construct appointment date, start, and end time for use in Appointment List TableView
@@ -95,6 +97,10 @@ public class Appointment {
         return userName.get();
     }
 
+    public String getCustName() {
+        return custName.get();
+    }
+    
     public IntegerProperty appointmentIdProperty() {
         return appointmentId;
     }
@@ -125,6 +131,10 @@ public class Appointment {
 
     public StringProperty userNameProperty() {
         return userName;
+    }
+    
+    public StringProperty custNameProperty() {
+        return custName;
     }
 
     public ObjectProperty<LocalDate> dateProperty() {

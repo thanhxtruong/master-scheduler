@@ -23,29 +23,10 @@ import javafx.util.Callback;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
-import static java.time.ZonedDateTime.now;
 import java.time.format.DateTimeFormatter;
 import java.util.TreeMap;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.Calendar;
-import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.WEEK_OF_YEAR;
-import java.util.Locale;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
-import static java.time.ZonedDateTime.now;
 import static java.time.ZonedDateTime.now;
 
 
@@ -56,6 +37,7 @@ import static java.time.ZonedDateTime.now;
 public class AppointmentDB {
     
     private static ObservableList<Appointment> apptListByCust;
+    private static ObservableList<Appointment> apptListByUser;
     private static ObservableList<Appointment> sortedList = FXCollections.observableArrayList();
     private static Map<Integer, Map<Integer, ObservableList<String>>> apptMapByMonth;
     private static Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByWeek;
@@ -77,7 +59,8 @@ public class AppointmentDB {
                     a.startDateTimeProperty(),
                     a.endDateTimeProperty(),
                     a.typeProperty(),
-                    a.userNameProperty()
+                    a.userNameProperty(),
+                    a.custNameProperty()
                 };
             }
             
@@ -95,6 +78,7 @@ public class AppointmentDB {
             
         };
         apptListByCust = FXCollections.observableArrayList(extractor);
+        apptListByUser = FXCollections.observableArrayList(extractor);
         
         apptListByCust.addListener(listener);
     }
@@ -106,6 +90,10 @@ public class AppointmentDB {
     
     public ObservableList<Appointment> getApptListByCust() {
         return apptListByCust;
+    }
+    
+    public ObservableList<Appointment> getApptListByUser() {
+        return apptListByUser;
     }
         
     public void downloadAppt(Customer selectedCust) {
@@ -151,8 +139,60 @@ public class AppointmentDB {
                     result.getString("title"), result.getString("description"),
                     result.getString("location"), result.getString("type"),
                     localStartTS, localEndTS,
-                    result.getString("userName"));
+                    result.getString("userName"), result.getString("userName"));
                 apptListByCust.add(tempAppt);
+            }
+            DBConnection.closeConnection();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }            
+    }
+    
+    public void downloadAppt(User user) {
+        try {
+            apptListByUser.clear();
+            // Connect to the DB
+            DBConnection.makeConnection();
+            
+            String sqlStatement = "SELECT customerName, appointmentId, "
+                + "appointment.customerId, title, description, location, contact, "
+                + "start, end, type, appointment.userId, userName\n"
+                + "FROM appointment\n"
+                + "INNER JOIN customer\n"
+                + "ON appointment.customerId = customer.customerId\n"
+                + "INNER JOIN user\n"
+                + "ON appointment.userId = user.userId\n"
+                + "WHERE appointment.userId = " + user.getUserId();
+            
+            Query.makeQuery(sqlStatement);
+            ResultSet result = Query.getResult();            
+            
+            Timestamp tempStartTS;
+            Timestamp tempEndTS;
+            while (result.next()) {
+                //Start and End time from DB
+                tempStartTS = result.getTimestamp("start");
+                tempEndTS = result.getTimestamp("end");
+                
+                ZoneId newzid = ZoneId.systemDefault();
+                
+                // Covert Start and End time to local date and time
+                ZonedDateTime newzdtStart = tempStartTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
+                ZonedDateTime newLocalStart = newzdtStart.withZoneSameInstant(newzid);
+                LocalDateTime localStart = newLocalStart.toLocalDateTime();
+                Timestamp localStartTS = Timestamp.valueOf(localStart);
+                
+                ZonedDateTime newzdtEnd = tempEndTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
+                ZonedDateTime newLocalEnd = newzdtEnd.withZoneSameInstant(newzid);
+                LocalDateTime localEnd = newLocalEnd.toLocalDateTime();
+                Timestamp localEndTS = Timestamp.valueOf(localEnd);
+                
+                Appointment tempAppt = new Appointment(result.getInt("appointmentId"),
+                    result.getString("title"), result.getString("description"),
+                    result.getString("location"), result.getString("type"),
+                    localStartTS, localEndTS,
+                    result.getString("userName"), result.getString("userName"));
+                apptListByUser.add(tempAppt);
             }
             DBConnection.closeConnection();
         } catch (Exception ex) {

@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -112,7 +111,8 @@ public class AddAppointmentController extends AbstractController implements Init
             
             // Now, we're ready to create the new appointment to add to the DB
             Appointment newAppt = new Appointment(title, description, loc, type,
-                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName());
+                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
+                    selectedCust.getCustomerName());
             
             AppointmentDB.getInstance().insertAppt(newAppt, selectedCust);
             

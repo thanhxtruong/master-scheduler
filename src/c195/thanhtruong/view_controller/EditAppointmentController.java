@@ -122,7 +122,8 @@ public class EditAppointmentController extends AbstractController implements Ini
             
             // Now, we're ready to create the new appointment to add to the DB
             Appointment newAppt = new Appointment(title, description, loc, type,
-                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName());
+                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
+                    selectedCust.getCustomerName());
             
             AppointmentDB.getInstance().updateAppt(newAppt, tempAppt, selectedCust);
             

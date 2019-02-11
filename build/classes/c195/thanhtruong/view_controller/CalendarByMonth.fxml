@@ -146,12 +146,12 @@
             </Button>
          </children>
       </HBox>
-      <ButtonBar layoutX="465.0" layoutY="19.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.rightAnchor="20.0">
+      <ButtonBar layoutX="465.0" layoutY="19.0" prefHeight="40.0" prefWidth="613.0" AnchorPane.rightAnchor="20.0">
         <buttons>
+            <Button fx:id="apptDetailBut" mnemonicParsing="false" onAction="#handleSeeDetails" prefHeight="31.0" prefWidth="167.0" text="All Appoinments" />
           <Button fx:id="newApptBut" mnemonicParsing="false" onAction="#handleNewAppt" text="New" />
             <Button fx:id="editApptBut" mnemonicParsing="false" onAction="#handleEditAppt" text="Edit" />
-            <Button fx:id="deleteApptBut" mnemonicParsing="false" onAction="#handleDeleteAppt" text="Delete" />
-            <Button fx:id="apptDetailBut" mnemonicParsing="false" onAction="#handleSeeDetails" text="Details" />
+            <Button fx:id="deleteApptBut" minWidth="68.0" mnemonicParsing="false" onAction="#handleDeleteAppt" prefHeight="31.0" text="Delete" />
         </buttons>
       </ButtonBar>
       <Button fx:id="closeCalBut" layoutX="628.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleCloseCal" text="Close" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />

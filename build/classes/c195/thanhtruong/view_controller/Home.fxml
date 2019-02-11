@@ -40,7 +40,7 @@
             </Button>
          </children>
       </HBox>
-      <Button fx:id="closeHome" layoutX="418.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleCloseHome" text="Log out" />
+      <Button fx:id="logoutBut" layoutX="418.0" layoutY="193.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
       <Label layoutX="45.0" layoutY="150.0" text="Customers" />
       <Label layoutX="214.0" layoutY="150.0" text="Appointments" />
       <Label layoutX="420.0" layoutY="150.0" text="Reports" />

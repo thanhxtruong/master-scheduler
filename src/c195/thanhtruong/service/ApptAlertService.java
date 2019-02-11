@@ -26,19 +26,13 @@ public class ApptAlertService extends Service<LocalDateTime> {
             protected LocalDateTime call() throws Exception {
                 
                 if (AppointmentDB.getInstance().getApptListByUser() != null) {
-                    int sleepSec = 30;
+                    int sleepMin = 5;
                     LocalDateTime startTime = LocalDateTime.now(ZoneId.systemDefault());
-//                    LocalDateTime endTime = startTime.plusMinutes(1);
-                    LocalDateTime endTime = startTime.plusSeconds(5);
+                    LocalDateTime endTime = startTime.plusMinutes(5);
 
                     while (endTime.isAfter(LocalDateTime.now(ZoneId.systemDefault()))) {
                         try {
-                            System.out.println("---");
-                            System.out.println("Time: " + LocalDateTime.now());
-                            System.out.println("End: " + endTime);
-
-//                            Thread.sleep(1000 * 30);
-                            Thread.sleep(500);
+                            Thread.sleep(1000 * 60 * sleepMin);
                         } catch (InterruptedException e) {
 
                             if (isCancelled()) {

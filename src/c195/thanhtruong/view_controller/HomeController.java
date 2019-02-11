@@ -12,6 +12,7 @@ import c195.thanhtruong.service.ApptAlertService;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -83,25 +84,28 @@ public class HomeController extends AbstractController implements Initializable 
         alertService.setOnSucceeded(new EventHandler<WorkerStateEvent> () {
             @Override
             public void handle(WorkerStateEvent event) {
-                System.out.println("Service succeeded");
-                if (AppointmentDB.getInstance().getApptListByUser() != null) {
-                    for (Appointment appt:AppointmentDB.getInstance().getApptListByUser()) {
-                        LocalDateTime apptStart = appt.getStartDateTime().toLocalDateTime();
-                        if (apptStart.isAfter(LocalDateTime.now(ZoneId.systemDefault()))
-                                && apptStart.isBefore(LocalDateTime.now(ZoneId.systemDefault()).plusMinutes(15))) {
-                            DialogPopup.showAlert(getDialogStage(), "Reminder",
-                                "Appointment start in 15 minutes",
-                                appt.getTitle() + "\n" + "Meet with: " + appt.getCustName() + 
-                                "\n" + appt.getStartDateTime().toLocalDateTime() +
-                                " - " + appt.getEndDateTime().toLocalDateTime(),
-                                Alert.AlertType.INFORMATION);
-                        }
-                    }
-                }
+                checkUpcomingAppt();
                 alertService.restart();
             }
         });
         alertService.start();
+    }
+    
+    public void checkUpcomingAppt() {
+        if (AppointmentDB.getInstance().getApptListByUser() != null) {
+            for (Appointment appt:AppointmentDB.getInstance().getApptListByUser()) {
+                LocalDateTime apptStart = appt.getStartDateTime().toLocalDateTime();
+                if (apptStart.isAfter(LocalDateTime.now(ZoneId.systemDefault()))
+                        && apptStart.isBefore(LocalDateTime.now(ZoneId.systemDefault()).plusMinutes(15))) {
+                    DialogPopup.showAlert(getDialogStage(), "Reminder",
+                        "Appointment start in 15 minutes",
+                        appt.getTitle() + "\n" + "Meet with: " + appt.getCustName() + 
+                        "\n" + appt.getStartDateTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH : mm")) +
+                        " - " + appt.getEndDateTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH : mm")),
+                        Alert.AlertType.INFORMATION);
+                }
+            }
+        }
     }
 
     /**
@@ -115,6 +119,7 @@ public class HomeController extends AbstractController implements Initializable 
 
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
+        checkUpcomingAppt();
         initService();
     }
     

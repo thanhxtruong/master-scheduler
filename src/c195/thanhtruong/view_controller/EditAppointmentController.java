@@ -167,12 +167,10 @@ public class EditAppointmentController extends AbstractController implements Ini
         Integer startHr = tempAppt.getStartDateTime().toLocalDateTime().getHour();
         Integer endHr = tempAppt.getEndDateTime().toLocalDateTime().getHour();
         Integer startMin = tempAppt.getStartDateTime().toLocalDateTime().getMinute();
-        System.out.println("Integer startMin: " + startMin.intValue());
         Integer endMin = tempAppt.getEndDateTime().toLocalDateTime().getMinute();
         
         apptStartHr.setValue(ApptCboOptions.getInstance().getHrByKey(startHr));
         apptEndHr.setValue(ApptCboOptions.getInstance().getHrByKey(endHr));
-        System.out.println("setValue: " + ApptCboOptions.getInstance().getMinByKey(startMin));
         apptStartMin.setValue(ApptCboOptions.getInstance().getMinByKey(startMin));
         apptEndMin.setValue(ApptCboOptions.getInstance().getMinByKey(endMin));
         

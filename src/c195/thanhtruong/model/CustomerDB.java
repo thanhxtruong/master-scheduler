@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 public class CustomerDB{
     
     private static ObservableList<Customer> customerList;
+    private String sqlStatement;
 
     public CustomerDB() {
         this.customerList = FXCollections.observableArrayList();
@@ -55,7 +56,7 @@ public class CustomerDB{
             // Connect to the DB
             DBConnection.makeConnection();
             
-            String sqlStatement = "SELECT customerId, customerName, " +
+            sqlStatement = "SELECT customerId, customerName, " +
                 "customer.addressId, address, address2,  postalCode,  " +
                 "phone, address.cityId, city, country\n" +
                 "FROM customer\n" +
@@ -93,7 +94,7 @@ public class CustomerDB{
             DBConnection.makeConnection();
             
             // Get the cityId (FK) for the city and country input by user from GUI
-            String sqlStatement = "SELECT cityId FROM country, city WHERE country.country = '" +
+            sqlStatement = "SELECT cityId FROM country, city WHERE country.country = '" +
                                 country + "' AND city.city = '" +
                                 city + "'";
             Query.makeQuery(sqlStatement);
@@ -144,7 +145,6 @@ public class CustomerDB{
     
     public void updateDB(Customer newCust, Customer selectedCust, boolean isAddressChanged, boolean isCustNameChanged) {
         int cityId, addressId;
-        String sqlStatement;
         try {
             // Connect to the DB
             DBConnection.makeConnection();
@@ -195,7 +195,6 @@ public class CustomerDB{
     }
     
     public boolean deleteCustomer(Customer customer) {
-        String sqlStatement;
         try {
             int custId = customer.getCustomerID();
             // Connect to the DB

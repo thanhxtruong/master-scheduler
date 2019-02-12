@@ -21,10 +21,10 @@ import c195.thanhtruong.view_controller.UserLoginController;
  * @author thanhtruong
  */
 public class ControllerFactory {
-    public static AbstractController getControllerClass(String objectName) {
-        switch (objectName) {
+    public static AbstractController getControllerClass(AbstractController controller) {
+        switch (controller.getClass().getSimpleName()) {
             case "UserLoginController":
-                return new UserLoginController();
+                return (UserLoginController)controller;
             case "HomeController":
                 return new HomeController();
             case "CustomerListController":
@@ -42,6 +42,6 @@ public class ControllerFactory {
             case "CalendarByCustController":
                 return new CalendarByCustController();
         }
-        throw new UnsupportedOperationException("Unsupported data type: " + objectName);
+        throw new UnsupportedOperationException("Unsupported data type: " + controller);
     }
 }

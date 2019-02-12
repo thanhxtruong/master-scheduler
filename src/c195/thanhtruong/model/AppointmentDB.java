@@ -39,10 +39,12 @@ public class AppointmentDB {
     
     private static ObservableList<Appointment> apptListByCust;
     private static ObservableList<Appointment> apptListByUser;
+    private static ObservableList<Appointment> allApptList;
     private static ObservableList<Appointment> sortedList = FXCollections.observableArrayList();
     private static Map<Integer, Map<Integer, ObservableList<String>>> apptMapByMonth;
     private static Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByWeek;
     private static final AppointmentDB instance;
+    private String sqlStatement;
     
     static {
         instance = new AppointmentDB();
@@ -96,66 +98,36 @@ public class AppointmentDB {
     public ObservableList<Appointment> getApptListByUser() {
         return apptListByUser;
     }
-        
-    public void downloadAppt(Customer selectedCust) {
-        try {
-            apptListByCust.clear();
-            // Connect to the DB
-            DBConnection.makeConnection();
-            
-            String sqlStatement = "SELECT customerName, appointmentId, "
-                + "appointment.customerId, title, description, location, contact, "
-                + "start, end, type, appointment.userId, userName\n"
-                + "FROM appointment\n"
-                + "INNER JOIN customer\n"
-                + "ON appointment.customerId = customer.customerId\n"
-                + "INNER JOIN user\n"
-                + "ON appointment.userId = user.userId\n"
-                + "WHERE customer.customerId = " + selectedCust.getCustomerID();
-            
-            Query.makeQuery(sqlStatement);
-            ResultSet result = Query.getResult();            
-            
-            Timestamp tempStartTS;
-            Timestamp tempEndTS;
-            while (result.next()) {
-                //Start and End time from DB
-                tempStartTS = result.getTimestamp("start");
-                tempEndTS = result.getTimestamp("end");
-                
-                ZoneId newzid = ZoneId.systemDefault();
-                
-                // Covert Start and End time to local date and time
-                ZonedDateTime newzdtStart = tempStartTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
-                ZonedDateTime newLocalStart = newzdtStart.withZoneSameInstant(newzid);
-                LocalDateTime localStart = newLocalStart.toLocalDateTime();
-                Timestamp localStartTS = Timestamp.valueOf(localStart);
-                
-                ZonedDateTime newzdtEnd = tempEndTS.toLocalDateTime().atZone(ZoneId.of("UTC"));
-                ZonedDateTime newLocalEnd = newzdtEnd.withZoneSameInstant(newzid);
-                LocalDateTime localEnd = newLocalEnd.toLocalDateTime();
-                Timestamp localEndTS = Timestamp.valueOf(localEnd);
-                
-                Appointment tempAppt = new Appointment(result.getInt("appointmentId"),
-                    result.getString("title"), result.getString("description"),
-                    result.getString("location"), result.getString("type"),
-                    localStartTS, localEndTS,
-                    result.getString("userName"), result.getString("userName"));
-                apptListByCust.add(tempAppt);
-            }
-            DBConnection.closeConnection();
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }            
+
+    public ObservableList<Appointment> getAllApptList() {
+        return allApptList;
     }
-    
-    public void downloadAppt(User user) {
-        try {
-            apptListByUser.clear();
-            // Connect to the DB
-            DBConnection.makeConnection();
-            
-            String sqlStatement = "SELECT customerName, appointmentId, "
+        
+    public void downloadAppt(AbstractModel model) {
+        // Case model to either Customer or User obj
+        String modelClass;
+        if (model != null) {
+            ModelFactory.getModelClass(model);
+            modelClass = model.getClass().getSimpleName();
+        } else {
+            modelClass = "all";
+        }
+        switch (modelClass) {
+            case "Customer": 
+                apptListByCust.clear();
+                sqlStatement = "SELECT customerName, appointmentId, "
+                    + "appointment.customerId, title, description, location, contact, "
+                    + "start, end, type, appointment.userId, userName\n"
+                    + "FROM appointment\n"
+                    + "INNER JOIN customer\n"
+                    + "ON appointment.customerId = customer.customerId\n"
+                    + "INNER JOIN user\n"
+                    + "ON appointment.userId = user.userId\n"
+                    + "WHERE customer.customerId = " + ((Customer)model).getCustomerID();
+                break;
+            case "User":
+                apptListByUser.clear();
+                sqlStatement = "SELECT customerName, appointmentId, "
                 + "appointment.customerId, title, description, location, contact, "
                 + "start, end, type, appointment.userId, userName\n"
                 + "FROM appointment\n"
@@ -163,8 +135,23 @@ public class AppointmentDB {
                 + "ON appointment.customerId = customer.customerId\n"
                 + "INNER JOIN user\n"
                 + "ON appointment.userId = user.userId\n"
-                + "WHERE appointment.userId = " + user.getUserId();
-            
+                + "WHERE appointment.userId = " + ((User)model).getUserId();
+                break;
+            case "all":
+                sqlStatement = "SELECT customerName, appointmentId, "
+                + "appointment.customerId, title, description, location, contact, "
+                + "start, end, type, appointment.userId, userName\n"
+                + "FROM appointment\n"
+                + "INNER JOIN customer\n"
+                + "ON appointment.customerId = customer.customerId\n"
+                + "INNER JOIN user\n"
+                + "ON appointment.userId = user.userId";
+                break;
+        }
+        
+        try {
+            // Connect to the DB
+            DBConnection.makeConnection();
             Query.makeQuery(sqlStatement);
             ResultSet result = Query.getResult();            
             
@@ -193,7 +180,18 @@ public class AppointmentDB {
                     result.getString("location"), result.getString("type"),
                     localStartTS, localEndTS,
                     result.getString("userName"), result.getString("userName"));
-                apptListByUser.add(tempAppt);
+                
+                switch (modelClass) {
+                    case "Customer":
+                        apptListByCust.add(tempAppt);
+                        break;
+                    case "User":
+                        apptListByUser.add(tempAppt);
+                        break;
+                    case "all":
+                        allApptList.add(tempAppt);
+                        break;
+                }
             }
             DBConnection.closeConnection();
         } catch (Exception ex) {
@@ -207,7 +205,7 @@ public class AppointmentDB {
             DBConnection.makeConnection();
             
             // Start and End Time have been converted to DB TimeZone in AddAppointmentController
-            String sqlStatement = "INSERT INTO appointment\n" +
+            sqlStatement = "INSERT INTO appointment\n" +
                 "(customerId, title, description, location, contact, url, start, end, "
                 + "createDate, createdBy, lastUpdate, lastUpdateBy, type, userId)\n" +
                 "VALUES (" + selectedCust.getCustomerID() + ", '" + newAppt.getTitle() +
@@ -241,7 +239,6 @@ public class AppointmentDB {
     }
     
     public void updateAppt(Appointment newAppt, Appointment selectedAppt, Customer selectedCust) {
-        String sqlStatement;
         try {
             // Connect to the DB
             DBConnection.makeConnection();
@@ -271,7 +268,6 @@ public class AppointmentDB {
     }
     
     public void deleteAppt(Appointment selectedAppt, Customer selectedCust ) {
-        String sqlStatement;
         try {
             
             int apptID = selectedAppt.getAppointmentId();

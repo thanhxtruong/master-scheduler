@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * 
  * @author thanhtruong
  */
-public abstract class AbstractController extends ControllerFactory {
+public abstract class AbstractController {
     private MainApp mainApp;
     private Stage dialogStage;
     private Customer selectedCust;

@@ -44,7 +44,7 @@ import javafx.stage.WindowEvent;
  * 
  * @author thanhtruong
  */
-public class WindowsDisplay extends ControllerFactory {
+public class WindowsDisplay {
     ResourceBundle rb;
     String FXMLPath;
     String title;
@@ -106,9 +106,6 @@ public class WindowsDisplay extends ControllerFactory {
                     controller.displayData(customer, null);
             else
                 controller.displayData(null, null);
-            if (user != null) {
-                controller.displayData(null, null);
-            }
             
             stage.show();
             

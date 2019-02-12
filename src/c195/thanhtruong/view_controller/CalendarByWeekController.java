@@ -280,7 +280,7 @@ public class CalendarByWeekController extends AbstractController implements Init
                         container.add(apptPane, colNo, startHr+1, 1, rSpan);
                         String apptDetails = appt.getStartDateTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH : mm")) +
                                 " - " + appt.getEndDateTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH : mm")) + 
-                                "\n" + appt.getTitle() + "\n " + appt.getLocation();
+                                "\n" + appt.getTitle() + "\n" + appt.getLocation();
                         Label apptLabel = new Label(apptDetails);
                         apptLabel.setWrapText(true);
                         apptLabel.setFont(new Font(16));

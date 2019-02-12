@@ -16,7 +16,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author thanhtruong
  */
-public class Customer {
+public class Customer extends AbstractModel {
     private IntegerProperty customerID = new SimpleIntegerProperty();
     private StringProperty customerName = new SimpleStringProperty();
     private IntegerProperty addressId = new SimpleIntegerProperty();

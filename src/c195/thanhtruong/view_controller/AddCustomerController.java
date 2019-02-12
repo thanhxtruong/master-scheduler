@@ -5,12 +5,14 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import c195.thanhtruong.model.DataInput;
+import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -59,7 +61,7 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(DataInput.isInputMissing(customerName.getText(),address1.getText(),
+        if(!DataInput.isInputMissing(customerName.getText(),address1.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     cityCbo.getSelectionModel().getSelectedItem(),
                     postalCode.getText(), phoneNumber.getText())) {
@@ -75,6 +77,7 @@ public class AddCustomerController extends AbstractController implements Initial
             custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
                             cityCbo.getSelectionModel().getSelectedItem(),
                             newCust);
+            
             getDialogStage().close();
             WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("CustomerList.fxml")

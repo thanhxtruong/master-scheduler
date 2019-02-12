@@ -6,6 +6,7 @@
 package c195.thanhtruong.model;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.service.ActivityLogger;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
@@ -220,6 +221,16 @@ public class AppointmentDB {
                         
             Query.makeQuery(sqlStatement);
             
+            // Get appointmentId for the new appointment
+            sqlStatement = "SELECT last_insert_id() FROM appointment";
+            Query.makeQuery(sqlStatement);
+            ResultSet result = Query.getResult();
+            result = Query.getResult();
+            result.next();
+            int apptID = result.getInt("last_insert_id()");
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
+                    " added a new appointmentId #" + apptID);
+            
             DBConnection.closeConnection();
             
             //Update apptListByCust;
@@ -248,6 +259,9 @@ public class AppointmentDB {
                             "WHERE appointmentId = " + selectedAppt.getAppointmentId();
             Query.makeQuery(sqlStatement);
             
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() + 
+                    " updated appointmentId #" + selectedAppt.getAppointmentId() );
+            
             DBConnection.closeConnection();
             
             downloadAppt(selectedCust);
@@ -259,12 +273,17 @@ public class AppointmentDB {
     public void deleteAppt(Appointment selectedAppt, Customer selectedCust ) {
         String sqlStatement;
         try {
+            
+            int apptID = selectedAppt.getAppointmentId();
             // Connect to the DB
             DBConnection.makeConnection();
             
             sqlStatement = "DELETE FROM appointment\n" +
                             "WHERE appointmentId = " + selectedAppt.getAppointmentId();
-            Query.makeQuery(sqlStatement);          
+            Query.makeQuery(sqlStatement);
+            
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
+                    " deleted appointmentId #" + apptID);
                         
             DBConnection.closeConnection();
             

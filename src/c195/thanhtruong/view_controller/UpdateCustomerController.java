@@ -81,7 +81,7 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     @FXML
     void handleSaveUpdate(ActionEvent event) {
-        if(DataInput.isInputMissing(customerName.getText(),address1.getText(),
+        if(!DataInput.isInputMissing(customerName.getText(),address1.getText(),
                     currentCountry.getText(), currentCity.getText(),
                     postalCode.getText(), phoneNumber.getText())) {
             newCust = new Customer(customerName.getText(),

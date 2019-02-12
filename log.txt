@@ -1,0 +1,32 @@
+Feb 12, 2019 5:37:17 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: testlogged in
+Feb 12, 2019 5:40:41 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:41:59 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:43:32 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:46:09 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:49:56 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:50:40 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:51:54 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:58:26 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 5:58:29 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 12, 2019 6:19:10 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 6:24:39 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: testupdated appointmentId #8
+Feb 12, 2019 6:25:08 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 12, 2019 6:25:39 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 6:29:31 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 12, 2019 6:29:48 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: testupdated customerId #2

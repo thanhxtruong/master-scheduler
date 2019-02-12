@@ -61,7 +61,6 @@ public class HomeController extends AbstractController implements Initializable 
     @FXML
     void logout(ActionEvent event) {
         DialogPopup.exitConfirmation(getDialogStage());
-        getDialogStage().close();
     }
 
     @FXML

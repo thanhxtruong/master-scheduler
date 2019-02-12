@@ -6,6 +6,7 @@
 package c195.thanhtruong.model;
 
 import c195.thanhtruong.MainApp;
+import c195.thanhtruong.service.ActivityLogger;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
@@ -129,6 +130,9 @@ public class CustomerDB{
             
             Query.makeQuery(sqlStatement);
             
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
+                    " added a new customerId #" + ID);
+            
             DBConnection.closeConnection();
             
             // Update customerList
@@ -175,6 +179,9 @@ public class CustomerDB{
                 Query.makeQuery(sqlStatement);
             }
             
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
+                    " updated customerId #" + selectedCust.getCustomerID());
+            
             DBConnection.closeConnection();
             downloadCustDB();
         } catch (Exception ex) {
@@ -190,6 +197,7 @@ public class CustomerDB{
     public boolean deleteCustomer(Customer customer) {
         String sqlStatement;
         try {
+            int custId = customer.getCustomerID();
             // Connect to the DB
             DBConnection.makeConnection();
             
@@ -199,6 +207,9 @@ public class CustomerDB{
                             "WHERE customerId = " + customer.getCustomerID() + 
                             " AND address.addressId = " + customer.getAddressId();
             Query.makeQuery(sqlStatement);
+            
+            ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
+                    " deleted customerId #" + custId);
             
             DBConnection.closeConnection();
             

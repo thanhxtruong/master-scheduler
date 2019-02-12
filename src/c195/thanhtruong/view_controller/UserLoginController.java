@@ -9,6 +9,7 @@ import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.service.ActivityLogger;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.net.URL;
@@ -83,6 +84,9 @@ public class UserLoginController extends AbstractController implements Initializ
                 // Download and store all appointments by User in apptListByUser in AppointmentDB
                 AppointmentDB apptDB = AppointmentDB.getInstance();
                 apptDB.downloadAppt(MainApp.getCurrentUser());
+                
+                // Log activity
+                ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() + " logged in");
                 
                 getDialogStage().close();
                 showHome();

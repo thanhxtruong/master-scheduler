@@ -5,8 +5,10 @@
  */
 package c195.thanhtruong.view_controller;
 
+import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
+import c195.thanhtruong.service.ActivityLogger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +60,10 @@ public class DialogPopup {
                                 "Are you sure you want to exit?",
                                 ButtonType.YES, ButtonType.NO);
         exitConfirmation.setHeaderText("Confirm Exit");
-        if(exitConfirmation.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){            
+        if(exitConfirmation.showAndWait().orElse(ButtonType.NO) == ButtonType.YES){
+            if (Thread.currentThread().getStackTrace()[2].getClassName().equals("c195.thanhtruong.view_controller.HomeController")) {
+                ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() + " logged out");
+            }
             currentStage.close();
             return true;
         } else {

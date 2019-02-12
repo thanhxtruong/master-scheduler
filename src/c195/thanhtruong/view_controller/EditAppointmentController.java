@@ -11,6 +11,7 @@ import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.DataInput;
+import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

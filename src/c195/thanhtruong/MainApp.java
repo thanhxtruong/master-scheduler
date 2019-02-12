@@ -10,8 +10,13 @@ import c195.thanhtruong.model.User;
 import c195.thanhtruong.service.ApptAlertService;
 import c195.thanhtruong.view_controller.WindowsBuilder;
 import c195.thanhtruong.view_controller.WindowsDisplay;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javafx.application.Application;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -73,7 +78,7 @@ public class MainApp extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         launch(args);
     }
     

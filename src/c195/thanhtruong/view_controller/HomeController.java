@@ -74,10 +74,13 @@ public class HomeController extends AbstractController implements Initializable 
     @FXML
     void handleReportMenu(ActionEvent event) {
         String selectedReport = DialogPopup.selectReport();
+        if (selectedReport == null) {
+            selectedRepport = "";
+        }
         getDialogStage().close();
         WindowsDisplay windowDisplay;
         switch (selectedReport) {
-            case "Total appointment by Type and Month":
+            case "Total Appointment by Type and Month":
                 windowDisplay = new WindowsBuilder()
                     .setFXMLPath("ApptTypeByMonthReport.fxml")
                     .setTitle("Total Appointments by Type and Month")
@@ -89,6 +92,20 @@ public class HomeController extends AbstractController implements Initializable 
                     .setFXMLPath("AllApptReport.fxml")
                     .setTitle("All Apppointments Sorted By Consultant and Customer")
                     .build();
+                windowDisplay.displayScene();
+                break;
+            case "All Customers":
+                windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("AllCustomersReport.fxml")
+                    .setTitle("All Customers")
+                    .build();
+                windowDisplay.displayScene();
+                break;
+            default:
+                windowDisplay = new WindowsBuilder()
+                .setFXMLPath("Home.fxml")
+                .setTitle("Home")
+                .build();
                 windowDisplay.displayScene();
                 break;
         }

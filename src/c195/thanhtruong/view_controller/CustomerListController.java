@@ -192,15 +192,13 @@ public class CustomerListController extends AbstractController implements Initia
     public void initialize(URL url,
             ResourceBundle rb) {
         
-        custDB = new CustomerDB();
-        custDB.downloadCustDB();
-        displayCustTable(custDB);
-        
     }    
 
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
-        
+        custDB = new CustomerDB();
+        custDB.downloadCustDB();
+        displayCustTable(custDB);
     }
     
 }

@@ -68,3 +68,15 @@ Feb 13, 2019 5:12:30 AM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
 Feb 13, 2019 5:13:52 AM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
+Feb 13, 2019 5:37:21 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 13, 2019 5:44:13 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 13, 2019 5:49:30 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 13, 2019 5:53:34 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 13, 2019 5:54:03 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 13, 2019 5:55:02 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out

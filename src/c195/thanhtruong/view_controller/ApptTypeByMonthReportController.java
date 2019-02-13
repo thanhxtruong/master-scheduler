@@ -9,17 +9,15 @@ import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptTypeCount;
 import c195.thanhtruong.model.Customer;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +26,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * FXML Controller class
@@ -44,9 +44,46 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
     private TableColumn<ApptTypeCount, Integer> totalApptCol;
     @FXML
     private Button closeButton;
+     @FXML
+    private Button saveBut;
     
     private Map<String, Map<Integer, Map<Integer, ObservableList<Integer>>>> apptTypeByMonth = new TreeMap<>();
     private ObservableList<ApptTypeCount> apptCount = FXCollections.observableArrayList();
+
+    @FXML
+    void handleClose(ActionEvent event) {
+        getDialogStage().close();
+        WindowsDisplay windowDisplay = new WindowsBuilder()
+                .setFXMLPath("Home.fxml")
+                .setTitle("Home")
+                .build();
+        windowDisplay.displayScene();
+    }
+
+    @FXML
+    void saveReport(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Report");
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+                new ExtensionFilter("CSV Files", "*.csv"),
+                new ExtensionFilter("All Files", "*.*"));
+        File file = fileChooser.showSaveDialog(getDialogStage());
+        if (file != null) {
+            saveFile(file);
+        }
+    }
+    
+    private void saveFile(File file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for(ApptTypeCount apptType:apptCount) {
+                writer.write(apptType.getApptType() + ",");
+                writer.write(apptType.getCount() + "\r\n");
+            }
+        } catch(IOException ex) {
+            System.out.println("Unable to Save file");
+            ex.printStackTrace();
+        }
+    }
     
     private void mapApptByType() {
         AppointmentDB apptDB = AppointmentDB.getInstance();
@@ -84,11 +121,6 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
-
-    @FXML
-    private void handleClose(ActionEvent event) {
-        
-    }
 
     @Override
     public void displayData(Customer selectedCust,

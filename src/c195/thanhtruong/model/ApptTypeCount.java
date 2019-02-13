@@ -31,4 +31,12 @@ public class ApptTypeCount {
     public IntegerProperty countProperty() {
         return count;
     }
+    
+    public String getApptType() {
+        return apptType.get();
+    }
+    
+    public int getCount() {
+        return count.get();
+    }
 }

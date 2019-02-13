@@ -20,6 +20,7 @@
       <ButtonBar layoutX="84.0" layoutY="236.0" prefHeight="40.0" prefWidth="295.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.80000000000001">
         <buttons>
           <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+            <Button fx:id="saveBut" mnemonicParsing="false" onAction="#saveReport" text="Save" />
         </buttons>
       </ButtonBar>
    </children>

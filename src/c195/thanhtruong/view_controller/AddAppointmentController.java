@@ -14,6 +14,7 @@ import c195.thanhtruong.model.DataInput;
 import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -90,6 +91,7 @@ public class AddAppointmentController extends AbstractController implements Init
         
         boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
+        boolean validApptTime = isApptTimeValid(date, startHr, startMin, endHr, endMin)
         if (!missingInput) {
             // Concatanate the String Start DateTime3
             String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
@@ -143,6 +145,46 @@ public class AddAppointmentController extends AbstractController implements Init
                 .setCustomer(selectedCust)
                 .build();
         windowDisplay.displayScene();
+    }
+    
+    private boolean validApptTime(LocalDate date, int startHr, int startMin, int endHr, int endMin) {
+        String errorMessage = "";
+        
+        try {
+            date.getDayOfWeek().getValue();
+        }
+        
+        if(partID.getText() == null || partID.getText().length() == 0){
+            errorMessage += "No valid Part ID!\n";
+        } else {
+            try {
+                Integer.parseInt(partID.getText());
+            } catch(NumberFormatException e) {
+                errorMessage += "No valid Part ID (must be an integer)!\n";
+            }
+        }
+        
+        if(errorMessage.length() == 0){
+            return true;
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("Please correct invalid input");
+            alert.setContentText(errorMessage);
+            
+            alert.showAndWait();
+            
+            return false;
+        }
+    }
+    
+    private void checkValidApptDate(LocalDate date, int startHr, int startMin, int endHr, int endMin) {
+        if (date.getDayOfWeek().getValue() == 7 || date.getDayOfWeek().getValue() == 8
+                || startHr >= LocalDateTime.now(ZoneId.systemDefault()).getHour()
+                || ) {
+            throw new IllegalArgumentException("Appointment is outside business hours");
+        }
     }
 
     /**

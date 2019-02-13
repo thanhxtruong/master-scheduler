@@ -75,7 +75,7 @@ public class HomeController extends AbstractController implements Initializable 
     void handleReportMenu(ActionEvent event) {
         String selectedReport = DialogPopup.selectReport();
         if (selectedReport == null) {
-            selectedRepport = "";
+            selectedReport = "";
         }
         getDialogStage().close();
         WindowsDisplay windowDisplay;

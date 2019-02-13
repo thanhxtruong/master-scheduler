@@ -180,7 +180,7 @@ public class AppointmentDB {
                     result.getString("title"), result.getString("description"),
                     result.getString("location"), result.getString("type"),
                     localStartTS, localEndTS,
-                    result.getString("userName"), result.getString("userName"));
+                    result.getString("userName"), result.getString("customerName"));
                 
                 switch (modelClass) {
                     case "Customer":

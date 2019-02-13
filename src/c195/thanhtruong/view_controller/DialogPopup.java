@@ -97,6 +97,7 @@ public class DialogPopup {
     public static String selectReport() {
         List<String> reportList = new ArrayList<>();
         reportList.add("Total appointment by Type and Month");
+        reportList.add("All Appointments");
         
         ChoiceDialog<String> dialog = new ChoiceDialog<>(null, reportList);
         dialog.setTitle("Report Selection");

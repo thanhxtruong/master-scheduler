@@ -75,13 +75,22 @@ public class HomeController extends AbstractController implements Initializable 
     void handleReportMenu(ActionEvent event) {
         String selectedReport = DialogPopup.selectReport();
         getDialogStage().close();
+        WindowsDisplay windowDisplay;
         switch (selectedReport) {
-            case "Total appointment by Type and Month":
-                WindowsDisplay windowDisplay = new WindowsBuilder()
+            case "Total Appointment by Type and Month":
+                windowDisplay = new WindowsBuilder()
                     .setFXMLPath("ApptTypeByMonthReport.fxml")
                     .setTitle("Total Appointments by Type and Month")
                     .build();
                 windowDisplay.displayScene();
+                break;
+            case "All Appointments":
+                windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("AllApptReport.fxml")
+                    .setTitle("All Apppointments Sorted By Consultant and Customer")
+                    .build();
+                windowDisplay.displayScene();
+                break;
         }
         
     }

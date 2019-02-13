@@ -5,47 +5,30 @@
  */
 package c195.thanhtruong.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
  * @author TTruong
  */
 public class ApptTypeCount {
-    private Map<String, ObservableList<Integer>> apptTypeByMonth = new HashMap<>();
-    private ObservableList<ApptTypeCount> apptCount = FXCollections.observableArrayList();
-    private StringProperty apptType;
-    private IntegerProperty count;
-
-    public ApptTypeCount(StringProperty apptType, IntegerProperty count) {
-        this.apptType = apptType;
-        this.count = count;
-    }
     
-    public void mapApptByType() {
-        AppointmentDB apptDB = AppointmentDB.getInstance();
-        apptDB.downloadAppt(null);
-        
-        String key;
-        for (Appointment appt:AppointmentDB.getInstance().getAllApptList()) {
-            key = appt.getType();
-            if (!apptTypeByMonth.containsKey(key)) {
-                apptTypeByMonth.put(key, FXCollections.observableArrayList());
-            }
-            apptTypeByMonth.get(key).add(new Integer(appt.getAppointmentId()));
-        }
-        
-        for (StringProperty )
+    private StringProperty apptType = new SimpleStringProperty();
+    private IntegerProperty count = new SimpleIntegerProperty();
+
+    public ApptTypeCount(String apptType, Integer count) {
+        this.apptType.set(apptType);
+        this.count.set(count);
     }
 
-    public Map<String, ObservableList<Integer>> getApptTypeByMonth() {
-        return apptTypeByMonth;
+    public StringProperty apptTypeProperty() {
+        return apptType;
     }
-    
-    
+
+    public IntegerProperty countProperty() {
+        return count;
+    }
 }

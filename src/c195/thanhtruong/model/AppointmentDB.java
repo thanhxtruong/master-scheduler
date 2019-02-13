@@ -82,6 +82,7 @@ public class AppointmentDB {
         };
         apptListByCust = FXCollections.observableArrayList(extractor);
         apptListByUser = FXCollections.observableArrayList(extractor);
+        allApptList = FXCollections.observableArrayList(extractor);
         
         apptListByCust.addListener(listener);
     }

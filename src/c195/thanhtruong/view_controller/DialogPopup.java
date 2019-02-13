@@ -93,4 +93,21 @@ public class DialogPopup {
         }
         return selectedCust;
     }
+    
+    public static String selectReport() {
+        List<String> reportList = new ArrayList<>();
+        reportList.add("Total appointment by Type and Month");
+        
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(null, reportList);
+        dialog.setTitle("Report Selection");
+        dialog.setHeaderText("Please, select a report from the drop-down!");
+        dialog.setContentText("Select a report:");
+        
+        Optional<String> selectedReport = dialog.showAndWait();
+        if (selectedReport.isPresent()) {
+            return selectedReport.get();
+        } else {
+            return null;
+        }
+    }
 }

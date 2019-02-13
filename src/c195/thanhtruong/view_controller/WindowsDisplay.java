@@ -107,6 +107,13 @@ public class WindowsDisplay {
             else
                 controller.displayData(null, null);
             
+            stage.setOnShown(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    stage.centerOnScreen();
+                }
+                
+            });
             stage.show();
             
         } catch(IOException e) {

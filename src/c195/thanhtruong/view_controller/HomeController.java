@@ -13,10 +13,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -47,6 +44,7 @@ public class HomeController extends AbstractController implements Initializable 
     @FXML
     void handleCalModButton(ActionEvent event) {
         Customer selectedCust = DialogPopup.selectCustomer();
+        getDialogStage().close();
         if (selectedCust != null) {
             WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("CalendarByCust.fxml")
@@ -75,7 +73,17 @@ public class HomeController extends AbstractController implements Initializable 
 
     @FXML
     void handleReportMenu(ActionEvent event) {
-
+        String selectedReport = DialogPopup.selectReport();
+        getDialogStage().close();
+        switch (selectedReport) {
+            case "Total appointment by Type and Month":
+                WindowsDisplay windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("ApptTypeByMonthReport.fxml")
+                    .setTitle("Total Appointments by Type and Month")
+                    .build();
+                windowDisplay.displayScene();
+        }
+        
     }
     
     private void initService() {

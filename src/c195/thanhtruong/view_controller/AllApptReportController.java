@@ -7,8 +7,13 @@ package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
+import c195.thanhtruong.model.ApptTypeCount;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.ReportSaver;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -79,7 +84,29 @@ public class AllApptReportController extends AbstractController implements Initi
 
     @FXML
     private void saveReport(ActionEvent event) {
-        
+        File file = ReportSaver.prepareFile(getDialogStage());
+        if (file != null) {
+            saveFile(file);
+        }
+    }
+    
+    private void saveFile(File file) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for(Appointment appt:apptList) {
+                writer.write(appt.getTitle() + ", ");
+                writer.write(appt.getDescription() + ", ");
+                writer.write(appt.getLocation() + ", ");
+                writer.write(appt.getType() + ", ");
+                writer.write(appt.getDate() + ", ");
+                writer.write(appt.getStartTime() + ", ");
+                writer.write(appt.getEndTime() + ", ");
+                writer.write(appt.getCustName() + ", ");
+                writer.write(appt.getUserName() + "\r\n");
+            }
+        } catch(IOException ex) {
+            System.out.println("Unable to Save file");
+            ex.printStackTrace();
+        }
     }
 
     @Override

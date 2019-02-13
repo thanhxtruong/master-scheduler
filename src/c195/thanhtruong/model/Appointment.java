@@ -34,8 +34,11 @@ public class Appointment {
     
     private ObjectProperty<LocalDate> date = new SimpleObjectProperty();
     private ObjectProperty<LocalTime> startTime = new SimpleObjectProperty();
-    private ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();    
-
+    private ObjectProperty<LocalTime> endTime = new SimpleObjectProperty();
+    
+    DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
+    DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("kk:mm:ss.S");
+    
     public Appointment(String title, String description, String location,
             String type, Timestamp startDateTime, Timestamp endDateTime, String userName, String custName) {
         this.title.set(title);
@@ -54,12 +57,10 @@ public class Appointment {
         this.appointmentId.set(appointmentId);
 
         // Construct appointment date, start, and end time for use in Appointment List TableView
-        DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String txtStartDT = startDateTime.toString();
         String txtEndDT = endDateTime.toString();                
         this.date.setValue(LocalDate.parse(txtStartDT.substring(0, 10), dFormatter));
-        
-        DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("kk:mm:ss.S");        
+               
         this.startTime.setValue(LocalTime.parse(txtStartDT.substring(11), tFormatter));
         this.endTime.setValue(LocalTime.parse(txtEndDT.substring(11), tFormatter));
         
@@ -99,6 +100,18 @@ public class Appointment {
 
     public String getCustName() {
         return custName.get();
+    }
+    
+    public String getDate() {
+        return date.getValue().format(dFormatter);
+    }
+    
+    public String getStartTime() {
+        return startTime.getValue().format(tFormatter);
+    }
+    
+    public String getEndTime() {
+        return endTime.getValue().format(tFormatter);
     }
     
     public IntegerProperty appointmentIdProperty() {

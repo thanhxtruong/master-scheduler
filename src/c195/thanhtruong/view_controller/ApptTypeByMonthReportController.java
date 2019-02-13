@@ -9,6 +9,7 @@ import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptTypeCount;
 import c195.thanhtruong.model.Customer;
+import c195.thanhtruong.model.ReportSaver;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -62,12 +63,7 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
 
     @FXML
     void saveReport(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Report");
-        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
-                new ExtensionFilter("CSV Files", "*.csv"),
-                new ExtensionFilter("All Files", "*.*"));
-        File file = fileChooser.showSaveDialog(getDialogStage());
+        File file = ReportSaver.prepareFile(getDialogStage());
         if (file != null) {
             saveFile(file);
         }
@@ -76,7 +72,7 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
     private void saveFile(File file) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for(ApptTypeCount apptType:apptCount) {
-                writer.write(apptType.getApptType() + ",");
+                writer.write(apptType.getApptType() + ", ");
                 writer.write(apptType.getCount() + "\r\n");
             }
         } catch(IOException ex) {

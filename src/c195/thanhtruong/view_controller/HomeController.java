@@ -77,7 +77,7 @@ public class HomeController extends AbstractController implements Initializable 
         getDialogStage().close();
         WindowsDisplay windowDisplay;
         switch (selectedReport) {
-            case "Total Appointment by Type and Month":
+            case "Total appointment by Type and Month":
                 windowDisplay = new WindowsBuilder()
                     .setFXMLPath("ApptTypeByMonthReport.fxml")
                     .setTitle("Total Appointments by Type and Month")

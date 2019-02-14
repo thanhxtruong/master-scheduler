@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
@@ -25,8 +20,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class.
+ * Loaded by MainApp. Validate username and password when user clicks Log-in.
+ * Once validated, load the Home.fxml window.
  * @author thanhtruong
  */
 public class UserLoginController extends AbstractController implements Initializable {
@@ -99,6 +95,7 @@ public class UserLoginController extends AbstractController implements Initializ
 
     /**
      * Initializes the controller class.
+     * ResourceBundle is used for this FXML only for language translation.
      */
     @Override
     public void initialize(URL url,
@@ -114,7 +111,7 @@ public class UserLoginController extends AbstractController implements Initializ
 
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
-        
+        // Override method inherited from AbstractController
     }
     
 }

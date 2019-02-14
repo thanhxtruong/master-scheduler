@@ -23,8 +23,10 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 /**
+ * MainApp used to launch the UserLogin FXML, which starts the application.
  * Getters are used to pass Stage and mainApp instances to other controllers for 
  * loading FXML from controller (indirectly) instead of from mainApp.
+ * The logged-in user is also set in MainApp and can be retrieved from here.
  * @author thanhtruong
  */
 public class MainApp extends Application {
@@ -53,7 +55,6 @@ public class MainApp extends Application {
         rb = ResourceBundle.getBundle("language_files/rb", myLocale);
                 
         showLoginScreen();
-//        showScreen(); 
     }    
     
     public void showLoginScreen(){
@@ -64,17 +65,7 @@ public class MainApp extends Application {
                 .build();
         windowDisplay.displayScene();
     }
-
-//    public void showScreen(){
-//        // Use of Builder Pattern
-//        WindowsDisplay windowDisplay = new WindowsBuilder()
-//                .setRb(rb)
-//                .setFXMLPath("CalendarByCust.fxml")
-//                .build();
-//        windowDisplay.displayScene();
-//    }
     
-
     /**
      * @param args the command line arguments
      */

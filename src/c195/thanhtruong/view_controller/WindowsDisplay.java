@@ -27,21 +27,17 @@ import javafx.stage.WindowEvent;
 /**
  * The WindowsDisplay class is used to load FXML, set BundleResource (as needed),
  * and pass an instance of mainApp and active Stage to the controller for use
- * in other method calls defined in controller.
- * There are two static overloading methods:
- *      1. The method with ResourceBundle in the parameters is used when there is
- *      language translator used (currently used for Login FXML only)
- *      2. The method WITHOUT ResourceBundle works the same way, except there is
- *      no ResourceBundle
- * The displayModalWindow() static method is used to display a Window on top of
- * the current active Window.
- * @param rb (optional) ResourceBundle for the language_files
- * @param rootLayout The layout container for the FXML
- * @param primaryStage The active stage in mainApp
- * @param title (optional) The title for the stage
- * @param stream The stream to load the logo icon
- * @param mainApp An instance of mainApp to pass to controller
+ * in other method calls defined in controller.\
  * 
+ * @param rb (optional) ResourceBundle for the language_files
+ * @param FXMLPath The path to the FXML file to be loaded for this scene
+ * @param title The title for the stage
+ * @param ownerStage (optional) Set onwerStage for Window modality if not null
+ * @param customer (optional) Set the selected customer in the @override
+ * displayData() method inherited from AbstractController. This parameter is used
+ * associate customer information and/or appointment by customer data with the
+ * selected customer
+ * @param  appointment (optional) same as the "customer" parameter
  * @author thanhtruong
  */
 public class WindowsDisplay {
@@ -50,19 +46,17 @@ public class WindowsDisplay {
     String title;
     Stage ownerStage;
     Customer customer;
-    User user;
     Appointment appointment;
     private static final InputStream logoStream = WindowsDisplay.class.getClassLoader().getResourceAsStream("resources/images/logo.png");
 
     public WindowsDisplay(ResourceBundle rb, String FXMLPath, String title,
-        Stage ownerStage, Customer customer, User user, Appointment appointment) {
+        Stage ownerStage, Customer customer, Appointment appointment) {
         
         this.rb = rb;
         this.FXMLPath = FXMLPath;
         this.title = title;
         this.ownerStage = ownerStage;
         this.customer = customer;
-        this.user = user;
         this.appointment = appointment;
     }
         
@@ -84,8 +78,7 @@ public class WindowsDisplay {
                 stage.initOwner(ownerStage);
             } else {
                 stage = MainApp.getPrimaryStage();
-            }            
-            stage.centerOnScreen();
+            }
             stage.setScene(scene);
             // Title is the key-value pair defined in ResourceBundle
             if (rb != null) {                

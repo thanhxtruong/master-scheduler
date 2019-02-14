@@ -24,7 +24,6 @@ public class WindowsBuilder {
     String title;
     Stage ownerStage;
     Customer customer;
-    User user;
     Appointment appointment;
     
     public WindowsBuilder setRb(ResourceBundle rb) {
@@ -50,12 +49,7 @@ public class WindowsBuilder {
     public WindowsBuilder setCustomer(Customer customer) {
         this.customer = customer;
         return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
+    }    
     
     public WindowsBuilder setAppointment(Appointment appointment) {
         this.appointment = appointment;
@@ -63,6 +57,6 @@ public class WindowsBuilder {
     }
     
     public WindowsDisplay build() {
-        return new WindowsDisplay(rb, FXMLPath, title, ownerStage, customer, user, appointment);
+        return new WindowsDisplay(rb, FXMLPath, title, ownerStage, customer, appointment);
     }
 }

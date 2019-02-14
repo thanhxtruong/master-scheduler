@@ -107,6 +107,7 @@ public class AddAppointmentController extends AbstractController implements Init
                                     startHr, startMin, endHr, endMin);
             Appointment.checkValidApptDate(apptDate.getValue(), Integer.parseInt(startHr),
                     Integer.parseInt(startMin), Integer.parseInt(endHr), Integer.parseInt(endMin));
+            AppointmentDB.getInstance().checkOverlappingAppt(ldtStart, ldtEnd);
         } catch (NullPointerException | IllegalArgumentException ex)  {
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
@@ -114,7 +115,8 @@ public class AddAppointmentController extends AbstractController implements Init
                                     ex.getMessage(),
                                     AlertType.ERROR);
         } finally {
-            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()) {
+            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()
+                    && AppointmentDB.isOverlappedAppt()) {
                 // Convert to DB timezone
                 ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
                 ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));

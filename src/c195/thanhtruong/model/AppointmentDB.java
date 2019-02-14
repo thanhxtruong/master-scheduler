@@ -45,6 +45,7 @@ public class AppointmentDB {
     private static Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMapByWeek;
     private static final AppointmentDB instance;
     private String sqlStatement;
+    private static boolean overlappedAppt;
     
     static {
         instance = new AppointmentDB();
@@ -103,7 +104,11 @@ public class AppointmentDB {
     public ObservableList<Appointment> getAllApptList() {
         return allApptList;
     }
-        
+
+    public static boolean isOverlappedAppt() {
+        return overlappedAppt;
+    }
+            
     public void downloadAppt(AbstractModel model) {
         // Case model to either Customer or User obj
         String modelClass;
@@ -416,15 +421,34 @@ public class AppointmentDB {
         return null;
     }
     
-    private void checkOverlappingAppt(LocalDateTime startDT, LocalDateTime endDT) {
+    public void checkOverlappingAppt(LocalDateTime nStartDT, LocalDateTime nEndDT) {
         // Check for conflict within the customer-own apptList
+        LocalDateTime cStartDT, cEndDT;
         for (Appointment appt:apptListByCust) {
-            if ((startDT.isBefore(appt.getEndDateTime().toLocalDateTime()) &&
-                    endDT.isBefore(appt.getStartDateTime().toLocalDateTime())) ||
-                    startDT.isAfter(appt.getEndDateTime().toLocalDateTime())) {
-                
+            cStartDT = appt.getStartDateTime().toLocalDateTime();
+            cEndDT = appt.getEndDateTime().toLocalDateTime();
+            if (nStartDT.isEqual(cStartDT) || nEndDT.isEqual(cEndDT) ||
+                    (nStartDT.isAfter(cStartDT) && nStartDT.isBefore(cEndDT)) ||
+                    (nEndDT.isAfter(cStartDT) && nEndDT.isBefore(cEndDT))) {
+                overlappedAppt = true;
+                throw new IllegalArgumentException(
+                    "New appointment time is conflicting with existing AppointmentId #" + 
+                    appt.getAppointmentId());
             }
         }
+        for (Appointment appt:apptListByUser) {
+            cStartDT = appt.getStartDateTime().toLocalDateTime();
+            cEndDT = appt.getEndDateTime().toLocalDateTime();
+            if (nStartDT.isEqual(cStartDT) || nEndDT.isEqual(cEndDT) ||
+                    (nStartDT.isAfter(cStartDT) && nStartDT.isBefore(cEndDT)) ||
+                    (nEndDT.isAfter(cStartDT) && nEndDT.isBefore(cEndDT))) {
+                overlappedAppt = true;
+                throw new IllegalArgumentException(
+                    "New appointment time is conflicting with existing AppointmentId #" + 
+                    appt.getAppointmentId());
+            }
+        }
+        overlappedAppt = false;
     }
      
     public static void main(String[] args) {

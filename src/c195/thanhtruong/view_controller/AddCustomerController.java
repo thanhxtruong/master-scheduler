@@ -5,20 +5,17 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.CityDB;
 import c195.thanhtruong.model.CountryDB;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.CustomerDB;
 import c195.thanhtruong.model.DataInput;
-import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;

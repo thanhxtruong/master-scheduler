@@ -129,6 +129,7 @@ public class CustomerListController extends AbstractController implements Initia
         }
     }
     private void displayCustTable(CustomerDB custDB) {
+        // Lambda expression used for the Callback functional interface
         custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
         custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());
         phoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phone());
@@ -141,47 +142,66 @@ public class CustomerListController extends AbstractController implements Initia
         countryTableCol.setCellValueFactory(cellData -> cellData.getValue().country());
         customerTable.setItems(custDB.getCustomerList());
         
-        Predicate p = new Predicate() {
-            @Override
-            public boolean test(Object t) {
-                return true;
-            }
-            
-        };
+        // Lambda expressions used for the Predicate and ChangeListener
+        // functional interfaces. The code using anonymous classes are shown 
+        // in the commented-out code below for demonstration.
+        FilteredList<Customer> filteredCustomerByName = new FilteredList<>(
+                custDB.getCustomerList(), p -> true);
         
-        FilteredList<Customer> filteredCustomerByName = new FilteredList<>(custDB.getCustomerList(), p);
-        
-        ChangeListener listener = new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable,
-                    Object oldValue,
-                    Object newValue) {                
-        
-                Predicate<Customer> p2 = new Predicate<Customer>() {
-                    @Override
-                    public boolean test(Customer customer) {
-                        if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
-                            return true;
-                        }
-                        
-                        String lowerCaseFilter = newValue.toString().toLowerCase();
-                        
-                        if(customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                };
-                
-                filteredCustomerByName.setPredicate(p2);
-            }
-        };
-        
-        customerSearchText.textProperty().addListener(listener);
+        customerSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredCustomerByName.setPredicate(customer -> {
+                if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toString().toLowerCase();
+
+                if(customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
         
         SortedList<Customer> sortedData = new SortedList<>(filteredCustomerByName);
         sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
         customerTable.setItems(sortedData);
+        
+        
+        
+//        Predicate p = new Predicate() {
+//            @Override
+//            public boolean test(Object t) {
+//                return true;
+//            }
+//            
+//        };
+//        
+//        FilteredList<Customer> filteredCustomerByName = new FilteredList<>(custDB.getCustomerList(), p);
+//        
+//        ChangeListener listener = new ChangeListener() {
+//            @Override
+//            public void changed(ObservableValue observable, Object oldValue, Object newValue) {                
+//        
+//                Predicate<Customer> p2 = new Predicate<Customer>() {
+//                    @Override
+//                    public boolean test(Customer customer) {
+//                        if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
+//                            return true;
+//                        }
+//                        
+//                        String lowerCaseFilter = newValue.toString().toLowerCase();
+//                        
+//                        if(customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
+//                            return true;
+//                        }
+//                        return false;
+//                    }
+//                };
+//                
+//                filteredCustomerByName.setPredicate(p2);
+//            }
+//        };
     }
         
 

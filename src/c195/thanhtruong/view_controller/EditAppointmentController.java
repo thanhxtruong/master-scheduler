@@ -13,7 +13,6 @@ import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.DataInput;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -95,29 +94,31 @@ public class EditAppointmentController extends AbstractController implements Ini
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();
         String endMin = apptEndMin.getSelectionModel().getSelectedItem();
         
+        // Concatanate the String Start DateTime
+        String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
+        String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
+
+        // Parse String to LocalDateTime in order to covert to timezone in local DB
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
+        LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
+        LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
+        
         DataInput dataInput = new DataInput();
         try {
             dataInput.checkMissingInput(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
             Appointment.checkValidApptDate(apptDate.getValue(), Integer.parseInt(startHr),
                     Integer.parseInt(startMin), Integer.parseInt(endHr), Integer.parseInt(endMin));
+            AppointmentDB.getInstance().checkOverlappingAppt(ldtStart, ldtEnd);
         } catch (NullPointerException | IllegalArgumentException ex)  {
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
+                                    "",
                                     ex.getMessage(),
-                                    "Please, fill in the missing input",
                                     AlertType.ERROR);
         } finally {
-            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()) {
-                // Concatanate the String Start DateTime
-                String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
-                String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
-
-                // Parse String to LocalDateTime in order to covert to timezone in local DB
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
-                LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
-                LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
-
+            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()
+                    && !AppointmentDB.isOverlappedAppt()) {
                 //Convert LocalDateTime to ZonedDateTime using user's timezone
                 ZonedDateTime lczdtStart = ldtStart.atZone(ZoneId.systemDefault());
                 ZonedDateTime lczdtEnd = ldtEnd.atZone(ZoneId.systemDefault());

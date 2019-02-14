@@ -84,8 +84,7 @@ public class UpdateCustomerController extends AbstractController implements Init
         DataInput dataInput = new DataInput();
         try {
             dataInput.checkMissingInput(customerName.getText(),address1.getText(),
-                    countryCbo.getSelectionModel().getSelectedItem(),
-                    cityCbo.getSelectionModel().getSelectedItem(),
+                    currentCountry.getText(),currentCity.getText(),
                     postalCode.getText(), phoneNumber.getText());
             
         } catch (NullPointerException ex)  {
@@ -95,7 +94,7 @@ public class UpdateCustomerController extends AbstractController implements Init
                                     "Please, fill in the missing input",
                                     AlertType.ERROR);
         } finally {
-            if (dataInput.isMissingInput()) {
+            if (!dataInput.isMissingInput()) {
                 newCust = new Customer(customerName.getText(),
                     address1.getText(),
                     address2.getText(),

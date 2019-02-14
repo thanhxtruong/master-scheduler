@@ -11,10 +11,8 @@ import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.DataInput;
-import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -102,6 +100,10 @@ public class AddAppointmentController extends AbstractController implements Init
         LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
         
         DataInput dataInput = new DataInput();
+        // NullPointerException is thrown from the checkMissingInput() method call.
+        // IllegalArgumentException is thrown from the checkValidApptDate() and
+        // checkOverlappingAppt() method calls.
+        // try-catch-finally is used as shown below to catch the exceptions.
         try {
             dataInput.checkMissingInput(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
@@ -116,7 +118,7 @@ public class AddAppointmentController extends AbstractController implements Init
                                     AlertType.ERROR);
         } finally {
             if (!dataInput.isMissingInput() && Appointment.isValidApptDate()
-                    && AppointmentDB.isOverlappedAppt()) {
+                    && !AppointmentDB.isOverlappedAppt()) {
                 // Convert to DB timezone
                 ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
                 ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));

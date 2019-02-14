@@ -30,7 +30,7 @@ public class CustomerDB{
         this.customerList = FXCollections.observableArrayList();
     }
 
-    public static ObservableList<Customer> getCustomerList() {
+    public ObservableList<Customer> getCustomerList() {
         return customerList;
     }
     

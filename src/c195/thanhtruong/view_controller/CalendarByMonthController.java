@@ -66,7 +66,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
     @FXML
     private Button deleteApptBut;
     
-     @FXML
+    @FXML
     private Button apptDetailBut;
 
     @FXML

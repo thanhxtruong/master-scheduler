@@ -20,6 +20,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -68,7 +70,8 @@ public class AddAppointmentController extends AbstractController implements Init
     @FXML
     private Button addApptButton;
     
-    private Customer selectedCust;    
+    private Customer selectedCust;
+    private ObservableList apptList = FXCollections.observableArrayList();
     
     @FXML
     void handleAddAppt(ActionEvent event) {
@@ -89,51 +92,55 @@ public class AddAppointmentController extends AbstractController implements Init
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();
         String endMin = apptEndMin.getSelectionModel().getSelectedItem();
         
-        boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
+        // Concatanate the String DateTime
+        String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
+        String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
+
+        // Parse String to LocalDateTime in order to covert to timezone in local DB
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
+        LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
+        LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
+        
+        DataInput dataInput = new DataInput();
+        try {
+            dataInput.checkMissingInput(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
-        boolean validApptTime = isApptTimeValid(date, startHr, startMin, endHr, endMin)
-        if (!missingInput) {
-            // Concatanate the String Start DateTime3
-            String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
-            String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
-            
-            // Parse String to LocalDateTime in order to covert to timezone in local DB
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
-            LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
-            LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
-            
-            // Convert to DB timezone
-            ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
-            ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
-            
-            // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
-            LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
-            LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
-            Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
-            Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
-            
-            // Now, we're ready to create the new appointment to add to the DB
-            Appointment newAppt = new Appointment(title, description, loc, type,
-                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
-                    selectedCust.getCustomerName());
-            
-            AppointmentDB.getInstance().insertAppt(newAppt, selectedCust);
-            
-            getDialogStage().close();
-        } else {
+            Appointment.checkValidApptDate(apptDate.getValue(), Integer.parseInt(startHr),
+                    Integer.parseInt(startMin), Integer.parseInt(endHr), Integer.parseInt(endMin));
+        } catch (NullPointerException | IllegalArgumentException ex)  {
             DialogPopup.showAlert(getDialogStage(),
                                     "Warning",
-                                    "Missing input!",
-                                    "Please, fill in the missing input",
+                                    "",
+                                    ex.getMessage(),
                                     AlertType.ERROR);
+        } finally {
+            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()) {
+                // Convert to DB timezone
+                ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
+                ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
+
+                // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
+                LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
+                LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
+                Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
+                Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
+
+                // Now, we're ready to create the new appointment to add to the DB
+                Appointment newAppt = new Appointment(title, description, loc, type,
+                        lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
+                        selectedCust.getCustomerName());
+
+                AppointmentDB.getInstance().insertAppt(newAppt, selectedCust);
+
+                getDialogStage().close();
+                WindowsDisplay windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("CalendarByCust.fxml")
+                    .setTitle("Appointments")
+                    .setCustomer(selectedCust)
+                    .build();
+                windowDisplay.displayScene();
+            }
         }
-        getDialogStage().close();
-        WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CalendarByCust.fxml")
-                .setTitle("Appointments")
-                .setCustomer(selectedCust)
-                .build();
-        windowDisplay.displayScene();
     }
 
     @FXML
@@ -145,46 +152,6 @@ public class AddAppointmentController extends AbstractController implements Init
                 .setCustomer(selectedCust)
                 .build();
         windowDisplay.displayScene();
-    }
-    
-    private boolean validApptTime(LocalDate date, int startHr, int startMin, int endHr, int endMin) {
-        String errorMessage = "";
-        
-        try {
-            date.getDayOfWeek().getValue();
-        }
-        
-        if(partID.getText() == null || partID.getText().length() == 0){
-            errorMessage += "No valid Part ID!\n";
-        } else {
-            try {
-                Integer.parseInt(partID.getText());
-            } catch(NumberFormatException e) {
-                errorMessage += "No valid Part ID (must be an integer)!\n";
-            }
-        }
-        
-        if(errorMessage.length() == 0){
-            return true;
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Input");
-            alert.setHeaderText("Please correct invalid input");
-            alert.setContentText(errorMessage);
-            
-            alert.showAndWait();
-            
-            return false;
-        }
-    }
-    
-    private void checkValidApptDate(LocalDate date, int startHr, int startMin, int endHr, int endMin) {
-        if (date.getDayOfWeek().getValue() == 7 || date.getDayOfWeek().getValue() == 8
-                || startHr >= LocalDateTime.now(ZoneId.systemDefault()).getHour()
-                || ) {
-            throw new IllegalArgumentException("Appointment is outside business hours");
-        }
     }
 
     /**
@@ -202,6 +169,7 @@ public class AddAppointmentController extends AbstractController implements Init
     @Override
     public void displayData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
+        apptList = AppointmentDB.getInstance().getApptListByCust();
     }
     
 }

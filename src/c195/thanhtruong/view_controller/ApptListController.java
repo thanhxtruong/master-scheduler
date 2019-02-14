@@ -47,11 +47,15 @@ public class ApptListController extends AbstractController implements Initializa
     private TableColumn<Appointment, LocalTime> apptEndTimeCol;
     @FXML
     private Button closeButton;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private Button modifyButton;
     
     private Customer selectedCust;
     
-    
-    private void handleDeleteCust(ActionEvent event) {
+    @FXML
+    private void handleDeleteAppt(ActionEvent event) {
         Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
         if (selectedAppt != null) {
             AppointmentDB.getInstance().deleteAppt(selectedAppt, selectedCust);
@@ -62,7 +66,8 @@ public class ApptListController extends AbstractController implements Initializa
         }
     }
 
-    private void handleModifyCust(ActionEvent event) {
+    @FXML
+    private void handleModifyAppt(ActionEvent event) {
         Appointment selectedAppt = apptTable.getSelectionModel().getSelectedItem();
         Stage currentStage = getDialogStage();
         

@@ -24,8 +24,8 @@
       </TableView>
       <ButtonBar layoutX="550.0" layoutY="290.0" prefHeight="40.0" prefWidth="295.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0">
         <buttons>
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteCust" text="Delete" />
-            <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#handleModifyCust" text="Modify" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteAppt" text="Delete" />
+            <Button fx:id="modifyButton" mnemonicParsing="false" onAction="#handleModifyAppt" text="Modify" />
           <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>
       </ButtonBar>

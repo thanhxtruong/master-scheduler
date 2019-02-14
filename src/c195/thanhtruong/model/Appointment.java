@@ -39,6 +39,8 @@ public class Appointment {
     DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
     DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("kk:mm:ss.S");
     
+    private static boolean validApptDate;
+    
     public Appointment(String title, String description, String location,
             String type, Timestamp startDateTime, Timestamp endDateTime, String userName, String custName) {
         this.title.set(title);
@@ -64,7 +66,21 @@ public class Appointment {
         this.startTime.setValue(LocalTime.parse(txtStartDT.substring(11), tFormatter));
         this.endTime.setValue(LocalTime.parse(txtEndDT.substring(11), tFormatter));
         
-    }  
+    }
+    
+    public static void checkValidApptDate(LocalDate date, int startHr, int startMin, int endHr, int endMin) {
+        if (date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7
+                || startHr < 8 || startHr >= 17 || endHr < 8 || endHr > 17 || (endHr == 17 && endMin > 0)) {
+            validApptDate = false;
+            throw new IllegalArgumentException("Appointment is outside business hours");
+        } else {
+            validApptDate = true;
+        }
+    }
+
+    public static boolean isValidApptDate() {
+        return validApptDate;
+    }
     
     public int getAppointmentId() {
         return appointmentId.get();

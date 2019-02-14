@@ -5,20 +5,15 @@
  */
 package c195.thanhtruong.view_controller;
 
-import c195.thanhtruong.MainApp;
 import c195.thanhtruong.model.Appointment;
-import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class

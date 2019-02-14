@@ -81,10 +81,22 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     @FXML
     void handleSaveUpdate(ActionEvent event) {
-        if(!DataInput.isInputMissing(customerName.getText(),address1.getText(),
-                    currentCountry.getText(), currentCity.getText(),
-                    postalCode.getText(), phoneNumber.getText())) {
-            newCust = new Customer(customerName.getText(),
+        DataInput dataInput = new DataInput();
+        try {
+            dataInput.checkMissingInput(customerName.getText(),address1.getText(),
+                    countryCbo.getSelectionModel().getSelectedItem(),
+                    cityCbo.getSelectionModel().getSelectedItem(),
+                    postalCode.getText(), phoneNumber.getText());
+            
+        } catch (NullPointerException ex)  {
+            DialogPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    ex.getMessage(),
+                                    "Please, fill in the missing input",
+                                    AlertType.ERROR);
+        } finally {
+            if (dataInput.isMissingInput()) {
+                newCust = new Customer(customerName.getText(),
                     address1.getText(),
                     address2.getText(),
                     cityCbo.getSelectionModel().getSelectedItem(),
@@ -92,17 +104,15 @@ public class UpdateCustomerController extends AbstractController implements Init
                     countryCbo.getSelectionModel().getSelectedItem(),
                     phoneNumber.getText());
             
-            CustomerDB custDB = new CustomerDB();
-            custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
-            
-            WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CustomerList.fxml")
-                .setTitle("Customer Maintenance")
-                .build();
-            windowDisplay.displayScene();
-        } else {
-            DialogPopup.showAlert(getDialogStage(), "Warning", "Missing input",
-                "Please, fill in the missing input", AlertType.ERROR);
+                CustomerDB custDB = new CustomerDB();
+                custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
+
+                WindowsDisplay windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("CustomerList.fxml")
+                    .setTitle("Customer Maintenance")
+                    .build();
+                windowDisplay.displayScene();
+            }
         }
     }
     

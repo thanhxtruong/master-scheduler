@@ -11,9 +11,9 @@ import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.Customer;
 import c195.thanhtruong.model.DataInput;
-import c195.thanhtruong.service.ActivityLogger;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -70,6 +70,7 @@ public class EditAppointmentController extends AbstractController implements Ini
     
     private Customer selectedCust;
     private Appointment tempAppt;
+    private boolean validApptDate;
 
     @FXML
     void handleCancelUpdateAppt(ActionEvent event) {
@@ -94,46 +95,60 @@ public class EditAppointmentController extends AbstractController implements Ini
         String endHr = apptEndHr.getSelectionModel().getSelectedItem();
         String endMin = apptEndMin.getSelectionModel().getSelectedItem();
         
-        boolean missingInput = DataInput.isInputMissing(title, description, loc, type, date,
+        DataInput dataInput = new DataInput();
+        try {
+            dataInput.checkMissingInput(title, description, loc, type, date,
                                     startHr, startMin, endHr, endMin);
-        if (!missingInput) {
-            // Concatanate the String Start DateTime
-            String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
-            String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
-            
-            // Parse String to LocalDateTime in order to covert to timezone in local DB
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
-            LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
-            LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
-            
-            //Convert LocalDateTime to ZonedDateTime using user's timezone
-            ZonedDateTime lczdtStart = ldtStart.atZone(ZoneId.systemDefault());
-            ZonedDateTime lczdtEnd = ldtEnd.atZone(ZoneId.systemDefault());
-            
-            // Convert to DB timezone
-            ZonedDateTime dbzdtStart = lczdtStart.withZoneSameInstant(ZoneId.of("UTC"));
-            ZonedDateTime dbzdtEnd = lczdtEnd.withZoneSameInstant(ZoneId.of("UTC"));
-            System.err.println(dbzdtStart);
-            
-            // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
-            LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
-            LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
-            Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
-            Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
-            
-            // Now, we're ready to create the new appointment to add to the DB
-            Appointment newAppt = new Appointment(title, description, loc, type,
-                    lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
-                    selectedCust.getCustomerName());
-            
-            AppointmentDB.getInstance().updateAppt(newAppt, tempAppt, selectedCust);
-            
-            getDialogStage().close();
-            
-        } else {
-            DialogPopup.showAlert(getDialogStage(), "Warning", "Missing input!",
-                "Please, fill in the missing input", AlertType.ERROR);
-        }
+            Appointment.checkValidApptDate(apptDate.getValue(), Integer.parseInt(startHr),
+                    Integer.parseInt(startMin), Integer.parseInt(endHr), Integer.parseInt(endMin));
+        } catch (NullPointerException | IllegalArgumentException ex)  {
+            DialogPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    ex.getMessage(),
+                                    "Please, fill in the missing input",
+                                    AlertType.ERROR);
+        } finally {
+            if (!dataInput.isMissingInput() && Appointment.isValidApptDate()) {
+                // Concatanate the String Start DateTime
+                String startdtConcat = date + " " + startHr + ":" + startMin + ":00.0";
+                String enddtConcat = date + " " + endHr + ":" + endMin + ":00.0";
+
+                // Parse String to LocalDateTime in order to covert to timezone in local DB
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss.S");
+                LocalDateTime ldtStart = LocalDateTime.parse(startdtConcat, df);
+                LocalDateTime ldtEnd = LocalDateTime.parse(enddtConcat, df);
+
+                //Convert LocalDateTime to ZonedDateTime using user's timezone
+                ZonedDateTime lczdtStart = ldtStart.atZone(ZoneId.systemDefault());
+                ZonedDateTime lczdtEnd = ldtEnd.atZone(ZoneId.systemDefault());
+
+                // Convert to DB timezone
+                ZonedDateTime dbzdtStart = lczdtStart.withZoneSameInstant(ZoneId.of("UTC"));
+                ZonedDateTime dbzdtEnd = lczdtEnd.withZoneSameInstant(ZoneId.of("UTC"));
+                System.err.println(dbzdtStart);
+
+                // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
+                LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();
+                LocalDateTime lcdbzdtEnd = dbzdtEnd.toLocalDateTime();
+                Timestamp lcdbzTSStart = Timestamp.valueOf(lcdbzdtStart);
+                Timestamp lcdbzTSEnd = Timestamp.valueOf(lcdbzdtEnd);
+
+                // Now, we're ready to create the new appointment to add to the DB
+                Appointment newAppt = new Appointment(title, description, loc, type,
+                        lcdbzTSStart,lcdbzTSEnd, MainApp.getCurrentUser().getUserName(),
+                        selectedCust.getCustomerName());
+
+                AppointmentDB.getInstance().updateAppt(newAppt, tempAppt, selectedCust);
+
+                getDialogStage().close();
+                WindowsDisplay windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("CalendarByCust.fxml")
+                    .setTitle("Appointments")
+                    .setCustomer(selectedCust)
+                    .build();
+                windowDisplay.displayScene();
+            }
+        }        
     }
 
     /**

@@ -416,6 +416,17 @@ public class AppointmentDB {
         return null;
     }
     
+    private void checkOverlappingAppt(LocalDateTime startDT, LocalDateTime endDT) {
+        // Check for conflict within the customer-own apptList
+        for (Appointment appt:apptListByCust) {
+            if ((startDT.isBefore(appt.getEndDateTime().toLocalDateTime()) &&
+                    endDT.isBefore(appt.getStartDateTime().toLocalDateTime())) ||
+                    startDT.isAfter(appt.getEndDateTime().toLocalDateTime())) {
+                
+            }
+        }
+    }
+     
     public static void main(String[] args) {
         final AppointmentDB apptDB = AppointmentDB.getInstance();
     }  

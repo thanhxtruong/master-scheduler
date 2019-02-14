@@ -10,12 +10,20 @@ package c195.thanhtruong.model;
  * @author thanhtruong
  */
 public class DataInput {
-    public static boolean isInputMissing(String ...s) {
+    private boolean missingInput;
+
+    public boolean isMissingInput() {
+        return missingInput;
+    }
+    
+    public void checkMissingInput(String ...s) {
         for (String i:s) {
             if (i == null || i.length() == 0) {
-                return true;
+                missingInput = true;
+                throw new NullPointerException("Missing input!");
+            } else {
+                missingInput = false;
             }
         }
-        return false;
     }
 }

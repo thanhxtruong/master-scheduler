@@ -130,6 +130,12 @@ public class CustomerDB{
                 now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "')";
             
             Query.makeQuery(sqlStatement);
+            // Get the new customerID
+            sqlStatement = "SELECT last_insert_id() FROM customer";
+            Query.makeQuery(sqlStatement);
+            result = Query.getResult();
+            result.next();
+            ID = result.getInt("last_insert_id()");
             
             ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
                     " added a new customerId #" + ID);

@@ -61,11 +61,22 @@ public class AddCustomerController extends AbstractController implements Initial
 
     @FXML
     void handleSaveAddCust(ActionEvent event) {
-        if(!DataInput.isInputMissing(customerName.getText(),address1.getText(),
+        DataInput dataInput = new DataInput();
+        try {
+            dataInput.checkMissingInput(customerName.getText(),address1.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     cityCbo.getSelectionModel().getSelectedItem(),
-                    postalCode.getText(), phoneNumber.getText())) {
-            Customer newCust = new Customer(customerName.getText(),
+                    postalCode.getText(), phoneNumber.getText());
+            
+        } catch (NullPointerException ex)  {
+            DialogPopup.showAlert(getDialogStage(),
+                                    "Warning",
+                                    ex.getMessage(),
+                                    "Please, fill in the missing input",
+                                    AlertType.ERROR);
+        } finally {
+            if (!dataInput.isMissingInput()) {
+                Customer newCust = new Customer(customerName.getText(),
                     address1.getText(),
                     address2.getText(),
                     cityCbo.getSelectionModel().getSelectedItem(),
@@ -73,23 +84,18 @@ public class AddCustomerController extends AbstractController implements Initial
                     countryCbo.getSelectionModel().getSelectedItem(),
                     phoneNumber.getText());
             
-            CustomerDB custDB = new CustomerDB();
-            custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
-                            cityCbo.getSelectionModel().getSelectedItem(),
-                            newCust);
-            
-            getDialogStage().close();
-            WindowsDisplay windowDisplay = new WindowsBuilder()
-                .setFXMLPath("CustomerList.fxml")
-                .setTitle("Customer Maintenance")
-                .build();
-            windowDisplay.displayScene();
-        } else {
-            DialogPopup.showAlert(getDialogStage(),
-                                    "Warning",
-                                    "Missing input",
-                                    "Please, fill in the missing input",
-                                    AlertType.ERROR);
+                CustomerDB custDB = new CustomerDB();
+                custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
+                                cityCbo.getSelectionModel().getSelectedItem(),
+                                newCust);
+
+                getDialogStage().close();
+                WindowsDisplay windowDisplay = new WindowsBuilder()
+                    .setFXMLPath("CustomerList.fxml")
+                    .setTitle("Customer Maintenance")
+                    .build();
+                windowDisplay.displayScene();
+            }
         }
     }
 

@@ -80,12 +80,10 @@ public class AddCustomerController extends AbstractController implements Initial
                     postalCode.getText(),
                     countryCbo.getSelectionModel().getSelectedItem(),
                     phoneNumber.getText());
-            
-                CustomerDB custDB = new CustomerDB();
-                custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
+                
+                CustomerDB.getInstance().insertDB(countryCbo.getSelectionModel().getSelectedItem(),
                                 cityCbo.getSelectionModel().getSelectedItem(),
                                 newCust);
-                custDB.downloadCustDB();
 
                 getDialogStage().close();
                 WindowsDisplay windowDisplay = new WindowsBuilder()

@@ -49,43 +49,23 @@ public class AppointmentDB {
     
     static {
         instance = new AppointmentDB();
-        Callback<Appointment, Observable[]> extractor = new Callback<Appointment, Observable[]>(){
-            @Override
-            public Observable[] call(Appointment a) {
-                return new Observable[] {
-                    a.appointmentIdProperty(),
-                    a.titleProperty(),
-                    a.descriptionProperty(),
-                    a.locationProperty(),
-                    a.dateProperty(),
-                    a.startTimeProperty(),
-                    a.endTimeProperty(),
-                    a.startDateTimeProperty(),
-                    a.endDateTimeProperty(),
-                    a.typeProperty(),
-                    a.userNameProperty(),
-                    a.custNameProperty()
-                };
-            }
-            
-        };
-        ListChangeListener listener = new ListChangeListener() {
-            @Override
-            public void onChanged(Change c) {
-                while (c.next()) {
-                    if (c.wasUpdated()) {
-                        int start = c.getFrom();
-                        int end = c.getTo();
-                    }
-                }
-            }
-            
+        Callback<Appointment, Observable[]> extractor = (Appointment a) -> new Observable[] {
+            a.appointmentIdProperty(),
+            a.titleProperty(),
+            a.descriptionProperty(),
+            a.locationProperty(),
+            a.dateProperty(),
+            a.startTimeProperty(),
+            a.endTimeProperty(),
+            a.startDateTimeProperty(),
+            a.endDateTimeProperty(),
+            a.typeProperty(),
+            a.userNameProperty(),
+            a.custNameProperty()
         };
         apptListByCust = FXCollections.observableArrayList(extractor);
         apptListByUser = FXCollections.observableArrayList(extractor);
         allApptList = FXCollections.observableArrayList(extractor);
-        
-        apptListByCust.addListener(listener);
     }
     private AppointmentDB() {}
     

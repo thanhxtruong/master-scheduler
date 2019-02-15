@@ -72,14 +72,12 @@ public class CustomerListController extends AbstractController implements Initia
     @FXML
     private Button closeButton;
     
-    private CustomerDB custDB;
-    
     @FXML
     void handleAddCust(ActionEvent event) {
-        getDialogStage().close();
         WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("AddCustomer.fxml")
                 .setTitle("Add Customer")
+                .setOwnerStage(getDialogStage())
                 .build();
         windowDisplay.displayScene();
     }
@@ -100,25 +98,25 @@ public class CustomerListController extends AbstractController implements Initia
         Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
         
         if (selectedCust != null) {
-            custDB.deleteCustomer(selectedCust);
-            custDB.downloadCustDB();
+            CustomerDB.getInstance().deleteCustomer(selectedCust);
+            CustomerDB.getInstance().downloadCustDB();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
                 "No customer selected!", "Please, select a customer to delete!",
                 AlertType.ERROR);
         }
-        displayCustTable(custDB);
+        displayCustTable(CustomerDB.getInstance());
     }
 
     @FXML
     void handleModifyCust(ActionEvent event) {
         Customer selectedCust = customerTable.getSelectionModel().getSelectedItem();
-        Stage currentStage = getDialogStage();
-        
+                
         if (selectedCust != null) {
             WindowsDisplay windowDisplay = new WindowsBuilder()
                 .setFXMLPath("UpdateCustomer.fxml")
                 .setTitle("Update Customer Information")
+                .setOwnerStage(getDialogStage())
                 .setCustomer(selectedCust)
                 .build();
             windowDisplay.displayScene();
@@ -130,16 +128,16 @@ public class CustomerListController extends AbstractController implements Initia
     }
     private void displayCustTable(CustomerDB custDB) {
         // Lambda expression used for the Callback functional interface
-        custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
-        custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());
-        phoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phone());
-        addressTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().address1(),
+        custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerIDProperty().asObject());
+        custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        phoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
+        addressTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().address1Property(),
                                             "\n",
-                                            cellData.getValue().address2()));
-        cityAndPCTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().city(),
+                                            cellData.getValue().address2Property()));
+        cityAndPCTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().cityProperty(),
                                             "\n",
-                                            cellData.getValue().postalCode()));
-        countryTableCol.setCellValueFactory(cellData -> cellData.getValue().country());
+                                            cellData.getValue().postalCodeProperty()));
+        countryTableCol.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
         customerTable.setItems(custDB.getCustomerList());
         
         // Lambda expressions used for the Predicate and ChangeListener
@@ -216,9 +214,9 @@ public class CustomerListController extends AbstractController implements Initia
 
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
-        custDB = new CustomerDB();
-        custDB.downloadCustDB();
-        displayCustTable(custDB);
+        
+        CustomerDB.getInstance().downloadCustDB();
+        displayCustTable(CustomerDB.getInstance());
     }
     
 }

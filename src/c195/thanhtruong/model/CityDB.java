@@ -37,7 +37,6 @@ public class CityDB {
                                     "INNER JOIN country ON city.countryId = country.countryId " +
                                     "WHERE country.country = '" +
                                     country + "'";
-            System.out.println(sqlStatement);
             Query.makeQuery(sqlStatement);
             // result is the list of city for the selected country
             ResultSet result = Query.getResult();                            

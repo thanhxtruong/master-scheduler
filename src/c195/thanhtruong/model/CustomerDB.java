@@ -10,12 +10,16 @@ import c195.thanhtruong.service.ActivityLogger;
 import c195.thanhtruong.service.DBConnection;
 import c195.thanhtruong.service.Query;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.ZoneId;
 import static java.time.ZonedDateTime.now;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 /**
  *
@@ -24,10 +28,28 @@ import javafx.collections.ObservableList;
 public class CustomerDB{
     
     private static ObservableList<Customer> customerList;
+    private static final CustomerDB instance;
     private String sqlStatement;
+    
+    static {
+        instance = new CustomerDB();
+        Callback<Customer, Observable[]> extractor = (Customer c) -> new Observable[] {
+            c.customerIDProperty(),
+            c.customerNameProperty(),
+            c.address1Property(),
+            c.address2Property(),
+            c.cityProperty(),
+            c.postalCodeProperty(),
+            c.countryProperty(),
+            c.phoneProperty()
+        };
+        customerList = FXCollections.observableArrayList(extractor);
+    }
 
-    public CustomerDB() {
-        this.customerList = FXCollections.observableArrayList();
+    private CustomerDB() {}
+    
+    public static CustomerDB getInstance() {
+        return instance;
     }
 
     public ObservableList<Customer> getCustomerList() {
@@ -52,6 +74,7 @@ public class CustomerDB{
     }
             
     public void downloadCustDB() {
+        customerList.clear();
         try {
             // Connect to the DB
             DBConnection.makeConnection();
@@ -79,7 +102,7 @@ public class CustomerDB{
                                     result.getString("postalCode"),
                                     result.getString("country"),
                                     result.getString("phone"));
-                addCustomer(tempCust);
+                customerList.add(tempCust);
             }
             DBConnection.closeConnection();
         } catch (Exception ex) {
@@ -105,14 +128,16 @@ public class CustomerDB{
             
             // Insert the new customer into the DB
             sqlStatement = "INSERT INTO address " +
-                        "(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)\n" +
-                        "VALUES ('"+ newCust.getAddress1() + "', '" +
-                        newCust.getAddress2() + "', " + 
-                        ID + ", '" +
-                        newCust.getPostalCode() + "', '" +
-                        newCust.getPhone() + "', '" + 
-                        now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
-                        now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "')";
+                "(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)\n" +
+                "VALUES ('"+ newCust.getAddress1() + "', '" +
+                newCust.getAddress2() + "', " + 
+                ID + ", '" +
+                newCust.getPostalCode() + "', '" +
+                newCust.getPhone() + "', '" + 
+                Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) +
+                "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
+                Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) +
+                "', '" + MainApp.getCurrentUser().getUserName() + "')";
             
             Query.makeQuery(sqlStatement);
             
@@ -126,8 +151,10 @@ public class CustomerDB{
             sqlStatement = "INSERT INTO customer " +
                 "(customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy)\n" +
                 "VALUES ('" + newCust.getCustomerName() + "', " + ID + ", 1, '" +
-                now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
-                now(ZoneId.of("UTC")) + "', '" + MainApp.getCurrentUser().getUserName() + "')";
+                Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) +
+                "', '" + MainApp.getCurrentUser().getUserName() + "', '" +
+                Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) +
+                "', '" + MainApp.getCurrentUser().getUserName() + "')";
             
             Query.makeQuery(sqlStatement);
             // Get the new customerID
@@ -149,7 +176,7 @@ public class CustomerDB{
         }      
     }
     
-    public void updateDB(Customer newCust, Customer selectedCust, boolean isAddressChanged, boolean isCustNameChanged) {
+    public void updateDB(Customer newCust, Customer selectedCust) {
         int cityId, addressId;
         try {
             // Connect to the DB
@@ -165,14 +192,14 @@ public class CustomerDB{
 
             // Update address
             sqlStatement = "UPDATE address\n" +
-                            "SET address = '" + newCust.getAddress1() + "',\n" +
-                            "address2 = '" + newCust.getAddress2() + "',\n" +
-                            "cityId = " + cityId + ",\n" +
-                            "postalCode = '" + newCust.getPostalCode() + "',\n" +
-                            "phone = '" + newCust.getPhone() + "',\n" +
-                            "lastUpdate = '" + now(ZoneId.of("UTC")) + "',\n" +
-                            "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
-                            "WHERE addressId = " + selectedCust.getAddressId();
+                "SET address = '" + newCust.getAddress1() + "',\n" +
+                "address2 = '" + newCust.getAddress2() + "',\n" +
+                "cityId = " + cityId + ",\n" +
+                "postalCode = '" + newCust.getPostalCode() + "',\n" +
+                "phone = '" + newCust.getPhone() + "',\n" +
+                "lastUpdate = '" + Timestamp.valueOf(now(ZoneId.of("UTC")).toLocalDateTime()) + "',\n" +
+                "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
+                "WHERE addressId = " + selectedCust.getAddressId();
             Query.makeQuery(sqlStatement);
             
             sqlStatement = "UPDATE customer\n" +
@@ -189,11 +216,6 @@ public class CustomerDB{
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-    }
-    
-    public boolean addCustomer(Customer customer) {
-        customerList.add(customer);
-        return true;
     }
     
     public boolean deleteCustomer(Customer customer) {

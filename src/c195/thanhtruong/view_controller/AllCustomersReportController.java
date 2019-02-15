@@ -15,7 +15,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -109,19 +108,18 @@ public class AllCustomersReportController extends AbstractController implements 
 
     @Override
     public void displayData(Customer selectedCust, Appointment appointment) {
-        CustomerDB custDB = new CustomerDB();
-        custDB.downloadCustDB();
-        custList = custDB.getCustomerList();
-        custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerID().asObject());
-        custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerName());
-        phoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phone());
-        addressTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().address1(),
+        CustomerDB.getInstance().downloadCustDB();
+        custList = CustomerDB.getInstance().getCustomerList();
+        custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerIDProperty().asObject());
+        custNameTableCol.setCellValueFactory(cellData -> cellData.getValue().customerNameProperty());
+        phoneTableCol.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
+        addressTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().address1Property(),
                                             "\n",
-                                            cellData.getValue().address2()));
-        cityAndPCTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().city(),
+                                            cellData.getValue().address2Property()));
+        cityAndPCTableCol.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().cityProperty(),
                                             "\n",
-                                            cellData.getValue().postalCode()));
-        countryTableCol.setCellValueFactory(cellData -> cellData.getValue().country());
+                                            cellData.getValue().postalCodeProperty()));
+        countryTableCol.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
         customerTable.setItems(custList);
     }
     

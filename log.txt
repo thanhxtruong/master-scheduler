@@ -240,3 +240,47 @@ Feb 15, 2019 12:20:40 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test updated customerId #3
 Feb 15, 2019 12:20:58 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged out
+Feb 15, 2019 1:01:35 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 1:02:28 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test added a new customerId #0
+Feb 15, 2019 1:09:38 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 15, 2019 1:24:02 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 1:24:58 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test added a new customerId #11
+Feb 15, 2019 1:26:09 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated appointmentId #4
+Feb 15, 2019 1:31:18 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 15, 2019 1:35:16 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 1:35:54 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test added a new customerId #12
+Feb 15, 2019 1:36:14 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 1:36:27 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 1:36:56 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 1:38:16 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 1:39:08 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 15, 2019 1:45:16 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 1:46:25 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 1:48:10 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test added a new appointmentId #19
+Feb 15, 2019 1:52:36 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 1:52:50 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #12
+Feb 15, 2019 2:00:26 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated appointmentId #8
+Feb 15, 2019 2:03:24 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test added a new appointmentId #20
+Feb 15, 2019 2:04:58 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out

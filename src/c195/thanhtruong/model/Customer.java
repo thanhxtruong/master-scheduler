@@ -93,35 +93,35 @@ public class Customer extends AbstractModel {
         return phone.get();
     }
     
-    public IntegerProperty customerID() {
+    public IntegerProperty customerIDProperty() {
         return customerID;
     }
     
-    public StringProperty customerName() {
+    public StringProperty customerNameProperty() {
         return customerName;
     }
     
-    public StringProperty address1() {
+    public StringProperty address1Property() {
         return address1;
     }
     
-    public StringProperty address2() {
+    public StringProperty address2Property() {
         return address2;
     }
     
-    public StringProperty city() {
+    public StringProperty cityProperty() {
         return city;
     }
     
-    public StringProperty postalCode() {
+    public StringProperty postalCodeProperty() {
         return postalCode;
     }       
     
-    public StringProperty country() {
+    public StringProperty countryProperty() {
         return country;
     }
     
-    public StringProperty phone() {
+    public StringProperty phoneProperty() {
         return phone;
     }
 }

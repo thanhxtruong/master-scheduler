@@ -142,12 +142,6 @@ public class EditAppointmentController extends AbstractController implements Ini
                 AppointmentDB.getInstance().updateAppt(newAppt, tempAppt, selectedCust);
 
                 getDialogStage().close();
-                WindowsDisplay windowDisplay = new WindowsBuilder()
-                    .setFXMLPath("CalendarByCust.fxml")
-                    .setTitle("Appointments")
-                    .setCustomer(selectedCust)
-                    .build();
-                windowDisplay.displayScene();
             }
         }        
     }

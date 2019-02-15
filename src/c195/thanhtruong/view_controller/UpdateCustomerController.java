@@ -66,8 +66,6 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     private Customer tempCust;
     private Customer newCust;
-    private boolean isAddressChanged = false;
-    private boolean isNameChanged = false;
 
     @FXML
     void handleCancelUpdate(ActionEvent event) {
@@ -98,16 +96,11 @@ public class UpdateCustomerController extends AbstractController implements Init
                 newCust = new Customer(customerName.getText(), address1.getText(),
                     address2.getText(), currentCity.getText(), postalCode.getText(),
                     currentCountry.getText(), phoneNumber.getText());
-            
-                CustomerDB custDB = new CustomerDB();
-                custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
-                custDB.downloadCustDB();
+                                
+                CustomerDB.getInstance().updateDB(newCust, tempCust);
+                CustomerDB.getInstance().downloadCustDB();
 
-                WindowsDisplay windowDisplay = new WindowsBuilder()
-                    .setFXMLPath("CustomerList.fxml")
-                    .setTitle("Customer Maintenance")
-                    .build();
-                windowDisplay.displayScene();
+                getDialogStage().close();
             }
         }
     }
@@ -126,22 +119,15 @@ public class UpdateCustomerController extends AbstractController implements Init
     
     @FXML
     void handleCitySelected(ActionEvent event) {
-        isAddressChanged = true;
         currentCity.setText(cityCbo.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void handleCountrySelected(ActionEvent event) {
-        isAddressChanged = true;
         currentCountry.setText(countryCbo.getSelectionModel().getSelectedItem());
         currentCity.clear();
         CityDB cityDB = new CityDB(countryCbo.getSelectionModel().getSelectedItem());
         cityCbo.setItems(cityDB.getListAsString());
-    }
-    
-    @FXML
-    public void handleNameChange() {
-        isNameChanged = true;
     }    
     
     @Override

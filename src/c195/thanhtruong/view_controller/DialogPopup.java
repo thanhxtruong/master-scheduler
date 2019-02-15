@@ -76,9 +76,8 @@ public class DialogPopup {
         List<String> custList = new ArrayList<>();
         Customer selectedCust;
         
-        CustomerDB custDB = new CustomerDB();
-        custDB.downloadCustDB();
-        custList = custDB.getCustListAsString();
+        CustomerDB.getInstance().downloadCustDB();
+        custList = CustomerDB.getInstance().getCustListAsString();
         
         ChoiceDialog<String> dialog = new ChoiceDialog<>(null, custList);
         dialog.setTitle("Customer Selection");
@@ -87,7 +86,7 @@ public class DialogPopup {
         
         Optional<String> selectedCustName = dialog.showAndWait();
         if (selectedCustName.isPresent()) {
-            selectedCust = custDB.getCustByName(selectedCustName.get());
+            selectedCust = CustomerDB.getInstance().getCustByName(selectedCustName.get());
         } else {
             selectedCust = null;
         }

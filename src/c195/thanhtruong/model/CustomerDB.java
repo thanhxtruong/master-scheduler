@@ -155,35 +155,31 @@ public class CustomerDB{
             // Connect to the DB
             DBConnection.makeConnection();
             
-            if(isAddressChanged) {
-                // Get the cityId for the new city
-                sqlStatement = "SELECT cityId FROM city WHERE city = '" + 
-                                    newCust.getCity() + "'";
-                Query.makeQuery(sqlStatement);
-                ResultSet result = Query.getResult();            
-                result.next();
-                cityId = result.getInt("cityId");
+            // Get the cityId for the new city
+            sqlStatement = "SELECT cityId FROM city WHERE city = '" + 
+                                newCust.getCity() + "'";
+            Query.makeQuery(sqlStatement);
+            ResultSet result = Query.getResult();            
+            result.next();
+            cityId = result.getInt("cityId");
 
-                // Update address
-                sqlStatement = "UPDATE address\n" +
-                                "SET address = '" + newCust.getAddress1() + "',\n" +
-                                "address2 = '" + newCust.getAddress2() + "',\n" +
-                                "cityId = " + cityId + ",\n" +
-                                "postalCode = '" + newCust.getPostalCode() + "',\n" +
-                                "phone = '" + newCust.getPhone() + "',\n" +
-                                "lastUpdate = '" + now(ZoneId.of("UTC")) + "',\n" +
-                                "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
-                                "WHERE addressId = " + selectedCust.getAddressId();
-                Query.makeQuery(sqlStatement);
-            }
+            // Update address
+            sqlStatement = "UPDATE address\n" +
+                            "SET address = '" + newCust.getAddress1() + "',\n" +
+                            "address2 = '" + newCust.getAddress2() + "',\n" +
+                            "cityId = " + cityId + ",\n" +
+                            "postalCode = '" + newCust.getPostalCode() + "',\n" +
+                            "phone = '" + newCust.getPhone() + "',\n" +
+                            "lastUpdate = '" + now(ZoneId.of("UTC")) + "',\n" +
+                            "lastUpdateBy = '" + MainApp.getCurrentUser().getUserName() + "'\n" +
+                            "WHERE addressId = " + selectedCust.getAddressId();
+            Query.makeQuery(sqlStatement);
             
-            if(isCustNameChanged) {
-                sqlStatement = "UPDATE customer\n" +
+            sqlStatement = "UPDATE customer\n" +
                             "SET customerName = '" + newCust.getCustomerName() + "'\n" +
                             "WHERE customerId = " + selectedCust.getCustomerID();
                 
-                Query.makeQuery(sqlStatement);
-            }
+            Query.makeQuery(sqlStatement);
             
             ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
                     " updated customerId #" + selectedCust.getCustomerID());

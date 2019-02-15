@@ -34,7 +34,7 @@
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Postal Code:" GridPane.rowIndex="5" />
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Country:" GridPane.rowIndex="1" />
             <Label styleClass="custom-label" stylesheets="@customStyle.css" text="Phone:" GridPane.rowIndex="6" />
-            <TextField fx:id="customerName" onInputMethodTextChanged="#handleNameChange" prefHeight="30.0" prefWidth="359.0" GridPane.columnIndex="1" />
+            <TextField fx:id="customerName" prefHeight="30.0" prefWidth="359.0" GridPane.columnIndex="1" />
             <TextField fx:id="address1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="address2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="postalCode" GridPane.columnIndex="1" GridPane.rowIndex="5" />

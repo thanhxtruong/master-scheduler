@@ -95,13 +95,9 @@ public class UpdateCustomerController extends AbstractController implements Init
                                     AlertType.ERROR);
         } finally {
             if (!dataInput.isMissingInput()) {
-                newCust = new Customer(customerName.getText(),
-                    address1.getText(),
-                    address2.getText(),
-                    cityCbo.getSelectionModel().getSelectedItem(),
-                    postalCode.getText(),
-                    countryCbo.getSelectionModel().getSelectedItem(),
-                    phoneNumber.getText());
+                newCust = new Customer(customerName.getText(), address1.getText(),
+                    address2.getText(), currentCity.getText(), postalCode.getText(),
+                    currentCountry.getText(), phoneNumber.getText());
             
                 CustomerDB custDB = new CustomerDB();
                 custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);

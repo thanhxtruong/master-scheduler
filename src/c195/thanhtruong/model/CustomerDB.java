@@ -224,6 +224,10 @@ public class CustomerDB{
             // Connect to the DB
             DBConnection.makeConnection();
             
+            sqlStatement = "DELETE FROM appointment\n" +
+                    "WHERE customerId = " + customer.getCustomerID();
+            Query.makeQuery(sqlStatement);
+            
             sqlStatement = "DELETE FROM address, customer\n" +
                             "USING customer\n" +
                             "INNER JOIN address\n" +

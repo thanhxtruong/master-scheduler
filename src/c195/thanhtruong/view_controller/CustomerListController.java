@@ -99,7 +99,6 @@ public class CustomerListController extends AbstractController implements Initia
         
         if (selectedCust != null) {
             CustomerDB.getInstance().deleteCustomer(selectedCust);
-            CustomerDB.getInstance().downloadCustDB();
         } else {
             DialogPopup.showAlert(getDialogStage(), "Attention",
                 "No customer selected!", "Please, select a customer to delete!",

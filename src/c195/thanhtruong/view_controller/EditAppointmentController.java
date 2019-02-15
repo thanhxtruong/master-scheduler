@@ -126,7 +126,6 @@ public class EditAppointmentController extends AbstractController implements Ini
                 // Convert to DB timezone
                 ZonedDateTime dbzdtStart = lczdtStart.withZoneSameInstant(ZoneId.of("UTC"));
                 ZonedDateTime dbzdtEnd = lczdtEnd.withZoneSameInstant(ZoneId.of("UTC"));
-                System.err.println(dbzdtStart);
 
                 // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
                 LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();

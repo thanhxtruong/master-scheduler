@@ -119,9 +119,13 @@ public class AddAppointmentController extends AbstractController implements Init
         } finally {
             if (!dataInput.isMissingInput() && Appointment.isValidApptDate()
                     && !AppointmentDB.isOverlappedAppt()) {
+                //Convert LocalDateTime to ZonedDateTime using user's timezone
+                ZonedDateTime lczdtStart = ldtStart.atZone(ZoneId.systemDefault());
+                ZonedDateTime lczdtEnd = ldtEnd.atZone(ZoneId.systemDefault());
+
                 // Convert to DB timezone
-                ZonedDateTime dbzdtStart = ldtStart.atZone(ZoneId.of("UTC"));
-                ZonedDateTime dbzdtEnd = ldtEnd.atZone(ZoneId.of("UTC"));
+                ZonedDateTime dbzdtStart = lczdtStart.withZoneSameInstant(ZoneId.of("UTC"));
+                ZonedDateTime dbzdtEnd = lczdtEnd.withZoneSameInstant(ZoneId.of("UTC"));
 
                 // Convert the ZonedDateTime back to LocalDateTime in order to convert it back to Timestamp
                 LocalDateTime lcdbzdtStart = dbzdtStart.toLocalDateTime();

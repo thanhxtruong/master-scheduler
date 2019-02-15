@@ -98,7 +98,6 @@ public class UpdateCustomerController extends AbstractController implements Init
                     currentCountry.getText(), phoneNumber.getText());
                                 
                 CustomerDB.getInstance().updateDB(newCust, tempCust);
-                CustomerDB.getInstance().downloadCustDB();
 
                 getDialogStage().close();
             }

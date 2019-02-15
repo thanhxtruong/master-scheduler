@@ -196,3 +196,17 @@ Feb 14, 2019 4:20:22 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged out
 Feb 14, 2019 4:36:41 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
+Feb 15, 2019 11:20:16 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 11:20:44 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #3
+Feb 15, 2019 11:24:34 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out
+Feb 15, 2019 11:27:50 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 11:28:32 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 15, 2019 11:28:52 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test updated customerId #3
+Feb 15, 2019 11:31:03 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged out

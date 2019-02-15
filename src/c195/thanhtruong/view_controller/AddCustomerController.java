@@ -85,6 +85,7 @@ public class AddCustomerController extends AbstractController implements Initial
                 custDB.insertDB(countryCbo.getSelectionModel().getSelectedItem(),
                                 cityCbo.getSelectionModel().getSelectedItem(),
                                 newCust);
+                custDB.downloadCustDB();
 
                 getDialogStage().close();
                 WindowsDisplay windowDisplay = new WindowsBuilder()

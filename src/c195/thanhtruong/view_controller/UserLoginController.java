@@ -68,8 +68,8 @@ public class UserLoginController extends AbstractController implements Initializ
             ResultSet result = Query.getResult();
             
             if (!result.isBeforeFirst()) {
-                DialogPopup.showAlert(getDialogStage(), "Authentication Failure",
-                    "Username and password do not match!", "Please, login again!",
+                DialogPopup.showAlert(getDialogStage(), this.rb.getString("alertTitle"),
+                    this.rb.getString("alertHeader"), this.rb.getString("alertMessage"),
                     AlertType.ERROR);
             } else {
                 result.first();

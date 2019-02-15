@@ -105,6 +105,7 @@ public class UpdateCustomerController extends AbstractController implements Init
             
                 CustomerDB custDB = new CustomerDB();
                 custDB.updateDB(newCust, tempCust, isAddressChanged, isNameChanged);
+                custDB.downloadCustDB();
 
                 WindowsDisplay windowDisplay = new WindowsBuilder()
                     .setFXMLPath("CustomerList.fxml")

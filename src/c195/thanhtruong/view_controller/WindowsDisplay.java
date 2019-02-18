@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
@@ -27,7 +22,11 @@ import javafx.stage.WindowEvent;
 /**
  * The WindowsDisplay class is used to load FXML, set BundleResource (as needed),
  * and pass an instance of mainApp and active Stage to the controller for use
- * in other method calls defined in controller.\
+ * in other method calls defined in controller.
+ * 
+ * Object for WindowsDisplay is instantiated using a WindowsBuilder, which is
+ * an instance of a builder pattern. Due to several optional parameters being
+ * used for constructing a WindowsDisplay, the builder design pattern was used.
  * 
  * @param rb (optional) ResourceBundle for the language_files
  * @param FXMLPath The path to the FXML file to be loaded for this scene

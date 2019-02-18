@@ -19,8 +19,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class.
+ * 
  * @author thanhtruong
  */
 public class HomeController extends AbstractController implements Initializable {
@@ -70,6 +70,7 @@ public class HomeController extends AbstractController implements Initializable 
     @FXML
     void handleReportMenu(ActionEvent event) {
         String selectedReport = DialogPopup.selectReport();
+        // selectedReport will be NULL if user cancels report selection from DialogPopup
         if (selectedReport == null) {
             selectedReport = "";
         }
@@ -108,6 +109,7 @@ public class HomeController extends AbstractController implements Initializable 
         
     }
     
+    // Service thread for appointment
     private void initService() {
         final ApptAlertService alertService = new ApptAlertService();
         alertService.setOnSucceeded(new EventHandler<WorkerStateEvent> () {
@@ -144,13 +146,8 @@ public class HomeController extends AbstractController implements Initializable 
     public void initialize(URL url,
             ResourceBundle rb) {
         // TODO
-    }    
-
-    /**
-     * 
-     * @param selectedCust
-     * @param appoinment 
-     */
+    }
+    
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
         checkUpcomingAppt();

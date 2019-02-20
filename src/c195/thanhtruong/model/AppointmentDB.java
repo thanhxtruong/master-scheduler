@@ -32,7 +32,11 @@ import static java.time.ZonedDateTime.now;
 
 
 /**
- *
+ * The AppointmentDB class is used to download appointments from the MYSQL database
+ * and to retrieve lists/maps of appointments for other method calls.
+ * This class uses the Singleton design pattern to allow only one object to be created
+ * in memory and shared among multiple classes as the lists/maps of appointments
+ * are updated/downloaded from the DB after each INSERT, DELETE, UPDATE query.
  * @author thanhtruong
  */
 public class AppointmentDB {
@@ -49,6 +53,9 @@ public class AppointmentDB {
     
     static {
         instance = new AppointmentDB();
+        // Callback functional interface is used to listen for changes on the 
+        // elements, which update the TableView automatically without the need
+        // to reload the FXML
         Callback<Appointment, Observable[]> extractor = (Appointment a) -> new Observable[] {
             a.appointmentIdProperty(),
             a.titleProperty(),
@@ -88,7 +95,11 @@ public class AppointmentDB {
     public static boolean isOverlappedAppt() {
         return overlappedAppt;
     }
-            
+    
+    /**
+     * This method downloads appointments by either selected Customer or User.
+     * @param model 
+     */
     public void downloadAppt(AbstractModel model) {
         // Case model to either Customer or User obj
         String modelClass;
@@ -366,9 +377,13 @@ public class AppointmentDB {
         return apptMapByWeek;
     }
     
-    /*
-    month is from 1 - 12
-    */
+    /**
+     * Retrieve lists of all appointments mapped by dates for the given month.
+     * @param month Ranges from 1 to 12
+     * @param apptMap Map of lists of all appointment by month (outer layer) and
+     * dates in month (inner layer).
+     * @return lists of all appointments mapped by dates for the given month
+     */
     public Map<Integer, ObservableList<String>> checkApptByMonth(int month, Map<Integer, Map<Integer, ObservableList<String>>> apptMap) {
         for (Integer key:apptMap.keySet()) {
             if (key.intValue() == month) {
@@ -387,6 +402,13 @@ public class AppointmentDB {
         return null;
     }
     
+    /**
+     * This method is used to check if there are any appointments in the list of
+     * all appointments by Month for the given date.
+     * @param apptInMonth Lists of all appointments mapped by dates of a given month.
+     * @param dateToMatch Date to check for scheduled appointment(s).
+     * @return list of scheduled appointments or null.
+     */
     public ObservableList<String> matchApptDatesInMonth(Map<Integer, ObservableList<String>> apptInMonth, int dateToMatch) {
         if (apptInMonth.containsKey(Integer.valueOf(dateToMatch))) {
             return apptInMonth.get(Integer.valueOf(dateToMatch));

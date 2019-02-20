@@ -20,7 +20,9 @@ import javafx.scene.control.Button;
 
 /**
  * FXML Controller class.
- * 
+ * Event handlers for loading FXML for Customer, Appointment, and Report modules.
+ * The service thread to check for appointment alert will be started after
+ * loading FXML (see displayData() method call below).
  * @author thanhtruong
  */
 public class HomeController extends AbstractController implements Initializable {
@@ -37,6 +39,7 @@ public class HomeController extends AbstractController implements Initializable 
     @FXML
     private Button logoutBut;
     
+    // Load calendar by selected Customer
     @FXML
     void handleCalModButton(ActionEvent event) {
         Customer selectedCust = DialogPopup.selectCustomer();
@@ -109,7 +112,7 @@ public class HomeController extends AbstractController implements Initializable 
         
     }
     
-    // Service thread for appointment
+    // Service thread for appointment reminder
     private void initService() {
         final ApptAlertService alertService = new ApptAlertService();
         alertService.setOnSucceeded(new EventHandler<WorkerStateEvent> () {

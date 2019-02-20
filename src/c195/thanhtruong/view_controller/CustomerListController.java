@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
@@ -27,8 +23,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class.
+ * 
  * @author thanhtruong
  */
 public class CustomerListController extends AbstractController implements Initializable {
@@ -125,6 +121,8 @@ public class CustomerListController extends AbstractController implements Initia
                 AlertType.ERROR);
         }
     }
+    
+    // Display a filtered and sorted list of all customers
     private void displayCustTable(CustomerDB custDB) {
         // Lambda expression used for the Callback functional interface
         custIDTableCol.setCellValueFactory(cellData -> cellData.getValue().customerIDProperty().asObject());
@@ -139,9 +137,6 @@ public class CustomerListController extends AbstractController implements Initia
         countryTableCol.setCellValueFactory(cellData -> cellData.getValue().countryProperty());
         customerTable.setItems(custDB.getCustomerList());
         
-        // Lambda expressions used for the Predicate and ChangeListener
-        // functional interfaces. The code using anonymous classes are shown 
-        // in the commented-out code below for demonstration.
         FilteredList<Customer> filteredCustomerByName = new FilteredList<>(
                 custDB.getCustomerList(), p -> true);
         
@@ -163,42 +158,6 @@ public class CustomerListController extends AbstractController implements Initia
         SortedList<Customer> sortedData = new SortedList<>(filteredCustomerByName);
         sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
         customerTable.setItems(sortedData);
-        
-        
-        
-//        Predicate p = new Predicate() {
-//            @Override
-//            public boolean test(Object t) {
-//                return true;
-//            }
-//            
-//        };
-//        
-//        FilteredList<Customer> filteredCustomerByName = new FilteredList<>(custDB.getCustomerList(), p);
-//        
-//        ChangeListener listener = new ChangeListener() {
-//            @Override
-//            public void changed(ObservableValue observable, Object oldValue, Object newValue) {                
-//        
-//                Predicate<Customer> p2 = new Predicate<Customer>() {
-//                    @Override
-//                    public boolean test(Customer customer) {
-//                        if((newValue.toString().isEmpty()) || (newValue.toString().equals(null))) {
-//                            return true;
-//                        }
-//                        
-//                        String lowerCaseFilter = newValue.toString().toLowerCase();
-//                        
-//                        if(customer.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
-//                            return true;
-//                        }
-//                        return false;
-//                    }
-//                };
-//                
-//                filteredCustomerByName.setPredicate(p2);
-//            }
-//        };
     }
         
 
@@ -212,8 +171,7 @@ public class CustomerListController extends AbstractController implements Initia
     }    
 
     @Override
-    public void displayData(Customer selectedCust, Appointment appoinment) {
-        
+    public void displayData(Customer selectedCust, Appointment appoinment) {        
         CustomerDB.getInstance().downloadCustDB();
         displayCustTable(CustomerDB.getInstance());
     }

@@ -103,6 +103,9 @@ public class WindowsDisplay {
                 @Override
                 public void handle(WindowEvent event) {
                     stage.centerOnScreen();
+                    if (controller.getClass().getSimpleName().equalsIgnoreCase("CalendarByCustController")) {
+                        ((CalendarByCustController)controller).callCalculateHeight();
+                    }
                 }
                 
             });

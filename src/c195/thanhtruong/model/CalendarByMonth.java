@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * This class consists of a list of all calendar dates by Month.
  * @author thanhtruong
  */
 public class CalendarByMonth {

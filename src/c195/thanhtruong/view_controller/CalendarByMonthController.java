@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
@@ -80,12 +76,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
     private Map<Integer, ObservableList<String>> apptInMonth = new TreeMap<>();
     private ObservableList<String> apptByDate = FXCollections.observableArrayList();
     private AppointmentDB apptDB;
-    
-    @FXML
-    void labelClick(MouseEvent event) {
-        System.out.println("clicked");
-    }
-    
+        
     @FXML
     void handleCloseCal(ActionEvent event) {
         getDialogStage().close();
@@ -165,25 +156,32 @@ public class CalendarByMonthController extends AbstractController implements Ini
     }
     
     public void printAllDays(int year, int month) {
+        // Get a list of all dates in the given month and year
         allDatesInMonth = calByMonth.getAllDatesInMonth(year, month);
         // Get day for first date of month
         Calendar firstDateOfMonth = Calendar.getInstance();
         firstDateOfMonth.set(year, month-1, 1);
+        // Determine the grid index for the first day of the given month
         // Get day as an int
         // Substract 1 to get the Column # in GridPane
         int colNo = firstDateOfMonth.get(DAY_OF_WEEK) - 1;
         int rowNo = 0;
         
+        // Get all dates in the given month as int for Calendar labels
         int[] allDates;
         CalendarByMonth calByMonth = new CalendarByMonth();
         allDates = calByMonth.getDatesOnly(year, month);
         
+        // Retrieve lists of all appointments mapped by dates for the given month
         apptInMonth = apptDB.checkApptByMonth(month, apptMapByMonth);
         
+        // Labels for dates in month for each calendar grid
         labels = new ArrayList<>();
         container.setAlignment(Pos.TOP_LEFT);
         
+        // Print all dates for labels
         for (int i=0; i < allDates.length; i++) {
+            // Reset col# and increment row#
             if (colNo > 6) {
                 colNo = 0;
                 rowNo++;
@@ -195,6 +193,7 @@ public class CalendarByMonthController extends AbstractController implements Ini
             label.setFont(new Font(18));
             labels.add(label);            
             vBox.getChildren().add(label);
+            // Display appointments as combo boxes
             if (apptInMonth != null) {
                 apptByDate = apptDB.matchApptDatesInMonth(apptInMonth, allDates[i]);
                 if (apptByDate != null) {
@@ -207,15 +206,6 @@ public class CalendarByMonthController extends AbstractController implements Ini
             }            
             colNo++;
         }
-    }
-    
-    public Map<Integer, ObservableList<String>> printAllAppt(int month) {
-        for (Integer key:apptMapByMonth.keySet()) {
-            if (key.intValue() == month) {
-                return apptMapByMonth.get(key);                
-            }
-        }
-        return null;
     }
 
     /**

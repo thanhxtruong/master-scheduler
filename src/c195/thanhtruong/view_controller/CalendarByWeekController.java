@@ -9,6 +9,7 @@ import c195.thanhtruong.model.Appointment;
 import c195.thanhtruong.model.AppointmentDB;
 import c195.thanhtruong.model.ApptCboOptions;
 import c195.thanhtruong.model.CalendarByWeek;
+import c195.thanhtruong.model.CalendarPaneHeight;
 import c195.thanhtruong.model.Customer;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -83,8 +85,8 @@ public class CalendarByWeekController extends AbstractController implements Init
     private Map<Integer, ObservableList<Appointment>> apptInWeek = new TreeMap<>();
     private static final Calendar currentCalDate = Calendar.getInstance();
     private ObservableList<Appointment> apptByDate = FXCollections.observableArrayList();
-    private AnchorPane aPaneSize;
-
+    private static AnchorPane aPaneSize = new AnchorPane();
+    
     @FXML
     void handleCloseCal(ActionEvent event) {
         getDialogStage().close();
@@ -157,21 +159,7 @@ public class CalendarByWeekController extends AbstractController implements Init
     
     private void displayAllLabels(Calendar currentDate) {
         sortedApptList = apptDB.sortApptByWeek();
-//        System.err.println("sortedApptList:");
-//        for (Appointment appt:sortedApptList) {
-//            System.out.println(appt.getStartDateTime().toLocalDateTime() + "-->" + appt.getTitle());
-//        }
         apptMapByWeek = apptDB.getApptMapByWeek(sortedApptList);
-//        System.err.println("apptMapByWeek:");
-//        for (Integer key1:apptMapByWeek.keySet()) {
-//            System.out.println("wKey: " + key1);
-//            for (Integer key2:apptMapByWeek.get(key1).keySet()) {
-//                System.out.println("dKey: " + key2);
-//                for (Appointment appt:apptMapByWeek.get(key1).get(key2)) {
-//                    System.out.println(appt.getStartDateTime());
-//                }
-//            }
-//        }
         
         // Set currennt date to the first date of the week        
         Calendar tempCalDate = (Calendar)currentDate.clone();
@@ -182,17 +170,7 @@ public class CalendarByWeekController extends AbstractController implements Init
         int rowNo = 1;
         int colNo;
         
-        apptInWeek = apptDB.checkApptByWeek(currentDate.get(WEEK_OF_YEAR), apptMapByWeek);
-//        System.out.println("current week: " + currentDate.get(WEEK_OF_YEAR));
-//        if(apptInWeek != null) {
-//            for (Integer key4:apptInWeek.keySet()) {
-//                System.out.println("dKey: " + key4);
-//                for (Appointment appt:apptInWeek.get(key4)) {
-//                    System.out.println(appt.getStartDateTime());
-//                }
-//            }
-//        }
-        
+        apptInWeek = apptDB.checkApptByWeek(currentDate.get(WEEK_OF_YEAR), apptMapByWeek);        
         
         Insets labelPadding = new Insets(0, 0, 0, 5);
         container.setAlignment(Pos.TOP_CENTER);
@@ -257,16 +235,14 @@ public class CalendarByWeekController extends AbstractController implements Init
             if(apptInWeek != null) {
                 apptByDate = apptDB.matchApptDatesInWeek(apptInWeek, tempCalDate2.get(DAY_OF_MONTH));
                 if (apptByDate != null) {
-//                    System.err.println("apptByDate: ");
-//                    for (Appointment appt:apptByDate) {
-//                        System.out.println(appt.getStartDateTime().toLocalDateTime() + " --> " + appt.getTitle());
-//                    }
                         for (Appointment appt:apptByDate) {
                         AnchorPane apptPane = new AnchorPane();
                         int startHr = appt.getStartDateTime().toLocalDateTime().getHour();
                         int endHr = appt.getEndDateTime().toLocalDateTime().getHour();
                         int startMin = appt.getStartDateTime().toLocalDateTime().getMinute();
+                        System.out.println("startMin: " + startMin);
                         int endMin = appt.getEndDateTime().toLocalDateTime().getMinute();
+                        System.out.println("endMin: " + endMin);
                         double topAnchor, botAnchor;
                         int rSpan;
                         
@@ -290,34 +266,26 @@ public class CalendarByWeekController extends AbstractController implements Init
                         Tooltip lbTooltip = new Tooltip("Click for more details!");
                         apptLabel.setTooltip(lbTooltip);
                         apptPane.getChildren().add(apptLabel);
-                        apptLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-                                lbTooltip.show(apptLabel, event.getScreenX(), event.getScreenY() + 15);
-                            }
-                            
+                        apptLabel.setOnMouseEntered((MouseEvent event) -> {
+                            lbTooltip.show(apptLabel, event.getScreenX(), event.getScreenY() + 15);
                         });
-                        apptLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-                                lbTooltip.hide();
-                            }
-                            
+                        apptLabel.setOnMouseExited((MouseEvent event) -> {
+                            lbTooltip.hide();
                         });
-                        apptLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-                                if(event.getClickCount() == 2) {
-                                    DialogPopup.showAlert(getDialogStage(),
+                        apptLabel.setOnMouseClicked((MouseEvent event) -> {
+                            if(event.getClickCount() == 2) {
+                                DialogPopup.showAlert(getDialogStage(),
                                         "Details", "Appointment Details",
                                         apptDetails, AlertType.INFORMATION);
-                                }
                             }
-
                         });
-                        
-                        topAnchor = aPaneSize.getHeight()*(((double)startMin)/60.0);
-                        botAnchor = aPaneSize.getHeight() - aPaneSize.getHeight()*(((double)endMin)/60.0);
+                        System.out.println("paneHeight from loop: " + CalendarPaneHeight.getInstance().getPaneHeight());
+                        topAnchor = CalendarPaneHeight.getInstance().getPaneHeight()*(((double)startMin)/60.0);
+                        if (endMin == 0){
+                            botAnchor = 0;
+                        } else {
+                            botAnchor = CalendarPaneHeight.getInstance().getPaneHeight() - CalendarPaneHeight.getInstance().getPaneHeight()*(((double)endMin)/60.0);
+                        }
                         
                         AnchorPane.setTopAnchor(apptLabel, topAnchor);
                         AnchorPane.setBottomAnchor(apptLabel, botAnchor);
@@ -333,6 +301,11 @@ public class CalendarByWeekController extends AbstractController implements Init
     
     private void clearAllDays() {
         container.getChildren().clear();
+    }
+    
+    public void calculateHeight() {
+        CalendarPaneHeight calPaneHeight = CalendarPaneHeight.getInstance();
+        calPaneHeight.setPaneHeight(aPaneSize.getHeight());
     }
 
     /**
@@ -350,7 +323,7 @@ public class CalendarByWeekController extends AbstractController implements Init
         
         apptDB = AppointmentDB.getInstance();
         apptDB.downloadAppt(selectedCust);
-        
+                
         displayAllLabels(currentCalDate);
         
     }

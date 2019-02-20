@@ -6,7 +6,8 @@
 package c195.thanhtruong.model;
 
 /**
- *
+ * Abstract class inherited by both Customer and User classes in order to support
+ * the factory design pattern used in ModelFactory.
  * @author TTruong
  */
 public class AbstractModel {

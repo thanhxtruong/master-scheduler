@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
@@ -16,8 +12,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class.
+ * Nested CalendarByWeekController and CalendarByMonthController, which are 
+ * controllers associated with FXML for the two Tabs.
  * @author thanhtruong
  */
 public class CalendarByCustController extends AbstractController implements Initializable {
@@ -39,9 +36,19 @@ public class CalendarByCustController extends AbstractController implements Init
     private Customer selectedCust;
     private Calendar currentCalDate;
     
+    // Display appointments by Week when user clicks on Week tab.
     @FXML
     void displayApptByWeek() {
         calByWeekController.displayAllAppt(currentCalDate);
+    }
+        
+    /**
+     * This method is called by WindowsDisplay after loading the controller.
+     * This method calls the calculateHeight() method in CalendarByWeekController
+     * to get the height of the AnchorPane inside grids as soon as the stage is loaded.
+     */
+    public void callCalculateHeight() {
+        calByWeekController.calculateHeight();
     }
     /**
      * Initializes the controller class.

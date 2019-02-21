@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 
 import java.io.BufferedWriter;
@@ -15,7 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- *
+ * FileChooser for saving reports.
  * @author thanhtruong
  */
 public class ReportSaver {

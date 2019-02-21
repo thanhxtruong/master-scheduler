@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
@@ -71,6 +67,12 @@ public class AddAppointmentController extends AbstractController implements Init
     private Customer selectedCust;
     private ObservableList apptList = FXCollections.observableArrayList();
     
+    /**
+     * Event handler for the "Add" (appointment) button.
+     * This methods validates user's input to check for missing required input,
+     * conflict in appointment time, and appointments outside of business hours.
+     * @param event 
+     */
     @FXML
     void handleAddAppt(ActionEvent event) {
         String title = apptTitle.getText();
@@ -78,6 +80,7 @@ public class AddAppointmentController extends AbstractController implements Init
         String loc = location.getText();
         String type = apptType.getSelectionModel().getSelectedItem();
         
+        // Prevent NullPointerException at run time
         String date;
         if (apptDate.getValue() != null) {
             date = apptDate.getValue().toString();
@@ -164,6 +167,7 @@ public class AddAppointmentController extends AbstractController implements Init
 
     /**
      * Initializes the controller class.
+     * Populate data for drop-down list of Start and End time.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

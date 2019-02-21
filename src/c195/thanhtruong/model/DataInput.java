@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 
 /**
- *
- * @author thanhtruong
+ * Check for missing user input(s).
+ * The caller can access the returned boolean isMissingInput via getter.
+ * @author TTruong
  */
 public class DataInput {
     private boolean missingInput;
@@ -16,6 +13,12 @@ public class DataInput {
         return missingInput;
     }
     
+    /**
+     * This method check for missing user inputs.
+     * The NullPointerException is thrown if there is a missing user input. The
+     * exception needs to be caught and resolved by the caller.
+     * @param s array of inputs to check (varargs)
+     */
     public void checkMissingInput(String ...s) {
         for (String i:s) {
             if (i == null || i.length() == 0) {

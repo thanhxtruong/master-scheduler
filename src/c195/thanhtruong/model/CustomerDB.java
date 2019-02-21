@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 
 import c195.thanhtruong.MainApp;
@@ -22,7 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.util.Callback;
 
 /**
- *
+ * The CustDB class is used to download appointments from the MYSQL database
+ * and to retrieve lists of customers for other method calls.
+ * This class uses the Singleton design pattern to allow only one object to be created
+ * in memory and shared among multiple classes as the lists/maps of appointments
+ * are updated/downloaded from the DB after each INSERT, DELETE, UPDATE query.
  * @author thanhtruong
  */
 public class CustomerDB{
@@ -72,7 +72,10 @@ public class CustomerDB{
         }
         return custNameList;
     }
-            
+    
+    /**
+     * This method downloads the list of all customers in the DB.
+     */
     public void downloadCustDB() {
         customerList.clear();
         try {
@@ -110,6 +113,14 @@ public class CustomerDB{
         }
     }
     
+    /**
+     * This method adds new customer to the MySQL DB.
+     * The event is logged in the ActivityLogger.
+     * The custList is updated after insertion.
+     * @param country country of the new customer
+     * @param city city of the new customer
+     * @param newCust object for the new Customer
+     */
     public void insertDB(String country, String city, Customer newCust) {
         int ID;
         try {
@@ -176,6 +187,13 @@ public class CustomerDB{
         }      
     }
     
+    /**
+     * This method update the current customer in the DB.
+     * The event is logged in the ActivityLogger.
+     * The custList is updated after insertion.
+     * @param newCust new Customer
+     * @param selectedCust current Customer
+     */
     public void updateDB(Customer newCust, Customer selectedCust) {
         int cityId, addressId;
         try {

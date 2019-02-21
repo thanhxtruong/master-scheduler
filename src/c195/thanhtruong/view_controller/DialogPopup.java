@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
@@ -20,7 +16,8 @@ import static javafx.scene.input.KeyCode.T;
 import javafx.stage.Stage;
 
 /**
- *
+ * Display dialog/alert for error, exit confirmation, prompt for customer selection,
+ * and prompt for report selection.
  * @author thanhtruong
  */
 public class DialogPopup {
@@ -49,12 +46,14 @@ public class DialogPopup {
         alert.showAndWait();
     }
     
-    /*
-    This alert displays a CONFIRMATIOn type alert.
-    Close the alert window to return to the cuurentStage when user clicks "NO" or
-    close the currentStage and return true, which can be used as a signal to display
-    another Window outside of this function if the currentStage is non-modal.
-    */
+    /**
+     * This alert displays a CONFIRMATIOn type alert.
+     * Close the alert window to return to the cuurentStage when user clicks "NO" or
+     * close the currentStage and return true, which can be used as a signal to display
+     * another Window outside of this function if the currentStage is non-modal.
+     * @param currentStage the parent stage
+     * @return true if user selects "YES", false if user selects "NO"
+     */
     public static boolean exitConfirmation(Stage currentStage) {
         Alert exitConfirmation = new Alert(Alert.AlertType.CONFIRMATION,
                                 "Are you sure you want to exit?",
@@ -72,6 +71,10 @@ public class DialogPopup {
         }
     }
     
+    /**
+     * This dialog prompts user to select a customer to view the calendar.
+     * @return the selected Customer
+     */
     public static Customer selectCustomer() {
         List<String> custList = new ArrayList<>();
         Customer selectedCust;
@@ -93,6 +96,10 @@ public class DialogPopup {
         return selectedCust;
     }
     
+    /**
+     * This dialog prompts user to select a report to view.
+     * @return the selected report or null if user cancels the selection
+     */
     public static String selectReport() {
         // Add all report options here
         List<String> reportList = new ArrayList<>();

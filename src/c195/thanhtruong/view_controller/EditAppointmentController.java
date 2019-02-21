@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.MainApp;
@@ -76,6 +72,12 @@ public class EditAppointmentController extends AbstractController implements Ini
         DialogPopup.exitConfirmation(getDialogStage());
     }
 
+    /**
+     * Event handler for the "Save" (appointment) button.
+     * This methods validates user's input to check for missing required input,
+     * conflict in appointment time, and appointments outside of business hours.
+     * @param event 
+     */
     @FXML
     void handleSaveUpdate(ActionEvent event) {
         String title = apptTitle.getText();
@@ -151,9 +153,13 @@ public class EditAppointmentController extends AbstractController implements Ini
     @Override
     public void initialize(URL url,
             ResourceBundle rb) {
-        // TODO
     }    
 
+    /**
+     * Populate data for current appointment in the Edit window.     * 
+     * @param selectedCust customer selected by user from the dialog prompt
+     * @param appointment appointment selected by user before clicking "Edit"
+     */
     @Override
     public void displayData(Customer selectedCust, Appointment appointment) {
         this.selectedCust = selectedCust;
@@ -182,7 +188,6 @@ public class EditAppointmentController extends AbstractController implements Ini
         apptStartHr.setValue(ApptCboOptions.getInstance().getHrByKey(startHr));
         apptEndHr.setValue(ApptCboOptions.getInstance().getHrByKey(endHr));
         apptStartMin.setValue(ApptCboOptions.getInstance().getMinByKey(startMin));
-        apptEndMin.setValue(ApptCboOptions.getInstance().getMinByKey(endMin));
-        
+        apptEndMin.setValue(ApptCboOptions.getInstance().getMinByKey(endMin));        
     }
 }

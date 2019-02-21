@@ -98,7 +98,8 @@ public class WindowsDisplay {
                     controller.displayData(customer, null);
             else
                 controller.displayData(null, null);
-            
+            // Center the stage and call the method to calculate AnchorPane height
+            // for the CalendarByWeekController
             stage.setOnShown(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {

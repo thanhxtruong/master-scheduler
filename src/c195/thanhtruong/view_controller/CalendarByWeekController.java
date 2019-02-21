@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
@@ -157,23 +153,28 @@ public class CalendarByWeekController extends AbstractController implements Init
         windowDisplay.displayScene();
     }
     
-    private void displayAllLabels(Calendar currentDate) {
-        sortedApptList = apptDB.sortApptByWeek();
-        apptMapByWeek = apptDB.getApptMapByWeek(sortedApptList);
-        
+    /**
+     * Populate all labels for Calendar view by Week.
+     * The first column is populated with time (0 - 23), and the first row is
+     * populated with dates in the week. The remaining grids are filled with
+     * empty AnchorPanes.
+     * 
+     * @param currentDate any date in the week
+     */
+    private void displayAllLabels(Calendar currentDate) {     
         // Set currennt date to the first date of the week        
         Calendar tempCalDate = (Calendar)currentDate.clone();
         tempCalDate.set(DAY_OF_WEEK, currentDate.getFirstDayOfWeek());
         
         currentWeekLabel.setText(CalendarByWeek.getDateAsString(currentDate));
         
+        // Start with Row #1 since the first row prints the dates in week
         int rowNo = 1;
-        int colNo;
-        
-        apptInWeek = apptDB.checkApptByWeek(currentDate.get(WEEK_OF_YEAR), apptMapByWeek);        
+        int colNo;        
         
         Insets labelPadding = new Insets(0, 0, 0, 5);
         container.setAlignment(Pos.TOP_CENTER);
+        // Populate the time column (Col #0)
         for (Integer key:ApptCboOptions.getInstance().getHourMap().keySet()) {
             AnchorPane anchorPane = new AnchorPane();
             container.add(anchorPane, 0, rowNo, 1, 1);
@@ -190,6 +191,12 @@ public class CalendarByWeekController extends AbstractController implements Init
             rowNo++;
         }
         
+        // Populate the dates columns
+        // Set calculateSize to true to signal the need to set aPaneSize to one
+        // of the emptyPane, which will be used later on after the scene is loaded
+        // to calculate the size of the empty AnchorPane. The size of the empty 
+        // AnchorPane is later used to calculate top and bottom AnchorPane alignment
+        // for appointment display.
         boolean calculateSize = true;
         for (colNo=1; colNo<8; colNo++) {
             // Display dates in week in top row
@@ -222,7 +229,21 @@ public class CalendarByWeekController extends AbstractController implements Init
         }
     }
     
+    /**
+     * Print all appointments in the week.
+     * First, the list of all appointments by Customer is downloaded from the
+     * MySQL DB before sorted and mapped by week and dates in week.
+     * For each appointment, a new AnchorPane is added for the purpose of setting
+     * row spanning. The top and bottom anchors for the new AnchorPane is set
+     * based on the Start and End minutes of the appointment.
+     * @param currentDate any dates in the week
+     */
     public void displayAllAppt(Calendar currentDate) {
+        sortedApptList = apptDB.sortApptByWeek();
+        apptMapByWeek = apptDB.getApptMapByWeek(sortedApptList);        
+        apptInWeek = apptDB.checkApptByWeek(currentDate.get(WEEK_OF_YEAR), apptMapByWeek);
+        
+        // Start with the second row since the first row is printed with all dates in week
         int rowNo = 1;
         int colNo;
         Insets labelPadding = new Insets(0, 0, 0, 5);
@@ -240,12 +261,11 @@ public class CalendarByWeekController extends AbstractController implements Init
                         int startHr = appt.getStartDateTime().toLocalDateTime().getHour();
                         int endHr = appt.getEndDateTime().toLocalDateTime().getHour();
                         int startMin = appt.getStartDateTime().toLocalDateTime().getMinute();
-                        System.out.println("startMin: " + startMin);
                         int endMin = appt.getEndDateTime().toLocalDateTime().getMinute();
-                        System.out.println("endMin: " + endMin);
                         double topAnchor, botAnchor;
                         int rSpan;
-                        
+                        // Calculate the number of rows to span across based on 
+                        // the number of hours for the appointment
                         if (endHr > startHr && endMin != 0) {
                             rSpan = endHr - startHr + 1;
                         } else if (endHr > startHr && endMin == 0) {
@@ -266,6 +286,7 @@ public class CalendarByWeekController extends AbstractController implements Init
                         Tooltip lbTooltip = new Tooltip("Click for more details!");
                         apptLabel.setTooltip(lbTooltip);
                         apptPane.getChildren().add(apptLabel);
+                        // Show tooltip as soon as mouse entered the text area
                         apptLabel.setOnMouseEntered((MouseEvent event) -> {
                             lbTooltip.show(apptLabel, event.getScreenX(), event.getScreenY() + 15);
                         });
@@ -279,7 +300,8 @@ public class CalendarByWeekController extends AbstractController implements Init
                                         apptDetails, AlertType.INFORMATION);
                             }
                         });
-                        System.out.println("paneHeight from loop: " + CalendarPaneHeight.getInstance().getPaneHeight());
+                        // Calculate top and bottom anchor based on the start
+                        // and end minutes of the appointment
                         topAnchor = CalendarPaneHeight.getInstance().getPaneHeight()*(((double)startMin)/60.0);
                         if (endMin == 0){
                             botAnchor = 0;
@@ -303,6 +325,10 @@ public class CalendarByWeekController extends AbstractController implements Init
         container.getChildren().clear();
     }
     
+    /*
+    This method is called as soon as the scene is loaded in order to calculate
+    the height of the AnchorPane (see displayAllAppt() method above)
+    */
     public void calculateHeight() {
         CalendarPaneHeight calPaneHeight = CalendarPaneHeight.getInstance();
         calPaneHeight.setPaneHeight(aPaneSize.getHeight());

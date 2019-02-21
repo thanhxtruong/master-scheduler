@@ -217,6 +217,15 @@ public class CalendarByMonthController extends AbstractController implements Ini
         
     }    
 
+    /**
+     * Display all labels and data in the calendar view.
+     * This method downloads the apptListByCust from the MYSQL DB and sort it by
+     * month before mapping it by month (key1) and dates (key2).
+     * The method display the current month-year value for the calendar and
+     * populates all dates in the current month.
+     * @param selectedCust customer selected by the user from the dialog prompt
+     * @param appoinment not used for this method
+     */
     @Override
     public void displayData(Customer selectedCust, Appointment appoinment) {
         this.selectedCust = selectedCust;

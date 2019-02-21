@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 
 import c195.thanhtruong.MainApp;
@@ -98,7 +94,8 @@ public class AppointmentDB {
     
     /**
      * This method downloads appointments by either selected Customer or User.
-     * @param model 
+     * Appointment time is converted to the local date and time.
+     * @param model Customer or User or null. When null, all appointments will be downloaded.
      */
     public void downloadAppt(AbstractModel model) {
         // Case model to either Customer or User obj
@@ -196,6 +193,13 @@ public class AppointmentDB {
         }            
     }
     
+    /**
+     * This method adds new appointment to the MySQL DB.
+     * The event is logged in the ActivityLogger.
+     * The apptListByCust is updated after insertion.
+     * @param newAppt
+     * @param selectedCust 
+     */
     public void insertAppt(Appointment newAppt, Customer selectedCust) {
         try {
             // Connect to the DB
@@ -223,6 +227,7 @@ public class AppointmentDB {
             result = Query.getResult();
             result.next();
             int apptID = result.getInt("last_insert_id()");
+            
             ActivityLogger.logActivities(MainApp.getCurrentUser().getUserName() +
                     " added a new appointmentId #" + apptID);
             
@@ -235,6 +240,14 @@ public class AppointmentDB {
         }
     }
     
+    /**
+     * This method updates a current appointment in the MySQL DB.
+     * The event is logged in the ActivityLogger.
+     * The apptListByCust is updated after insertion.
+     * @param newAppt
+     * @param selectedAppt
+     * @param selectedCust 
+     */
     public void updateAppt(Appointment newAppt, Appointment selectedAppt, Customer selectedCust) {
         try {
             // Connect to the DB
@@ -264,6 +277,13 @@ public class AppointmentDB {
         }
     }
     
+    /**
+     * This method deletes an appointment from the MySQL DB.
+     * The event is logged in the ActivityLogger.
+     * The apptListByCust is updated after insertion.
+     * @param selectedAppt
+     * @param selectedCust 
+     */
     public void deleteAppt(Appointment selectedAppt, Customer selectedCust ) {
         try {
             
@@ -287,6 +307,10 @@ public class AppointmentDB {
         
     }
     
+    /**
+     * This method sorts a list of appointments by month then by dates in a month.
+     * @return sortedList
+     */
     public ObservableList<Appointment> sortApptByMonth() {
         sortedList.clear();
         sortedList.addAll(apptListByCust);
@@ -310,6 +334,10 @@ public class AppointmentDB {
         return sortedList;
     }
     
+    /**
+     * This method sorts a list of appointments by Week then by dates in a week.
+     * @return sortedList
+     */
     public ObservableList<Appointment> sortApptByWeek() {
         sortedList.clear();
         sortedList.addAll(apptListByCust);
@@ -332,12 +360,27 @@ public class AppointmentDB {
         return sortedList;
     }
     
+    /**
+     * This method takes a LocalDate as an input and returns the Week of Year 
+     * for the given date.
+     * This method is used in the Collections.sort() functional interface of the 
+     * sortApptByWeek() method as well as in the key-value mapping of the
+     * getApptMapByWeek() method.
+     * @param lcDate
+     * @return int value of WEEK_OF_YEAR
+     */
     public int getWeekOfYear(LocalDate lcDate) {
         Calendar calDate = Calendar.getInstance();
         calDate.set(lcDate.getYear(), lcDate.getMonthValue()-1, lcDate.getDayOfMonth());
         return calDate.get(WEEK_OF_YEAR);
     }
     
+    /**
+     * This method takes an ObservableList of sorted appointments and map it by
+     * month then by dates in the month.
+     * @param sortedList ObservableList of appointments sorted by month and dates
+     * @return a 2-layer map of appointments mapped by month (key1) and dates (key2)
+     */
     public Map<Integer, Map<Integer, ObservableList<String>>> getApptMapByMonth(ObservableList<Appointment> sortedList) {        
         DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm");
         
@@ -358,6 +401,12 @@ public class AppointmentDB {
         return apptMapByMonth;
     }
     
+    /**
+     * This method takes an ObservableList of sorted appointments and map it by
+     * week then by dates in the week.
+     * @param sortedList ObservableList of appointments sorted by week and dates
+     * @return a 2-layer map of appointments mapped by week (key1) and dates (key2)
+     */
     public Map<Integer, Map<Integer, ObservableList<Appointment>>> getApptMapByWeek(ObservableList<Appointment> sortedList) {
         
         apptMapByWeek = new TreeMap<>();
@@ -393,6 +442,13 @@ public class AppointmentDB {
         return null;
     }
     
+    /**
+     * Retrieve lists of all appointments mapped by dates for the given week.
+     * @param week int value of the WEEK_OF_YEAR
+     * @param apptMap Map of lists of all appointment by week (outer layer) and
+     * dates in month (inner layer).
+     * @return lists of all appointments mapped by dates for the given week
+     */
     public Map<Integer, ObservableList<Appointment>> checkApptByWeek(int weekOfYear, Map<Integer, Map<Integer, ObservableList<Appointment>>> apptMap) {
         for (Integer key:apptMap.keySet()) {
             if (key.intValue() == weekOfYear) {
@@ -416,6 +472,13 @@ public class AppointmentDB {
         return null;
     }
     
+    /**
+     * This method is used to check if there are any appointments in the list of
+     * all appointments by Week for the given date.
+     * @param apptInWeek Lists of all appointments mapped by dates of a given week.
+     * @param dateToMatch Date to check for scheduled appointment(s).
+     * @return list of scheduled appointments or null.
+     */
     public ObservableList<Appointment> matchApptDatesInWeek(Map<Integer, ObservableList<Appointment>> apptInWeek, int dateToMatch) {
         if (apptInWeek.containsKey(Integer.valueOf(dateToMatch))) {
             return apptInWeek.get(Integer.valueOf(dateToMatch));
@@ -423,8 +486,20 @@ public class AppointmentDB {
         return null;
     }
     
+    /**
+     * This method checks for overlapping appointments for user input validation.
+     * The method checks for conflict within the apptListByCust first before
+     * checking for conflicts within the apptListByUser. The IllegalArgumentException
+     * is thrown if there is conflict. The exception is caught and resolved within
+     * the method calling this method validation (see AddAppointmentController and
+     * EditAppointmentController). The static boolean "overlappedAppt" is set to 
+     * true if there is a conflict, which is used as a flag in the "finally" section
+     * of the try-catch-finally exception handling method of the caller.
+     * @param nStartDT the Start datetime value of the new appointment
+     * @param nEndDT the End datetime value of the new appointment
+     */
     public void checkOverlappingAppt(LocalDateTime nStartDT, LocalDateTime nEndDT) {
-        // Check for conflict within the customer-own apptList
+        // Check for conflict within the apptListByCust
         LocalDateTime cStartDT, cEndDT;
         for (Appointment appt:apptListByCust) {
             cStartDT = appt.getStartDateTime().toLocalDateTime();
@@ -438,6 +513,7 @@ public class AppointmentDB {
                     appt.getAppointmentId());
             }
         }
+        //Check for conflict within apptListByUser
         for (Appointment appt:apptListByUser) {
             cStartDT = appt.getStartDateTime().toLocalDateTime();
             cEndDT = appt.getEndDateTime().toLocalDateTime();
@@ -452,9 +528,4 @@ public class AppointmentDB {
         }
         overlappedAppt = false;
     }
-     
-    public static void main(String[] args) {
-        final AppointmentDB apptDB = AppointmentDB.getInstance();
-    }  
-    
 }

@@ -362,3 +362,5 @@ Feb 20, 2019 1:00:55 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
 Feb 20, 2019 1:27:03 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
+Feb 21, 2019 10:40:36 AM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in

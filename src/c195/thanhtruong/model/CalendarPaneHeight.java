@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.model;
 
 /**
- *
+ * Singleton pattern used by CalendarByWeekController to calculate the Height
+ * of the empty AnchorPanes added to the calendar grids, which is later used to
+ * set top and bottom anchors for appointment display.
+ * Since the height needs to be calculated once as soon as the scene is loaded,
+ * Singleton Design Pattern is used for this class.
  * @author TTruong
  */
 public class CalendarPaneHeight {

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package c195.thanhtruong.view_controller;
 
 import c195.thanhtruong.model.Appointment;
@@ -81,6 +77,13 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
         }
     }
     
+    /**
+     * Create a list of appointment counts by Type.
+     * First, a list of all appointment is downloaded from the MySQL DB.
+     * The list is then map by Month (key1) then by Year (key2) and by Type (key3)
+     *  - 3-layer map. The list of total count of appointments by Type is then
+     * created by iterating through the created map.
+     */
     private void mapApptByType() {
         AppointmentDB apptDB = AppointmentDB.getInstance();
         apptDB.downloadAppt(null);
@@ -89,6 +92,7 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
         String typeKey;
         Integer yrKey;
         Integer moKey;
+        // Map appointment by Month (key1) then Year (key2) then Type (key3)
         for (Appointment appt:AppointmentDB.getInstance().getAllApptList()) {
             typeKey = appt.typeProperty().get();
             yrKey = appt.dateProperty().getValue().getYear();
@@ -105,6 +109,8 @@ public class ApptTypeByMonthReportController extends AbstractController implemen
             apptTypeByMonth.get(typeKey).get(yrKey).get(moKey).add(appt.getAppointmentId());
         }
         
+        // Iterate through the mao created above and count the number of appointments
+        // by Type before adding the count to the list of apptCount
         for (String key1:apptTypeByMonth.keySet()) {
             ApptTypeCount apptTypeCount = new ApptTypeCount(key1, apptTypeByMonth.get(key1).size());
             apptCount.add(apptTypeCount);

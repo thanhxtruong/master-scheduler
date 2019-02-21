@@ -8,7 +8,8 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 /**
- *
+ * Task to check for appointments coming up in 15 minutes.
+ * Task is scheduled to run every 5 minutes.
  * @author thanhtruong
  */
 public class ApptAlertService extends Service<LocalDateTime> {

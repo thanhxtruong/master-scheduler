@@ -1,6 +1,12 @@
 ---
 layout: default
 ---
+> Block quote
+> Block quote
+
+
+
+
 {:#heading-override}
 ### Design:
 
@@ -20,10 +26,10 @@ layout: default
 ### Execution:
 
 {:#text-override-article }
-1.	I started the execution phase with creating FXML code for all the GUI using Scene Builder.
-- ***Challenge:*** Create a calendar view by month and by week using JavaFX.
-- ***How I solved the problem:***
-    - 
+1.	I started the execution phase with creating FXML code for all the GUI using Scene Builder.<br>
+
+    * ***Challenge:***
+
 
 {:#heading-override}
 ### Final Product:

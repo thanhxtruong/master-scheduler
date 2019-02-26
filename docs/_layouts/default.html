@@ -18,8 +18,8 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -39,26 +39,215 @@
     <main>
       <div>
         <div class="row">
-          <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 pl-5">
-            {% assign sections = site.sections | sort: 'order' %}
-            {% for section in sections %}
-              {% if section.include != null %}
-                {% include {{ section.include }} %}
-              {% else %}
-                {% include sections/default.html %}
-              {% endif %}
-            {% endfor %}
-          </div>
-          <div class="col-sm-6 col-md-7 col-lg-8 col-xl-9 pl-5">            
-            {{content}}
+          <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3 main-content">
+
+            <!--Aside-->
+            <h5>Objective:</h5>
+            <p id="text-override-aside">
+              Develop a desktop user interface application for scheduling appointments with customers. The application must pull data from a MySQL database.              
+            </p>
+
+            <h5>Technical Wrap-up:</h5>
+            <ul id="text-override-aside">
+              <li>Java</li>
+              <li>JavaFX</li>
+              <li>MySQL</li>
+            </ul>
+
+            <h5>Advanced Java Concepts Implemented:</h5>
+            <ul id="text-override-aside">
+                <li>Functional Programming using Lambda Expression</li>
+                <li>Singleton Design Pattern</li>
+                <li>Builder Design Pattern</li>
+                <li>Language Translation Using Properties Files and ResourceBundle</li>
+                <li>Concurrency for Appointment Reminder Alert</li>
+                <li>Java IO for Report Exporting</li>
+                <li>Exception Handling for Input Validation</li>
+                <li>Java Database Connectivity (JDBC) for Interarting with MySQL</li>
+              </ul>
+          </div> <!--end of first col-->
+
+          <div class="col-sm-6 col-md-7 col-lg-8 col-xl-9 main-content">
+            <!-- Start of Pagination -->
+            <div class="contents">     
+
+              <!-- Page 1 of Pagination -->
+              <div class="content">
+                  <h3>Application Demo:</h3>
+                  <video class="video-custom" controls width="800">
+                    <source src="images/MasterSchedulerDemo.mp4" type="video/mp4">
+                  </video>
+                </div>
+
+              <!--Page 2 of Pagination-->
+              <div class="content">
+                <h3 class="text-center">Design:</h3>
+                <hr>
+                <ol>
+                  <li>I started the design process with a napkin-sketch of the GUI.<br>
+                    <a href="images/design.pdf" target="_blank"><img src="images/design.png" width="400" title="GUI Design" alt="GUI Design"></a>
+                  </li>
+
+                  <li>I then put together a wireflow diagram, which was used throughout the coding process.<br>
+                    <a href="images/wireflow.pdf" target="_blank"><img src="images/wireflow_Page_1.png" width="300" title="GUI Design" alt="GUI Design"><img src="images/wireflow_Page_2.png" width="300" title="GUI Design" alt="GUI Design"><img src="images/wireflow_Page_3.png" width="300" title="GUI Design" alt="GUI Design"></a>
+                  </li>
+
+                  <li>The Entity Relationship Diagram (ERD) for the database design is shown below.<br>
+                      <a href="images/ERD.png" target="_blank"><img src="images/ERD.png" width="400" title="ERD" alt="ERD"></a>
+                  </li>
+
+                  <li>The Model-View-Controller (MVC) design pattern was used to organize the source code for this application.</li>
+                </ol>
+              </div>
+
+              <!-- Page 3 of Pagination -->
+              <div class="content">
+                <h3 class="text-center">Execution:</h3>
+                <hr>
+                <h4>Challenge #1:</h4>
+                  <p><em>How to design an algorithm to display appointments in a calendar by month?</em></p>
+                  <a href="images/calendar_month.PNG" target="_blank"><img width="200" src="images/calendar_month.PNG" alt="Appoinment By Month"></a><br><br>
+
+                  <blockquote>                      
+                    <strong>Solution:</strong>
+                    <ul>
+                      <li>Add a VBox to each grid inside the GridPane to properly align ComboBox used for appointment lists and label used for displaying each date in the selected month.</li>
+
+                      <li>Download all appointments from the database and map them by months then by dates in a month (2-layer map). Iterate over the map by dates to add lists of appointments to ComboBoxes.</li>
+                    </ul>
+                  </blockquote>
+
+                  <div class="gistcontainer" id="gist1">
+                    <a href="#gist1" class="show">Expand</a>
+                    <script src="https://gist.github.com/thanhxtruong/3a73e4e10d49955ecc70942ab00b524b.js"></script>
+                  </div><br>
+
+                  <hr>
+
+                  <h4>Challenge #2:</h4>
+                  <p><em>How to design an algorithm to display appointments by week with overlapped time between grids?</em></p>
+                  <a href="images/calendar_week.PNG" target="_blank"><img width="200" src="images/calendar_week.PNG" alt="Appoinment By Week"></a><br><br>
+
+                  <blockquote> 
+                    <strong>Solution:</strong>
+                    <ul>
+                      <li>Anchor Labels with appointment details to AnchorPanes added to GridPane. The number of rowspan is determined based on the number of appointment hours.</li>
+
+                      <li>For appointments starting/ending at non-zero minutes, the top and bottom anchor values for the Label are set based on the startMin and endMin</li>
+                    </ul>
+                  </blockquote>
+
+                  <div class="gistcontainer" id="gist1">
+                    <a href="#gist1" class="show">Expand</a>
+                    <script src="https://gist.github.com/thanhxtruong/da9f90fbabcea06afee37ce587166c98.js"></script>
+                  </div>
+              </div>             
+
+              <!-- Page 4 of Pagination -->
+              <div class="content">
+                <h3 class="text-center">Execution:</h3>
+                <hr>
+                <h4>Challenge #3:</h4>
+                  <p><em>How to allow sharing one instance of the AppointmentDB class so that controllers can access lists and maps of appointments downloaded from the database without having to access the database?</em></p>
+
+                  <blockquote>                      
+                    <strong>Solution:</strong>
+                    <p>Singleton design pattern was used for the AppointmentDB class, which allows only one instance of the AppointmentDB class to be created in memory and shared among multiple classes as the lists/maps of appointments are updated/downloaded from the DB after each INSERT, DELETE, UPDATE query.</p>
+                  </blockquote>
+
+                  <div class="gistcontainer" id="gist1">
+                    <a href="#gist1" class="show">Expand</a>
+                    <script src="https://gist.github.com/thanhxtruong/d2e9b6a17657d83ad87432482feec8d8.js"></script>
+                  </div><br>
+
+                  <hr>
+
+                  <h4>Challenge #4:</h4>
+                  <p><em>ObservableList used for list of appointments downloaded from the database only listens for addition and removal types of change to the list resulting in Appointment TableView not updated after the user modified an appointment. How to detect list’s element updates and update TableView accordingly?</em></p>
+
+                  <blockquote> 
+                    <strong>Solution:</strong>
+                    <p>Implement a <strong><em>Callback</em></strong> with the ObservableList to report element updates.</p>
+                  </blockquote>
+
+                  <div class="gistcontainer" id="gist1">
+                    <a href="#gist1" class="show">Expand</a>
+                    <script src="https://gist.github.com/thanhxtruong/d2e9b6a17657d83ad87432482feec8d8.js"></script>
+                  </div><br>
+
+              </div>
+
+              <!-- Page 5 of Pagination -->
+              <div class="content">
+                <h3 class="text-center">Execution:</h3>
+                <hr>
+                <h4>Challenge #5:</h4>
+                <p><em>The displayScene() method in the WindowsDisplay class is used to load FXML, set Scene, and show Stage. Beside the required parameters for loading FXML and setting Stage (FXMLPath and title), there are certain scenes that required optional parameters (ResourceBundle for loading language files, ownerStage for modal Windows, and Customer and/or Appointment to set the selected Customer and/or Service in the controller data manipulation. How can this be achieved without making the optional parameters required?</em></p>
+
+                <blockquote> 
+                  <strong>Solution:</strong>
+                  <p>The Builder design pattern (WindowsBuilder class) was used to allow the necessary parameters to be passed to the Builder object through method chaining via setters in the WindowsBuilder class. A WindowsDisplay object is generated with a final build() call.</p>
+                </blockquote>
+
+                <div class="gistcontainer" id="gist1">
+                  <a href="#gist1" class="show">Expand</a>
+                  <script src="https://gist.github.com/thanhxtruong/f917ba036e8aca5068fb2fc86e5a6087.js"></script>
+                </div><br>
+                <div class="gistcontainer" id="gist1">
+                  <a href="#gist1" class="show">Expand</a>
+                  <script src="https://gist.github.com/thanhxtruong/c7c114f96ff251c5cf2f29d42e3bcd0e.js"></script>
+                </div><br>
+                <div class="gistcontainer" id="gist1">
+                  <a href="#gist1" class="show">Expand</a>
+                  <script src="https://gist.github.com/thanhxtruong/6dacbc0bd365bb26627b5ed132934257.js"></script>
+                </div><br>
+              </div>
+
+              <!-- Page 6 of Pagination -->
+              <div class="content">
+                <h3 class="text-center">Execution:</h3>
+                <hr>
+                <h4>Challenge #6:</h4>
+                <p><em>How to allow users to search the Customer List?</em></p>
+
+                <blockquote> 
+                  <strong>Solution:</strong>
+                  <ul>
+                    <li>Wrap a FilteredList around the ObservableList.</li>
+                    <li>Add a ChangeListener to the search TextArea. Whenever the TextArea is changed, the Predicate of the FIlteredList as defined by the lambda expression is updated. The Predicate matches the element in the ObservableList that will be visible.</li>
+                    <li>Finally, wrap the FilteredList inside a SortedList for sorting purpose and bind the sorted list to the TableView.</li>
+                  </ul>
+                </blockquote>
+
+                <div class="gistcontainer" id="gist1">
+                  <a href="#gist1" class="show">Expand</a>
+                  <script src="https://gist.github.com/thanhxtruong/071bac4ec24d6c56a5d956a9d18fdac1.js"></script>
+                </div><br>
+              </div>
+              
+              </div> <!-- end of Pagination -->
+            
+            <!-- Start of Pagination nav -->
             <div>
-              <video class="video-custom" controls width="800">
-                <source src="images/MasterSchedulerDemo.mp4" type="video/mp4">
-              </video>
-            </div>     
-          </div>          
-        </div>
-      </div>
+                <nav class="text-center">
+                    <ul class="pagination justify-content-end">
+                        <li class="pag_prev">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="pag_next">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>              
+            </div> <!--end of Pagination nav--> 
+
+          </div> <!--end of second col-->         
+        </div> <!--end of row-->
+      </div> <!--end of main div-->
     </main>
 
     <footer class="site-footer">
@@ -67,5 +256,6 @@
         {% endif %}
         <span class="site-footer-credits">This page was generated by <a id="a-override" href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-  </body>
+  </body>  
+    <script src="paging.js"></script>
 </html>

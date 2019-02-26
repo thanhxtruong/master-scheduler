@@ -1,16 +1,9 @@
 ---
 layout: default
 ---
-> Block quote
-> Block quote
 
-
-
-
-{:#heading-override}
 ### Design:
 
-{:#text-override-article }
 1.	I started the design process with a napkin-sketch of the GUI.<br>
 <a href="images/design.pdf" target="_blank"><img src="images/design.png" width="400" title="GUI Design" alt="GUI Design"></a>
 
@@ -22,17 +15,8 @@ layout: default
 
 4. The Model-View-Controller (MVC) design pattern was used to organize the source code for this application.
 
-{:#heading-override}
-### Execution:
-
-{:#text-override-article }
-1.	I started the execution phase with creating FXML code for all the GUI using Scene Builder.<br>
-
-    * ***Challenge:***
 
 
-{:#heading-override}
 ### Final Product:
 
-{:#text-override-article }
 1.	I started the design process with my napkin-sketch of the GUI.<br>

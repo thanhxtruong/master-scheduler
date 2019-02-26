@@ -61,15 +61,6 @@ a {
   }
 }
 
-#a-override {
-  color: $body-link-color;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 .video-custom {
   border-right: 50px solid black;
   border-left: 50px solid black;
@@ -173,27 +164,55 @@ a {
   }
 }
 
-#heading-override {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    color: $section-headings-color;
-  }
-
-#text-override-aside {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.5;
-  color: $body-text-color;
+#bootstrap-override-pagination > li > a:focus,
+#bootstrap-override-pagination > li > a:hover,
+#bootstrap-override-pagination > li > span:focus,
+#bootstrap-override-pagination > li > span:hover {
+    z-index: 3;
+    color: #23527c;
+    background-color: #159957;
+    border-color: #ddd;
 }
 
-#text-override-article {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: $body-text-color;
+.pagination > li > a
+{
+    background-color: white;
+    color: #159957;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #159957;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #159957;
+    border: solid 1px #159957;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #159957;
+    border: solid 1px #159957;
+}
+
+.gistcontainer {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.gistcontainer:target .show {display:none;}
+.gistcontainer:target {max-height:none;}
+
+#text-override-aside {
+  font-size: 14px;
 }
 
 .main-content {
@@ -205,13 +224,13 @@ a {
 
   @include large {
     max-width: 64rem;
-    padding: 2rem 6rem;
+    padding: 2rem 2rem;
     margin: 0 auto;
     font-size: 1.1rem;
   }
 
   @include medium {
-    padding: 2rem 4rem;
+    padding: 2rem 2rem;
     font-size: 1.1rem;
   }
 

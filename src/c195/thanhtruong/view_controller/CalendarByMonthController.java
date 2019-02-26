@@ -186,14 +186,16 @@ public class CalendarByMonthController extends AbstractController implements Ini
                 colNo = 0;
                 rowNo++;
             }
+            // Add VBox to GridPane
             VBox vBox = new VBox();
             vBox.setStyle("-fx-border-color: #c0c0c0");
             container.add(vBox, colNo, rowNo, 1, 1);
+            // Add Label to the top of VBox
             Label label = new Label(Integer.toString(allDates[i]));
             label.setFont(new Font(18));
             labels.add(label);            
             vBox.getChildren().add(label);
-            // Display appointments as combo boxes
+            // Add ComboBox to the bottom of VBox and add appointments to ComboBox
             if (apptInMonth != null) {
                 apptByDate = apptDB.matchApptDatesInMonth(apptInMonth, allDates[i]);
                 if (apptByDate != null) {

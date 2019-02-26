@@ -6,3 +6,7 @@ Feb 24, 2019 6:56:55 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged in
 Feb 24, 2019 6:59:17 PM c195.thanhtruong.service.ActivityLogger logActivities
 INFO: test logged out
+Feb 26, 2019 2:15:47 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in
+Feb 26, 2019 2:57:36 PM c195.thanhtruong.service.ActivityLogger logActivities
+INFO: test logged in

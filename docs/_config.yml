@@ -4,6 +4,3 @@ show_downloads: false
 google_analytics:
 theme: jekyll-theme-cayman
 repository: thanhxtruong/master-scheduler
-collections:
-- sections
-- articles

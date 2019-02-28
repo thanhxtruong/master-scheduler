@@ -112,7 +112,7 @@
                   <blockquote>                      
                     <strong>Solution:</strong>
                     <ul>
-                      <li>Add a VBox to each grid inside the GridPane to properly align ComboBox used for appointment lists and label used for displaying each date in the selected month.</li>
+                      <li>Add a VBox to each grid inside the GridPane to properly align ComboBox used for appointment lists and Label used for displaying each date in the selected month.</li>
 
                       <li>Download all appointments from the database and map them by months then by dates in a month (2-layer map). Iterate over the map by dates to add lists of appointments to ComboBoxes.</li>
                     </ul>
@@ -134,7 +134,7 @@
                     <ul>
                       <li>Anchor Labels with appointment details to AnchorPanes added to GridPane. The number of rowspan is determined based on the number of appointment hours.</li>
 
-                      <li>For appointments starting/ending at non-zero minutes, the top and bottom anchor values for the Label are set based on the startMin and endMin</li>
+                      <li>For appointments starting/ending at non-zero minutes, the top and bottom anchor values for the Label are set based on the startMin and endMin.</li>
                     </ul>
                   </blockquote>
 
@@ -153,7 +153,7 @@
 
                   <blockquote>                      
                     <strong>Solution:</strong>
-                    <p>Singleton design pattern was used for the AppointmentDB class, which allows only one instance of the AppointmentDB class to be created in memory and shared among multiple classes as the lists/maps of appointments are updated/downloaded from the DB after each INSERT, DELETE, UPDATE query.</p>
+                    <p>Singleton design pattern was used for the AppointmentDB class, which allows only one instance of the AppointmentDB class to be created in memory and shared among multiple classes as the lists/maps of appointments are updated/downloaded from the DB after each INSERT, DELETE, and UPDATE query.</p>
                   </blockquote>
 
                   <div class="gistcontainer" id="gist1">
@@ -164,7 +164,7 @@
                   <hr>
 
                   <h4>Challenge #4:</h4>
-                  <p><em>ObservableList used for list of appointments downloaded from the database only listens for addition and removal types of change to the list resulting in Appointment TableView not updated after the user modified an appointment. How to detect list’s element updates and update TableView accordingly?</em></p>
+                  <p><em>ObservableList used for list of appointments downloaded from the database only listens for addition and removal types of change to the list resulting in Appointment TableView not updated after the user modified an existing appointment. How to detect list’s element updates and update the TableView accordingly?</em></p>
 
                   <blockquote> 
                     <strong>Solution:</strong>
@@ -183,7 +183,7 @@
                 <h3>Execution:</h3>
                 <hr>
                 <h4>Challenge #5:</h4>
-                <p><em>The displayScene() method in the WindowsDisplay class is used to load FXML, set Scene, and show Stage. Beside the required parameters for loading FXML and setting Stage (FXMLPath and title), there are certain scenes that required optional parameters (ResourceBundle for loading language files, ownerStage for modal Windows, and Customer and/or Appointment to set the selected Customer and/or Service in the controller data manipulation. How can this be achieved without making the optional parameters required?</em></p>
+                <p><em>The displayScene() method in the WindowsDisplay class is used to load FXML, set Scene, and show Stage. Beside the required parameters for loading FXML and setting Stage (FXMLPath and title), there are certain scenes that required optional parameters (ResourceBundle for loading language files, ownerStage for modal Windows, and Customer and/or Appointment to set the selected Customer and/or Appointment in the controllers for data manipulation. How can this be achieved without making the optional parameters required?</em></p>
 
                 <blockquote> 
                   <strong>Solution:</strong>
